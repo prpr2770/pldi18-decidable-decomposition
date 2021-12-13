@@ -1,5 +1,5 @@
-% PLDI 2018 Artifact
-
+# PLDI 2018 Artifact
+[Marcel Taube's website](https://www.cs.tau.ac.il/~marcelotaube/modularity-for-decidability.html)
 This virtual machine contains the artifact for PLDI 2018 paper:
 "Modularity for Decidability: Implementing and Semi-Automatically
 Verifying Distributed Systems".
