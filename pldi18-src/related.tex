@@ -1,0 +1,336 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Fully Automatic Verification}
+\begin{sloppypar}
+Fully automatic
+%push-button
+verification of distributed protocols and systems is usually beyond reach because of
+undecidability. Bounded checking is successfully used, e.g., in
+Alloy~\cite{alloy} and TLA+~\cite{tla}, to check correctness of designs
+up to certain numbers of nodes. This is useful, due to the
+observation that most bugs occur with small numbers of nodes.  However
+as observed by Amazon~\cite{amazon} and others it is hard to scale
+these methods even for very few, e.g., $3$ nodes. Also many of the
+interesting bugs occur in the implementation.
+%One interesting approach to obtain decidability of fully automatic verification is via limiting the class of programs~\cite{vienna_book,konnov_smt_2015,konnov_short_2017,DBLP:conf/ershov/KonnovVW15}.
+% ODED: moved to next paragraph
+Another approach for automation is to use sound and incomplete procedures for deduction and invariant search for logics that combine quantifiers and set cardinalities~\cite{gleissenthall_cardinalities_2016,sally}.
+However, distributed systems of the level of complexity we consider here (i.e., Raft, Multi-Paxos) are beyond the reach of these techniques.
+Another direction, explored in~\cite{DBLP:journals/pacmpl/BakstGKJ17}, is to verify limited properties (e.g., for absence of deadlocks), using a sound but incomplete decidable check.
+None of the state-of-the-art techniques for fully automatic verification can prove properties such as consistency for systems implementations.
+Moreover, when automatic methods fail, the user is usually left without any solution.
+\end{sloppypar}
+
+\paragraph{Interactive Verification}
+%Recent projects such as Verdi~\cite{Verdi} and IronFleet~\cite{IronFleet} demonstrate
+The IronFleet~\cite{IronFleet} and Verdi~\cite{Verdi} projects recently demonstrated
+that distributed systems can be proved all the way from design to implementation.
+%
+The DistAlgo project~\cite{DistAlgo,chand_formal_2016} develops programming methodologies for interactively verifying distributed systems using the TLA+ proof system~\cite{chaudhuri_tla+proof_2010}.
+However, interactive verification requires tremendous human efforts and skills.
+% and thus has limited success so far.
+Our work can be considered as an attempt to understand how much automation is achievable using modularity.
+We argue that invariants provide a reasonable way to interact with verification tools, since one does not need
+to understand how decision procedures such as SMT work.
+%In this work we express invariants in first-order logic.
+%In the future, it may be possible to develop high-level specification approaches.
+%This work considers invariants in first-order logic, and an interesting future direction is to develop specification approaches.
+While this work considers invariant in first-order logic, it may be possible aplly its principles to richer specification approaches.
+
+\paragraph{Decidable Reasoning about Distributed Protocols}
+\begin{sloppypar}
+PSync~\cite{dragoi_psync:_2016} is a DSL for distributed systems, with
+decidable invariant checking in the $\mathbb{CL}$
+logic~\cite{dragoi_logic-based_2014}.  Decidability is obtained by
+restricting to the partially synchronous Heard-Of Model. A partially
+synchronous model is also used in \cite{alberti_counting_2016}, which
+develops a decidable fragment that allows some arithmetic with
+function symbols and cardinality constraints.
+%
+The Threshold Automata formalism and the ByMC verification tool
+\cite{vienna_book,konnov_smt_2015,konnov_short_2017,DBLP:conf/ershov/KonnovVW15}
+allow to express a restricted class of distributed algorithms
+operating in a partially synchronous communication mode. This
+restriction allows decidability results based on cutoff theorems, for
+both safety and liveness.
+%
+Recently, \cite{MSB17} presented a cutoff result for consensus
+algorithms. This allows to verify, e.g., the core Paxos algorithm,
+using a cutoff bound of 5 processes. However, this work is focused on
+algorithms for the core consensus problem, and does not support
+infinite-state per process, that is needed, e.g., to model Multi-Paxos
+and SMR.
+%
+Compared to these works, our approach considers a more general setting
+of asynchronous communication, and uses more restricted and mainstream
+decidable fragments that are supported by existing theorem
+provers. This is enabled by our use of modularity. Our approach of
+applying modularity to obtain decidability will benefit and become
+more powerful as more expressive decidable logics are developed and
+supported by efficient solvers.
+\end{sloppypar}
+
+%% Compared to previous work on Ivy~\cite{oopsla17-epr,ken_fmcad16,Ivy},
+%% this work is the first to produce verified implementation, exploiting
+%% modularity in a new way, and also using the FAU
+%% fragment~\cite{ge2009complete}, which is more expressive than EPR.
+
+\oded{Can we remove the following now that we are de-anonymized?
+Recently,~\cite{oopsla17-epr} showed how to verify abstract protocols
+of the Paxos family in EPR, and \cite{ken_fmcad16} used it for cache
+coherence. In this work we use EPR and FAU to reason about abstract
+protocols but also go beyond the protocol level to verify an actual
+efficient system implementation. The gap between the abstract protocol
+and the system implementation presents a major technical challenge. We
+bridge this gap by the novel use of modularity to obtain decidability,
+as well as the use of the FAU fragment~\cite{ge2009complete}, which is
+more expressive than EPR.}
+
+\paragraph{Modularity in Verification}
+The utility of modularity for simplified reasoning was already
+recognized in the seminal works of Hoare and Dijkstra (e.g.,
+\cite{Hoare:DataRepCorrectness}). Proof assistants such as
+Isabelle/HOL~\cite{nipkow_isabelle/hol:_2002} and Coq~\cite{coq}
+provide various modularity mechanisms. Deductive
+verification engines such as Dafny~\cite{Dafny} and VCC~\cite{VCC} employ modularity to
+simplify reasoning in a way that is similar to ours. The program logic
+Disel~\cite{disel}
+%uses protocols to allow
+allows modular verification of
+distributed systems, with rules somewhat similar to ours.
+In~\cite{paxos_destructed_abstracted}, a series of transformations are
+applied to obtain a verified implementation of Multi-Paxos from
+single-decree Paxos in a compositional manner.
+%
+In this landscape, our chief novelties are the use of modularity for
+decidability, and a methodology for modular, decidable reasoning about
+distributed systems. We note that unlike Dafny, Ivy performs syntactic
+checks to ensure that verification conditions are in decidable
+logics. Thus, the user either receives an error message and corrects
+the specification or can be assured that the verification problem is
+solvable. Our evaluation demonstrates that our methodology is useful
+for verifying complex distributed systems, and that it drastically
+reduces the verification effort.
+%
+%\commentout{
+%IVy, oopsla17-epr
+%
+%distalgo
+%
+%verdi
+%
+%ironfleet
+%
+%psync
+%
+%threshold automata
+%
+%ranjit oopsla17
+%}
+%
+%\TODO{all the text below is copied as is from the oopsla17}
+%
+%\paragraph{Automated verification of distributed protocols}
+%
+%Here we review several works that developed techniques for automated
+%verification of distributed protocols, and compare them with our
+%approach.
+%
+%%% CL and PSync
+%
+%The Consensus Verification Logic
+%$\mathbb{CL}$~\cite{dragoi_logic-based_2014} is a logic tailored to
+%verify consensus algorithms in the partially synchronous Heard-Of
+%Model~\cite{charron-bost_heard-model:_2009}, with a decidable fragment
+%that can be used for verification. PSync~\cite{dragoi_psync:_2016} is
+%a domain-specific programming language and runtime for developing formally
+%verified implementations of consensus algorithms based on
+%$\mathbb{CL}$ and the Heard-Of Model. Once the user provides inductive
+%invariants and ranking functions in $\mathbb{CL}$, safety and liveness
+%can be automatically verified. PSync's verified implementation of
+%LastVoting (Paxos in the Heard-Of Model) is comparable in
+%performance with state-of-the-art unverified systems.
+%%% Compared to
+%%% these works, our approach applies to a more general setting. The
+%%% Heard-Of Model is partially synchronous, while our methodology
+%%% applies to a general asynchronous setting.
+%
+%%% Viena
+%
+%Many interesting theoretical decidability results, as well as the ByMC
+%verification tool, have been developed based on the formalism of
+%Threshold Automata
+%\cite{vienna_book,konnov_smt_2015,konnov_short_2017,DBLP:conf/ershov/KonnovVW15}. This
+%formalism allows to express a restricted class of distributed
+%algorithms operating in a partially synchronous communication
+%mode. This restriction allows decidability results based on cutoff
+%theorems, for both safety and liveness.
+%%% However, the asynchronous
+%%% Paxos algorithms and the variants considered in this work are beyond
+%%% the reach of this formalism.
+%
+%\cite{alberti_counting_2016} present a decidable fragment of
+%Presburger arithmetic with function symbols and cardinality constraint
+%over interpreted sets.  Their work is motivated by applications to the
+%verification of fault-tolerant distributed algorithms, and they
+%demonstrate automatic safety verification of some fault-tolerant
+%distributed algorithms expressed in a partially synchronous
+%round-by-round model similar to PSync.
+%
+%\newcommand{\sharpie}{\#\Pi} $\sharpie$
+%\cite{gleissenthall_cardinalities_2016} present a logic that combines
+%reasoning about set cardinalities and universal quantifiers, along with an
+%invariant synthesis method. The logic is not decidable, so a sound and
+%incomplete reasoning method is used to check inductive
+%invariants. Inductive invariants are automatically synthesized by
+%method of Horn constraint solving. The technique is applied to
+%automatically verify a collection of parameterized systems, including
+%mutual exclusion, consensus, and garbage collection. However,
+%Paxos-like algorithms are beyond the reach of this verification
+%methodology since they require more complicated inductive invariants.
+%
+%\newcommand{\consl}{\mathit{ConsL}} Recently, \cite{MSB17} presented a
+%cutoff result for consensus algorithms.  They define $\consl$, a
+%domain specific language for consensus algorithms,
+%whose semantics is based on the Heard-Of Model. $\consl$ admits a cutoff
+%theorem, i.e., a parameterized algorithm expressed in $\consl$ is
+%correct (for any number of processors) if and only if it is correct
+%up to a some finite bounded number of processors (e.g., for Paxos the bound is 5) .
+%%Thus, correctness of the parameterized algorithm can be proven by finite-state model checking.
+%This theoretical result shows that for algorithms expressible in
+%$\consl$, verification is decidable. However, $\consl$ is focused on
+%algorithms for the core consensus problem, and does not support the
+%infinite-state per process that is needed, e.g., to model Multi-Paxos
+%and SMR.
+%%% \TODO{can anyone check that the last paragraph is correct?}
+%%% \TODO{maybe send them an email? I don't even understand how they model
+%%%   Paxos, since the rounds are still infinite even with finite
+%%%   processors.}
+%
+%The above mentioned works obtain automation (and some decidability) by
+%restricting the programming model. We note that our approach takes a
+%different path to decidability compared to these works. We axiomatize
+%arithmetic, set cardinalities, and other higher-order concepts in an
+%uninterpreted first-order abstraction. This is in contrast to the
+%above works, in which these concepts are baked into specially designed
+%logics and formalisms. Furthermore, we start with a Turing-complete
+%modeling language and invariants with unrestricted quantifier
+%alternation, and provide a methodology to reduce quantifier
+%alternation to obtain decidability.  This allows us to employ a
+%general-purpose decidable logic to verify asynchronous Paxos,
+%Multi-Paxos, and their variants, which are beyond the reach of all of
+%the above works.
+%
+%\paragraph{Deductive verification in undecidable logic}
+%IronFleet~\cite{IronFleet} is a verified implementation of SMR, using
+%the Dafny~\cite{dafny} program verifier, with verified safety and
+%liveness properties. Compared to our work, this system implementation
+%is considerably more detailed. The verification using Dafny employs Z3
+%to check verification conditions expressed in undecidable logics that
+%combine multiple theories and quantifier alternations. This leads to
+%great difficulties due to the unpredictability of the solver.  To
+%mitigate some of this unpredictability, IronFleet adopted a style they
+%call \emph{invariant quantifier hiding}.  This style attempts to
+%specify the invariants in a way that reduces the quantifiers that are
+%explicitly exposed to the solver. Our work is motivated by the
+%IronFleet experience and observations. The methodology we develop
+%provides a more systematic treatment of quantifier alternations, and
+%reduces the verification conditions to a decidable logic.
+%
+%\paragraph{Verification using interactive theorem provers}
+%
+%Recently, the Coq~\cite{coq} proof assistant has been used to develop
+%verified implementations of systems, such as a file system
+%\cite{fscq}, and shared memory data structures
+%\cite{DBLP:conf/pldi/SergeyNB15}. Closer to our work is
+%Verdi~\cite{DBLP:conf/pldi/WilcoxWPTWEA15}, which presents a verified
+%implementation of an SMR system based on Raft~\cite{raft}, a
+%Paxos-like algorithm.
+%%Such efforts demonstrate that interactive
+%%theorem provers allow a path to verified system
+%%implementations. However, this
+%This approach requires great effort, due
+%to the manual process of the proof; developing a
+%verified SMR system requires many months of work by verification
+%experts, and proofs measure in thousands of lines.
+%
+%\cite{rahli_15th_2015, schiper_developing_2014} verify the safety of
+%implementations of consensus and SMR algorithms in the EventML
+%programming language. EventML interfaces with the Nuprl theorem
+%prover, in which proofs are conducted, and uses Nuprl's code
+%generation facilities.
+%%The authors report proving a Paxos-like algorithm in a matter of
+%%days.  One notable feature of EventML is that its semantics is based
+%%on partial order between events, whereas most other tools employ the
+%%standard model of Lamport, in which an execution is a total order on
+%%events.
+%
+%Other works applied interactive theorem proving to verify Paxos
+%protocols at the algorithmic level, without an executable
+%implementation. \cite{DiskPaxos-AFP} proved the correctness of the
+%Disk Paxos algorithm in Isabelle/HOL~\cite{nipkow_isabelle/hol:_2002},
+%in about 6,500 lines of proof script. Recently,
+%\cite{chand_formal_2016} presented safety proofs of Paxos and
+%Multi-Paxos using the TLA+~\cite{lamport_temporal_1994} specification
+%language and the TLA Proof System
+%TLAPS~\cite{chaudhuri_tla+proof_2010}. TLA+ has also been used in
+%Amazon to model check distributed algorithms~\cite{amazon}. However,
+%they did not spend the effort required to obtain formal proofs, and
+%only used the TLA+ models for bug finding via the TLA+ model
+%checker~\cite{tlc}.
+%
+%Compared to our approach, using interactive theorem provers requires
+%more user expertise and is more labor intensive. We note that
+%part of the difficulty in using an interactive theorem prover lies in
+%the unpredictability of the automated proof methods available and the
+%considerable experience needed to write proofs in an idiomatic style
+%that facilitates automation. An interesting direction of research is
+%to integrate our methodology in an interactive theorem prover to
+%achieve predictable automation in a style that is natural to systems
+%designers.
+%
+%%% Compared to our approach, using interactive theorem provers requires
+%%% more user expertise and is more labor intensive.  To create a more
+%%% detailed comparison, we used Isabelle/HOL to prove the safety of a
+%%% Paxos model which is analogous to the first-order logic model of Paxos
+%%% of \Cref{fig:paxos-fol}. We report on this comparison in
+%%% \commentout{\Cref{sec:isabelle}}\cite{oopsla17-epr-tr}. We note that
+%%% part of the difficulty in using an interactive theorem prover lies in
+%%% the unpredictability of the automated proof methods available and the
+%%% considerable experience needed to write proofs in an idiomatic style
+%%% that facilitates automation. An interesting direction of research is
+%%% to integrate our methodology in an interactive theorem prover to
+%%% achieve predictable automation in a style that is natural to systems
+%%% designers.
+%
+%\paragraph{Works based on EPR}
+%
+%\cite{ivy} and \cite{ken_fmcad16} have also used EPR to verify
+%distributed protocols and cache coherence protocols. \cite{ivy}
+%develops an interactive technique for assisting the user to find
+%universally quantified invariants (without quantifier alternations).
+%In contrast, here we use invariants that contain quantifier alternations,
+%as used in proofs of Paxos protocols.
+%\cite{ken_fmcad16} goes beyond our work by extracting executable code from the modeling language.
+%In the future, we plan to apply a similar extraction methodology to Paxos protocols.
+%
+%In \cite{CAV:IBINS13,POPL:IBILNS14,shachar_thesis} it was shown that
+%EPR can express a limited form of transitive closure, in the context
+%of linked lists manipulations. We notice that in the context of our methodology,
+%%this work bears some similarity with our notion of  a derived relation, as
+%their treatment of transitive closure can be considered
+%as adding a derived relation. This work and our work both show that EPR is
+%surprisingly powerful, when augmented with derived relations.
+%
+%In \cite{tacas17-bh}, bounded quantifier instantiation is explored as
+%a possible solution to the undecidability caused by %that arises due to
+%quantifier alternations. This work shares some of the motivation and
+%challenges with our work, but proposes an alternative solution. The
+%context we consider here is also wider, since we deal not only with
+%quantifier alternations in the inductive invariant, but also with
+%quantifier alternations in the transition relation. \cite{tacas17-bh}
+%also shows an interesting connection between derived relations and quantifier instantiation, and these insights may
+%apply to our methodology as well. An appealing future research direction is to
+%combine user provided derived relations and rewrites
+%together with heuristically generated quantifier instantiation.

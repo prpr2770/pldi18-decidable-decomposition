@@ -1,0 +1,362 @@
+\section{Evaluation}
+
+To evaluate our methodology, we applied it to develop verified implementations
+of Raft~\cite{raft} and Multi-Paxos~\cite{paxos}\footnote{The artifact is available at \url{https://www.cs.tau.ac.il/~marcelotaube/modularity-for-decidability.html}}.
+%
+Both protocols implement a centralized shared log abstraction, i.e., a write-once map from
+indices %, starting at $0$,
+to values, which can be used to
+implement a fault-tolerant distributed service using state
+machine replication (SMR)~\cite{schneider_implementing_1990}.
+We verify that no two replicas ever disagree
+on the committed portion of the replicated log.
+%
+We implemented only the basic Raft and Multi-Paxos protocols, without
+ log truncation, state transfer to slow replicas,
+persisting the log to disk, crash recovery, batching, or
+application-level flow control. \oded{added ``application level flow
+  control'' is this the correct term?}
+
+%In both protocols, every node maintains a local copy of the log, and any two nodes agree on the indices that they both have in their copy.
+%We implemented our methodology in
+% We used the Ivy~\cite{Ivy} system, which uses Z3~\cite{Z3} to check
+% verification conditions.
+
+%In this section,
+%we first describe the implementation and verification of Raft and Multi-Paxos,
+%and then evaluate the performance of the resulting verified
+%systems.
+
+%\TODO{move this elsewhere:} Both implementations use the nset module to obtain to manipulate sets of nodes and test whether a given set contains a majority of the nodes using a first-order interface.
+
+%\subsection{Raft and Multi-Paxos}
+%\subsection{Decidable Decomposition of Raft and Multi-Paxos} % this is too long...
+\subsection{Verifying Raft and Multi-Paxos}
+% \oded{Maybe we can make this section title more accurate? I think this section is about the verification strategy for both protocols}
+\commentout{
+0- has all the elements of the overview including nodeset
+1- differences between impl / model
+2- relations instead of function, auxiliary relations
+3- auxiliary variable
+4- decidable fragments, theory
+5- creativity for epr
+}
+\paragraph{Raft}
+The Raft protocol operates in a sequence of \emph{terms}. In each term a leader
+is elected in a way that is similar to the toy leader election protocol
+presented in \Cref{sec:overview}, and the leader then replicates its log on the
+other nodes.
+%
+%For further details on the Raft protocol, see \citeauthor{ongaro:phd}'s
+%dissertation~\cite{ongaro:phd}.
+%
+Our decidable decomposition consists of a main module that contains the core
+protocol logic, and of a module that separates the local node state from the
+main module and exposes only relations in order to avoid
+quantifier alternations. To separate theories, Raft also uses the $\mnodeset$
+module presented in \Cref{sec:overview} (for node sets with majority testing),
+and a module that implements a log data type, internally represented using
+Ivy's built-in arrays.  This strategy uses the modular reasoning principles
+explained in \Cref{sec:modular} in a different way than the strategy used in
+\Cref{sec:overview} for the Toy Leader Election example: instead of separating
+the abstract protocol from the implementation, it separates the implementation
+from the representation of the local state.
+
+%This strategy differs slightly from
+%the one used in \Cref{sec:overview} for the Toy Leader Election
+%example, since instead of separating the abstract protocol from the protocol implementation,
+%it instead separates the implementation from the representation of the local state.
+%Despite these differences, this strategy still follows the same modular reasoning
+%principles explained in \Cref{sec:modular}.
+
+The main module contains the message handlers, which implement Raft's logic,
+as well as an inductive invariant that proves safety. This invariant is proved
+using the majority intersection property, which introduces a quantifier
+alternation edge from node set to node. The state of each node is naturally
+represented by a function from node to various sorts (including node set, e.g.,
+to let each node track its voters). Combining such functions in the main module
+would create quantifier alternation cycles (e.g., between node and node set).
+To avoid the cycles, we encapsulate the local state of nodes in a separate module
+that exposes only relations. For example, a node's current term is concretely
+represented by a function $t : \snode \to \sterm$, and it is exposed as a
+relation $r : \snode,\sterm$,
+intended to capture $r(n,x) \equiv (t(n) = x)$, and an additional relation that
+captures $t(n) \geq x$.  
+% The proof of the main module also relies on ghost state to capture
+% concepts such as the log of a term (storing a snapshot of the log of the term's
+% leader).
+%% The proof also relies on ghost state to capture
+%% concepts such as the ``official'' log of a term, which stores the log
+%% of the leader of the term, even after the leader has moved on
+%% to higher terms.
+
+Verification of both the main module and the local state module is done in EPR,
+with log indices and terms abstracted as linear orders. Crucially, although
+both modules use EPR, they use different quantifier alternation stratification
+orders, so a non-modular proof would fall outside the decidable fragment. The
+modules for node sets and logs are verified in the FAU fragment, which allows
+the necessary reasoning about arithmetic.
+
+\TODO{add line counts for modules, both for Raft and Multi-Paxos}
+
+\oded{I moved the TCP part to \Cref{sec:performance}}
+
+\jrw{Since MultiPaxos uses the strategy of Section 2, it would be
+  natural to describe it first. Can we change ``Raft and MultiPaxos''
+  to ``MultiPaxos and Raft'' everywhere in the paper, or is it too much?}
+
+\paragraph{Multi-Paxos}
+
+Our approach to implementing and verifying Multi-Paxos follows the
+strategy presented in \Cref{sec:overview} for the Toy Leader Election
+example. We separate the abstract protocol and its proof into a ghost
+module, and use this module as a lemma for proving the system
+implementation.
+
+Similarly to Raft, our Multi-Paxos implementation uses the $\mnodeset$
+module, which provides an abstract data type of node sets with majority
+testing. However, the majority intersection property
+(\Cref{fig:nodeset} \cref{line:nodeset-intersect}) is used only in the
+proof of the abstract protocol, and is not used when verifying the
+implementation module. Therefore, there is no quantifier alternation
+edge from quorum to node in the VC's of the implementation module,
+and, contrary to Raft, there is no need to abstract the local state of
+the nodes using relations.
+
+%\oded{Don't we want to say something about the witness module (see commented out text below)? It seems essential to the decidable decomposition of Multi-Paxos, or not?}
+%\gl{The text about the witness module in the commented-out text below does not apply anymore.
+%I still use a module called witness from the standard library, but it is a really a detail.}
+%
+\commentout{
+\oded{Let's keep this comment in the file in the file for our future use.}
+
+Single-Decree Paxos is an algorithm to solve the Consensus problem in a message-passing system (under sufficient synchrony assumptions).
+Single-Decree Paxos works in two phases. In phase 1, a node tries to acquire leadership of the cluster of nodes.
+If successful, in phase 2 the node instructs the cluster to vote for its proposal. If a majority of the nodes vote accordingly, the proposal is considered decided. If another nodes executes the leadership-acquisition phase con
+
+Multi-Paxos implements a linearizable shared log by orchestrating the execution of a sequence of logical Single-Decree Paxos instances (i.e.\ one logical instance per position in the log).
+Instead of running one independent instance of Single-Decree Paxos per index, Multi-Paxos uses a single leadership acquisition phase that simulates the leadership acquisition phase of all instances at the same time.
+Thus a node can acquire leadership of all instances at once and then start filling as many indices as needed by executing phase 2 only in each instance.
+
+To tolerate crashes, Multi-Paxos allows any node that suspects a leader crash to start its leadership-acquisition phase in order to take over the current leader.
+However, efficient execution of Multi-Paxos depends on there being a stable leader.
+When nodes repeatedly acquire and loose leadership to other nodes because of crash suspicions, the system does not do useful work.
+This can be prevented by various means, e.g.\ using random waiting times to reduce the likelihood of concurrent leadership-acquisition attempts, or relying on mostly synchronous execution to let nodes take turns trying to acqu
+
+We implement Multi-Paxos using random waiting times for leadership acquisition.
+The implementation is obtained starting from a protocol design whose verification conditions fall in the EPR fragment.
+
+An interesting feature of the proof is that the protocol design contains an action whose precondition asserts that for every index, there exist a node $n$ such that some condition holds.
+This quantifier alternation is stratified in the protocol design.
+However, in the implementation, this quantifier alternation is not stratified because, for instance, a node maintains the next index that is available to be filled.
+With Ivy's encoding of parameterized object, this gives rise to a function from node to index, and the verification conditions of the implementation are not stratified.
+
+To obtain stratified verification conditions for the implementation, we define a module called witness which declares an uninterpreted type t which we can think of as a map of witnesses that we can use to instantiate the probl
+The module exposes two relations present(T:t,X:idx) and is is(T:t,X:idx,V:value), and three actions set(t:t,i:idx,n:node): (r:t), returning an updated witness map, get(t:t,i:idx): (n:node), returning a witness mapped to index
+We add a parameter of this type to the protocol-design action and replace the existential quantifier by appropriate use of the relations present and is.
+
+Note that the specification is entirely relational and without quantifier alternation, and therefore can be use together with the protocol implementation while remaining stratified.
+The specification purposefully does not mention that there exists a witness for every index, or the stratification problem would reappear.
+However, the implementation of the witness module uses a function to represent the underlying map from indices to nodes, which gives us the existence of the witnesses.
+To satisfy the requirement of the protocol design action that there exist a witness for every index, we expose the implementation when proving the protocol design correct.
+
+The witness module is completely stripped for the code extraction.
+\gl{TODO:explain better.}
+}
+
+
+\subsection{Verification Effort}
+
+\gl{I created directories code\_lines in the raft and multi-paxos directories. I copied the respective ivy files in those directories and commented-out ghost code and invariants. I then counted all uncommented lines to obtain the numbers of ``code'' lines.}
+
+The Raft verification took approximately 3 person-months.
+\oded{I changed from 2 to 3, to account for all of Marcelo's work since the soundness bug was found. Should it be 4?}
+The code and proof of sum up to 840 lines,
+%(this excludes the $\mnodeset$ module),
+% code and 540 consist of non-ghost code.
+among which 300 consist of invariants and ghost code.
+%and 540 consist of implementation code.
+This gives a proof-to-code ratio of 0.6 for Raft.
+%
+Obtaining the Multi-Paxos implementation
+from the abstract protocol (which was already proved in~\cite{oopsla17-epr}) took
+approximately two person-months of work.
+The Multi-Paxos code and proof sum up to 789 lines,
+%(this excludes the $\mnodeset$ module and the array\_segment module that should be in the standard library).
+166 of which consist of invariants and ghost code.
+%and 623 consist of implementation code.
+This gives a proof-to-code ratio of 0.3 for Multi-Paxos.
+%\oded{I think we must update the ``two weeks'', feels more like 1-2 months now now? We should also say that a big part of the effort (most?) was to obtain an implementation with acceptable performance (at least for low loads).}
+%\gl{I don't really know how to count at this point. Okay for two month, that seems to be the right order of magnitude.}
+%
+Ivy successfully discharges all VC's of both Raft and Multi-Paxos in
+few minutes on a conventional laptop. During the development, Ivy
+quickly produced counterexamples to induction and displayed them
+graphically, which greatly assisted in the verification process.
+
+% \oded{I'm changing the way the numbers are presented for uniformity, for the final version we should be more careful and precise}
+
+For comparison, IronFleet's IronRSL~\cite{IronFleet} implementation is
+part of a verification effort of 3.7 person-years (which also includes
+IronKV, a verified key-value store). Excluding generic libraries such
+as verified serialization code and liveness proofs, which are not
+verified in the Ivy implementations, IronRSL consists of roughly 3,000
+implementation and 12,000 proof SLOC. This gives a proof-to-code
+ratio of~4. IronFleet's VC checking was performed on cloud
+servers to obtain verification times acceptable for interactive use.
+
+As evidenced by its larger code-base, IronRSL includes more features than the Ivy implementations presented:
+log truncation, batching, and state-transfer are part of IronRSL (however IronRSL does
+not support crash recovery).  Moreover, more properties are verified
+compared to the Ivy implementations: IronFleet verifies the network
+serialization and deserialization code, some liveness properties, and
+the model includes resource bounds (e.g., integer overflows).
+
+%% ODED: moved this above
+%% Excluding generic IronFleet libraries such as verified serialization
+%% code and liveness proofs, which are not verified in the Ivy
+%% implementations, IronRSL consists of roughly 3,000 implementation SLOC
+%% and 12,000 proof SLOC. This gives a proof/code ratio of about~4.
+
+The Verdi proof of the Raft protocol~\cite{VerdiCPP} consists of
+50,000 proof and 530 implementation SLOC, and required
+several person-years. Among those 50,000 lines, most are devoted
+to manual proofs of lemmas directly required for the Raft verification,
+and are thus not immediately generalizable to other protocols.
+Generic pieces of code, such as the network semantics, make up
+less than 5\% of the code base.
+% On the other hand,
+% the proof is more foundational in the sense that it
+% is done in the
+% Coq~\cite{coq} proof assistant, which has a smaller trusted base than
+% Ivy. For example, the Verdi proof includes an explicit theory of linearizability.
+%which is left implicit in Ivy's metatheory.
+
+\subsection{Verified System's Performance}
+\label{sec:performance}
+
+%\paragraph{Network Implementation}
+Our implementations of Raft and Multi-Paxos are compiled by Ivy to C++,
+and the resulting code is linked with several trusted libraries,
+including a low-level networking interface based on TCP using non-blocking sends.
+% The TCP
+% module implementation uses one sender thread and one receiver thread
+% per replica, which operate asynchronously from the main Ivy event
+% loop.  Sending a message never blocks; instead, messages sent to a
+% given destination when its corresponding send buffer is full are
+% silently dropped.  \oded{Maybe this is a bit too much detail? Not
+%   sure... Anyway, we should relate this to the remark we'll write
+%   about flow control}
+%   \gl{To get the whole picture we should explain that making blocking sends would make the leader send at the pace at which the slowest replica can receive and make it stall should any replica fail.}
+%
+In order to evaluate the performance of these verified replication protocols,
+we implemented a key-value store
+that can use either protocol internally.
+Unverified components handle the key-value store state machine
+and client communication on top of the verified replication library.
+The unverified portion consists of 785 SLOC of C++.
+We benchmarked the performance of these systems
+against that of two other Raft-based key-value stores:
+\texttt{vard}~\cite{Verdi}, a similar verified system,
+and \texttt{etcd}~\cite{etcd},
+an unverified, production-quality system.
+Our goal in these experiments is to show that
+systems developed with our decidable verification methodology
+achieve comparable performance to existing systems.
+
+\commentout{
+\begin{table}[t]
+\begin{footnotesize}
+%\begin{small}
+  \centering
+  %\caption{Throughput (requests/s) and average request latency (ms) of gets and puts to the key-value stores.}
+  \caption{Throughput and average request latency of gets and puts to the key-value stores.}
+  %\vspace{6pt}
+\label{tab:perf}
+  %% \begin{tabular}{lrrrr}
+  %%   \textbf{System} & \textbf{Throughput [req/sec]} & \textbf{Latency [ms]}\\
+  %%   Ivy-Raft        & 14,856       & 1.1 \\
+  %%   Ivy-Multi-Paxos & 8,453       & 1.9 \\
+  %%   \texttt{vard}   & 4,370       & 3.7 \\
+  %%   \texttt{etcd}   & 9,236       & 1.7 \\
+  %% \end{tabular}
+  \begin{tabular}{lrrrr}
+    \textbf{System} & \textbf{Throughput [req/ms]} & \textbf{Latency [ms]}\\
+    Ivy-Raft        & 13.5       & 1.2 \\
+    Ivy-Multi-Paxos & 8.7       & 1.9 \\
+    \texttt{vard}   & 4.4      & 3.7 \\
+    \texttt{etcd}   & 9.2        & 1.7 \\
+  \end{tabular}
+
+%\end{small}
+\end{footnotesize}
+\end{table}
+}
+
+\input{fig-eval}
+
+
+%% \TODO{combine this: through additional experiments, we checked that 16
+%%   client threads suffice to saturate the system. increasing the load
+%%   further does not increase throughput, and instead causes the system
+%%   to become overloaded, resulting in performance degradation and
+%%   instability. Since our systems do not include flow control, they are
+%%   not graceful under overload conditions, while \texttt{etcd} does contain flow
+%%   control and the required engineering to handle overload}
+
+We benchmarked all systems on a cluster of three Amazon EC2
+\texttt{m4.xlarge} nodes, each with 4 (virtual) CPU cores and 16GB of RAM. The
+cluster served 16 closed-loop client processes running on a fourth
+\texttt{m4.xlarge} node.
+The client processes sent a randomized 50/50 mix of
+\texttt{GET} and \texttt{PUT} requests to the servers,
+and we measured the observed throughput and latency.
+The results are summarized in \Cref{tab:perf}.
+%
+We chose 16 client processes through additional experimentation
+that revealed increasing the load further does not increase
+throughput, and instead causes the systems to become overloaded,
+resulting in performance degradation and instability. Since our
+systems do not include application-level flow control, they do not
+gracefully handle overload conditions.
+% (\texttt{etcd} does contain the required engineering to handle overload).
+
+While the performance of all systems is roughly in the same order of
+magnitude, there are some expected differences.  The systems vary
+in the languages, libraries, and data structures used,
+and they implement different optimizations.
+%
+The Multi-Paxos implementation notifies replicas of decision by broadcasting
+``decide'' messages. In Raft, those messages are instead piggy-backed on
+subsequent requests, resulting in more efficient network usage.
+%
+%Both \texttt{vard} and \texttt{etcd} were designed to persist data to disk, an operation not present in our implementations.
+Unlike our implementations, \texttt{vard} and \texttt{etcd} were designed to persist data to disk.
+%
+We partially mitigated this difference by modifying \texttt{vard} to disable disk writes
+and configuring \texttt{etcd} to use a RAM disk.
+%though it is worth noting that this is an imperfect comparison.
+%
+Our conclusion from this experiment is that
+systems verified with decidable decomposition can achieve
+similar performance to existing systems (we do not claim that any of the systems considered outperforms another).
+
+The results above were obtained while the systems were operating normally, i.e., a single elected leader and no failures.
+To test their fault tolerance, we also measured our systems during leader failure and reelection. 
+After startup, we let the system elect a leader and begin servicing client requests, until a steady state is reached.
+We then killed the server process on the leader node and observed the time required before clients could be serviced again.
+In both Raft and Multi-Paxos, the system recovered in 4-5 seconds.
+This delay is expected due to the way timeouts are currently set in our implementation, and could be improved by additional engineering.
+
+%% The results above were obtained while the systems were operating normally,
+%% i.e., there was exactly one active leader and no failures.  To test
+%% the fault tolerance of our systems, we also measured
+%% them during leader failure and reelection.  After startup, we allowed the system
+%% to elect a leader and begin servicing client requests until reaching a
+%% steady state.  We then artificially killed the server process on the
+%% leader node and observed the time required before client requests
+%% could be serviced again. In both Raft and Multi-Paxos, the system
+%% recovered in 4-5 seconds.  This delay is expected due to the way
+%% timeouts are currently set in our implementation, and could be
+%% improved by additional engineering.
+

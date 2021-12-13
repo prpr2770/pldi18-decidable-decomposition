@@ -1,0 +1,36 @@
+Save current progress after retesting
+Try to remove warnings from compilation
+Warnings include signed/unsigned comparison that might be fixed by moving to "nat" type/unbounded sequence
+
+
+
+
+search generically for h2/hist sort/voters sort
+handle_append_entries - h
+update_commited_ghost - h
+#TODO: check all actions return with the same name
+req_append_new_entry - lhist
+send_nack - added leader
+msg_append_send - ADD parameter to choose if broadcast or single response
+net.recv does not handle nack
+handle_nack needs to replicate the full array (review this entirely, + respond only to the requesting node)
+Does increase_term_by_nodeid replace move_to_term?
+increase_term_by_nodeid - Uses + without defining the operation
+send_nack - proper name in field (leader?cand?node?)
+Check used and how in old raft.ivy:
+    # Timeout API
+    action increase_time --> sec.timeout, 
+    action delay_leader_election -> net.handle_keepalive, announce_candidacy, handle_rqst_vote_nolog, handle_rqst_vote, handle_rqst_vote, handle_append_entries, OTHERS??? , SHOULD PROTECT MORE FROM OLD ROUNDS?
+    action is_leader_too_quiet returns (res: bool) -> sec.timeout
+TODO: what about races between the recovery flow and new messages being sent, will one node always lag the others? What about parallelism?
+
+
+Copy from patch: current net.handle_nack
+
+Later:
+ - Check bad flows
+ - Profiler
+ - Check if no copy on write (and check if can reduce voters array)
+ - Final diff in other directions, including diff of cpp file in evaluation
+ - parallelism when recoverying
+ - handle_nack and others have redundant conditions to avoid writing invariants localstate.myhist(leader).filled(ix)

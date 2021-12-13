@@ -1,0 +1,64 @@
+\begin{abstract}
+
+\commentout{
+This paper addresses the problem of verifying the correctness of realistic distributed systems, all the way from
+protocol design to efficient system implementation.
+\gl{implementations}\oded{is this better?}
+It shows how to harness modularity for simplifying the verification of such systems.
+Rather then directly reasoning about existing code,
+we present a programming language which both permits effective
+reasoning and generation of efficient executable code.
+
+The simplification is achieved by the usage of decidable logic to automatically check the correctness of straightline programs.
+Unlike existing approaches, the usage of decidable logic guarantees that the solver always terminates with a proof or a concrete counterexample.
+However, decidable logics are not a panacea. They are rather limited and common wisdom suggests that it is very hard to employ decidable reasoning to reason
+about real systems.
+
+This paper shows that existing modularity principles can be used to break the verification task into several subtasks that can be solved
+via different decidable logics.
+We embed this modularity in a real verification system and demonstrate the usefulness of the methodology
+to verify realistic protocols, such as Raft, all the way from the design to an efficient implementation.
+We also show that the verification effort is drastically smaller than existing approaches.
+
+There are several reasons why this can be done for distributed systems:
+(i)~The existence of a rather simple design of the protocol expressible in a rather limited language,
+(ii)~The separation between abstract and concrete data structures, and
+(iii)~The message passing communication model which makes it possible to treat each message handler as executing atomically.
+}
+
+Proof automation can substantially increase productivity in formal
+verification of complex systems.  However, unpredictablility of automated provers in handling quantified formulas presents a major
+hurdle to usability of these tools. We propose to solve this
+problem not by improving the provers, but by using a modular proof
+methodology that allows us to produce \emph{decidable} verification
+conditions.  Decidability greatly improves predictability of proof
+automation, resulting in a more practical verification approach. 
+We apply this methodology to develop verified
+implementations of distributed protocols, demonstrating its effectiveness.
+
+%We
+%demonstrate this by using the methodology to develop verified
+%implementations of distributed protocols with competitive performance.
+
+
+%\item The isolation between the local states at every node.
+
+%\begin{inparaenum}[(i)]
+%\item The existence of a rather simple design of the protocol expressible in a rather limited language,
+%\item The separation between abstract and concrete data structures, and
+%\item The message passing communication model which makes it possible to treat each message handler as executing atomically.
+%%\item The isolation between the local states at every node.
+%\end{inapraenum}
+
+
+%
+%
+%
+% \oded{I just put this here for us, we should write a real
+%abstract} We consider challenging distributed systems, e.g., Raft,
+%Muti-Paxos, Sharded Hash Table. We develop a methodology to
+%strucutre both the systems implementation and its proof such that
+%verification conditions are in decidable logics. We show that this
+%resutls in shorted and more intuitive proofs, as well as predictable
+%automation of VC checks.
+\end{abstract}

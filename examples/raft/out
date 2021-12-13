@@ -1,0 +1,83 @@
+
+Isolate node_term:
+
+    The following properties are assumed as axioms:
+        natural_numbers.ivy: line 20: term.spec.prop217
+        natural_numbers.ivy: term.spec.prop218
+        natural_numbers.ivy: line 22: term.spec.prop219
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 4: term.spec.transitivity
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 5: term.spec.antisymmetry
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 6: term.spec.totality
+
+    The inductive invariant consists of the following conjectures:
+        raft.ivy: line 475: node_term.conj299
+        raft.ivy: line 477: node_term.conj300
+        raft.ivy: line 479: node_term.conj301
+        raft.ivy: line 497: node_term.invar306
+        raft.ivy: line 499: node_term.invar307
+        raft.ivy: line 501: node_term.invar308
+
+    The following action implementations are present:
+        raft.ivy: line 491: implementation of node_term.empty
+        raft.ivy: line 483: implementation of node_term.get
+        raft.ivy: line 485: implementation of node_term.set
+
+    The following action monitors are present:
+        raft.ivy: line 532: monitor of node_term.empty
+        raft.ivy: line 507: monitor of node_term.get
+        raft.ivy: line 504: monitor of node_term.get
+        raft.ivy: line 512: monitor of node_term.set
+
+    The following initializers are present:
+        raft.ivy: line 545: node_term.init_promises.init[after315]
+
+    Initialization must establish the invariant
+        raft.ivy: line 475: node_term.conj299 ... PASS
+        raft.ivy: line 477: node_term.conj300 ... PASS
+        raft.ivy: line 479: node_term.conj301 ... PASS
+        raft.ivy: line 497: node_term.invar306 ... PASS
+        raft.ivy: line 499: node_term.invar307 ... PASS
+        raft.ivy: line 501: node_term.invar308 ... PASS
+
+    Any assertions in initializers must be checked ... PASS
+
+    The following set of external actions must preserve the invariant:
+        raft.ivy: line 532: ext:node_term.empty
+            raft.ivy: line 475: node_term.conj299 ... PASS
+            raft.ivy: line 477: node_term.conj300 ... PASS
+            raft.ivy: line 479: node_term.conj301 ... PASS
+            raft.ivy: line 497: node_term.invar306 ... PASS
+            raft.ivy: line 499: node_term.invar307 ... PASS
+            raft.ivy: line 501: node_term.invar308 ... PASS
+        raft.ivy: line 507: ext:node_term.get
+            raft.ivy: line 475: node_term.conj299 ... PASS
+            raft.ivy: line 477: node_term.conj300 ... PASS
+            raft.ivy: line 479: node_term.conj301 ... PASS
+            raft.ivy: line 497: node_term.invar306 ... PASS
+            raft.ivy: line 499: node_term.invar307 ... PASS
+            raft.ivy: line 501: node_term.invar308 ... PASS
+        raft.ivy: line 512: ext:node_term.set
+            raft.ivy: line 475: node_term.conj299 ... PASS
+            raft.ivy: line 477: node_term.conj300 ... PASS
+            raft.ivy: line 479: node_term.conj301 ... PASS
+            raft.ivy: line 497: node_term.invar306 ... PASS
+            raft.ivy: line 499: node_term.invar307 ... PASS
+            raft.ivy: line 501: node_term.invar308 ... PASS
+
+    The following program assertions are treated as assumptions:
+        in action node_term.get when called from the environment:
+            raft.ivy: line 505: assumption
+
+    The following program assertions are treated as guarantees:
+        in action node_term.empty when called from the environment:
+            raft.ivy: line 538: guarantee ... PASS
+            raft.ivy: line 539: guarantee ... PASS
+            raft.ivy: line 540: guarantee ... PASS
+        in action node_term.set when called from the environment:
+            raft.ivy: line 518: guarantee ... PASS
+            raft.ivy: line 519: guarantee ... PASS
+            raft.ivy: line 520: guarantee ... PASS
+        in action node_term.get when called from the environment,the environment:
+            raft.ivy: line 508: guarantee ... PASS
+
+OK

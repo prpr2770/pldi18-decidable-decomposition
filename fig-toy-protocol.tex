@@ -1,0 +1,44 @@
+\begin{figure}
+\begin{lstlisting}[
+    %frame=single,
+    basicstyle=\scriptsize,%\footnotesize,
+    keepspaces=true,
+    numbers=left,
+    %numbersep=1em,
+    xleftmargin=2em,
+    numberstyle=\tiny,
+    emph={
+      %% assert, assume,
+      %% if, then else,
+      %% while, do,
+      %% sort, relation, function,
+      %% axiom,
+      %% insert,
+    },
+    emphstyle={\bfseries},
+    mathescape=true,
+  ]
+ghost module $\mtoyprotocol$ {
+  relation $\rvoted$ : $\snode,\snode$
+  relation $\risleader$ : $\snode$
+  variable $\rquorum$ : $\snodeset$
+  init $\forall n_1,n_2. \; \neg\rvoted(n_1,n_2)$
+  init $\forall n. \neg\risleader(n)$
+  invariant $\ioneleader$ = $\forall n_1, n_2. \; \risleader(n_1) \land \risleader(n_2) \to n_1 = n_2$
+  invariant $\forall n,n_1,n_2. \; \rvoted(n,n_1) \land \rvoted(n,n_2) \to n_1 = n_2$
+  invariant $\forall n : \snode. \; \risleader(n) \to \big( \mnodeset.\rmajority(\rquorum) \, \land$
+                                     $\forall n':\snode. \; \mnodeset.\rmember(n' , \rquorum) \to \rvoted(n', n)\big)$
+  use $\mnodeset.\iintersect$ $\label{line:protocol:use}$
+  procedure $\pvote(\text{v} : \snode ,\, \text{n} : \snode)$ {
+    requires $\forall n'. \neg\rvoted(\text{v},n')$
+    $\rvoted(\text{v}, \text{n})$ := true
+  }
+  procedure $\pbecomeleader(\text{n} : \snode ,\, \text{s} : \snodeset)$ {
+    requires $\mnodeset.\rmajority(\text{s}) \, \land$ $\forall n':\snode. \; \mnodeset.\rmember(n' , \text{s}) \to \rvoted(n', n)$
+    $\risleader(\text{n})$ := true
+    $\rquorum$ := s
+  }
+}
+\end{lstlisting}
+\caption{\label{fig:toyprotocol}Protocol module for toy leader election.}
+\end{figure}

@@ -1,0 +1,243 @@
+\lstset{ %
+%  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+%  basicstyle=\scriptsize,        % the size of the fonts that are used for the code
+%  basicstyle=\normalsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+%  breaklines=true,                 % sets automatic line breaking
+%  captionpos=b,                    % sets the caption-position to bottom
+%  commentstyle=\color{mygreen},    % comment style
+%  deletekeywords={...},            % if you want to delete keywords from the given language
+%  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+%  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+%  frame=single,	                   % adds a frame around the code
+%  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\bf,       % keyword style
+  language=C,                 % the language of the code
+  otherkeywords={module,ghost,invariant,use,procedure,requires,ensures,system,message,send,handles,type,interpret,as,individual,init,action,returns,assert,assume,instantiate,isolate,mixin,before,relation,function,sort,variable,axiom,then,constant,let,*,local},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny,               % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+%  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+%  showstringspaces=false,          % underline spaces within strings only
+%  showtabs=false,                  % show tabs within strings adding particular underscores
+%  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+%  stringstyle=\color{mymauve},     % string literal style
+  tabsize=8,	                   % sets default tabsize to 2 spaces
+%  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+   columns=fullflexible,
+}
+
+\begin{figure}
+\begin{lstlisting}[
+    frame=single,
+    basicstyle=\scriptsize,%\footnotesize,
+    keepspaces=true,
+    numbers=left,
+    %numbersep=1em,
+    xleftmargin=2em,
+    numberstyle=\tiny,
+    emph={
+      %% assert, assume,
+      %% if, then else,
+      %% while, do,
+      %% sort, relation, function,
+      %% axiom,
+      %% insert,
+    },
+    emphstyle={\bfseries},
+    mathescape=true,
+  ]
+ghost module $\mtoyprotocol$ {
+  relation $\rvoted$ : $\snode,\snode$
+  relation $\risleader$ : $\snode$
+  variable $\rquorum$ : $\snodeset$
+
+  init $\forall n_1,n_2. \; \neg\rvoted(n_1,n_2)$
+  init $\forall n. \neg\risleader(n)$
+
+  invariant $\ioneleader$ = $\forall n_1, n_2. \; \risleader(n_1) \land \risleader(n_2) \to n_1 = n_2$
+  invariant $\forall n,n_1,n_2. \; \rvoted(n,n_1) \land \rvoted(n,n_2) \to n_1 = n_2$
+  invariant $\forall n : \snode. \; \risleader(n) \to \big( \mnodeset.\rmajority(\rquorum) \, \land$ 
+                                     $\forall n':\snode. \; \mnodeset.\rmember(n' , \rquorum) \to \rvoted(n', n)\big)$
+  use $\mnodeset.\iintersect$ $\label{line:protocol:use}$
+
+  procedure $\pvote(\text{v} : \snode ,\, \text{n} : \snode)$ {
+    requires $\forall n'. \neg\rvoted(\text{v},n')$
+    $\rvoted(\text{v}, \text{n})$ := true
+  }
+  procedure $\pbecomeleader(\text{n} : \snode ,\, \text{s} : \snodeset)$ {
+    requires $\mnodeset.\rreachedset(\text{s}) \, \land \mnodeset.\rmajority(\text{s}) \, \land$
+        $\forall n':\snode. \; \mnodeset.\rmember(n' , \text{s}) \to \rvoted(n', n)$
+    $\risleader(\text{n})$ := true
+    $\rquorum$ := s
+  }
+}
+\end{lstlisting}
+\caption{\label{fig:toyprotocol}Protocol module for toy leader election.}
+\end{figure}
+
+%invariant $\forall n : \snode. \; \risleader(n) \to \exists s : \snodeset. \; \mnodeset.\rreachedset(s) \, \land$
+%    $\mnodeset.\rmajority(s) \land \forall n':\snode. \; \mnodeset.\rmember(n' , s) \to \rvoted(n', n)$
+
+\commentout{
+   init $\forall n. \; \neg\ralreadyvoted(n)$
+   init $\forall n. \; \rvoters(n) = \mnodeset.\rempty$
+}
+\begin{figure}
+\begin{lstlisting}[
+    frame=single,
+    basicstyle=\scriptsize,%\footnotesize,
+    keepspaces=true,
+    numbers=left,
+    %numbersep=1em,
+    xleftmargin=2em,
+    numberstyle=\tiny,
+    emph={
+      %% assert, assume,
+      %% if, then else,
+      %% while, do,
+      %% sort, relation, function,
+      %% axiom,
+      %% insert,
+    },
+    emphstyle={\bfseries},
+    mathescape=true,
+  ]
+system module $\mtoysystem$ {
+  message $\msgrequestvote$ : $\snode$  $\label{line:system:msg-def1}$
+  message $\msgvote$ : $\snode, \snode$
+  message $\msgleader$ : $\snode$ $\label{line:system:msg-def3}$
+
+  invariant $\isafe$ = $\forall n_1, n_2. \; \msgleader(n_1) \land \msgleader(n_2) \to n_1 = n_2$
+
+  relation $\ralreadyvoted$ : $\snode$ $\label{line:system-begin-node}$
+  function $\rvoters$ : $\snode \to \snodeset$
+
+  procedure $\pinit(\text{self}:\snode)$ {
+    $\ralreadyvoted(\text{self})$ := false
+    $\rvoters(\text{self})$ := $\mnodeset.\pemptyset()$
+  }
+  procedure $\prequestvote(\text{self}:\snode)$ {
+    send $\msgrequestvote(\text{self})$
+    if $\neg\ralreadyvoted(\text{self})$ {
+      $\ralreadyvoted(\text{self})$ := true
+      $\rvoters(\text{self})$ := $\mnodeset.\padd(\rvoters(\text{self}, \text{self}))$
+      ghost { $\mtoyprotocol.\pvote(\text{self}, \text{self})$ }
+    }
+  }
+  procedure $\pcastvote(\text{self}:\snode ,\, \text{n}:\snode)$ handles $\msgrequestvote(\text{n})$ {
+    if $\neg\ralreadyvoted(\text{self})$ {
+      $\ralreadyvoted(\text{self})$ := true
+      send $\msgvote(\text{self}, \text{n})$
+      ghost { $\mtoyprotocol.\pvote(\text{self}, \text{n})$ }
+    }
+  }
+  procedure $\preceivevote(\text{self}:\snode, \text{n}:\snode)$ handles $\msgvote(\text{n},\text{self})$ {
+    $\rvoters(\text{self})$ := $\mnodeset.\padd(\rvoters(\text{self}), \text{n})$
+    if $\mnodeset.\rmajority(\rvoters(\text{self}))$ {
+      send $\msgleader(\text{self})$
+      ghost { $\mtoyprotocol.\pbecomeleader(\text{self},\rvoters(\text{self}))$ }
+    }
+  } $\label{line:system-end-node}$
+
+  // inductive invariant for the proof:
+  invariant $\forall n_1,n_2. \; \mtoyprotocol.\rvoted(n_1,n_2) \leftrightarrow $
+      $\left((n_1 \neq n_2 \land \msgvote(n_1,n_2)) \lor (n_1 = n_2 \land \msgrequestvote(n_1))\right)$
+  invariant $\forall n_1,n_2. \; \mnodeset.\rmember(n_1,\rvoters(n_2)) \to \mtoyprotocol.\rvoted(n_1,n_2)$
+  invariant $\forall n. \; \msgleader(n) \leftrightarrow \mtoyprotocol.\risleader(n)$
+  invariant $\forall n_1,n_2. \; \neg \ralreadyvoted(n_1) \to \neg \mtoyprotocol.\rvoted(n_1,n_2)$
+  invariant $\forall n. \; \mnodeset.\mnodeset.\rreachedset(\rvoters(n))$
+  use $\mtoyprotocol.\ioneleader$
+}
+\end{lstlisting}
+\caption{\label{fig:toysystem}System module for toy leader election. }
+\end{figure}
+
+\begin{figure}
+\begin{lstlisting}[
+    frame=single,
+    basicstyle=\scriptsize,%\footnotesize,
+    keepspaces=true,
+    numbers=left,
+    %numbersep=1em,
+    xleftmargin=2em,
+    numberstyle=\tiny,
+    emph={
+      %% assert, assume,
+      %% if, then else,
+      %% while, do,
+      %% sort, relation, function,
+      %% axiom,
+      %% insert,
+    },
+    emphstyle={\bfseries},
+    mathescape=true,
+  ]
+module $\mnodeset$ {
+  type t
+  relation $\rmember$ : $\snode,\text{t}$
+  relation $\rmajority$ : t
+  variable $\rallnodeset$ : t
+  ghost relation $\rreachedset$ : t
+  ghost relation $\rreachednode$ : $\snode$
+  ghost function $\risize$ : $\text{t} \to \sint$
+
+  interpret t as array<$\sint$,$\snode$>
+  interpret $\rmember(n,s)$ as $\exists i. 0 \leq i < \rlen(s) \land \rvalue(s,i,n)$
+  interpret $\rmajority(s)$ as $\rlen(s) + \rlen(s) > \rlen(\rallnodeset)$
+
+  invariant $\iintersect$ = $\forall s_1, s_2. \; \rreachedset(s_1) \land \rreachedset(s_2) \, \land$
+      $ \rmajority(s_1) \land \rmajority(s_2) \to \exists n. \; \rmember(n, s_1) \land \rmember(n, s_2)$
+
+  procedure $\pemptyset()$ returns s:t {
+    ensures $\rreachedset(\text{s}) \land \forall n. \; \neg\rmember(n,\text{s})$
+    s := array.empty()
+    ghost { $\rreachedset(\text{s})$ := true }
+  }
+  procedure $\padd(\text{s}_1 : \text{t} ,\, \text{n} : \snode)$ returns $\text{s}_2 : \text{t}$ {
+    requires $\rreachedset(\text{s}_1)$
+    ensures $\rreachedset(\text{s}_2) \land \forall n'. \; \rmember(n', \text{s}_2) \leftrightarrow (\rmember(n', \text{s}_1) \lor n' = n)$
+    if $\rmember(\text{n}, \text{s}_1)$ then { $\text{s}_2$ := $\text{s}_1$ } else {
+      s2 := array.append($\text{s}_1$, n)
+      ghost {
+        $\rreachedset(\text{s}_2)$ := true
+        if $\neg\rreachednode(\text{n})$ {
+          $\rreachednode(\text{n})$ := true
+          $\risize(x)$ := $(\risize(x) + 1)$ if $\rmember(\text{n},x)$ else $\risize(x)$
+        }
+      }
+    }
+  }
+  procedure $\pinit()$ {
+    ghost { $\risize(x)$ := 0; $\rreachedset(x)$ := false; $\rreachednode(x)$ := false }
+    // construct $\rallnodeset$ to be a node set with all nodes
+    $\rallnodeset$ := $\pemptyset()$
+    for $0 \leq i < \rlen(\rallnodes)$ {
+      invariant $0 \leq i \leq \rlen(\rallnodes) \land \forall n,j. \; 0 \leq j < i \, \to $
+                $(\rvalue(\rallnodes, j, n) \to \rvalue(\rallnodeset, j, n))$
+      $\rallnodeset$ := $\padd(\rallnodeset, \text{array.get}(\rallnodes,\text{i}))$
+    }
+  }
+
+  invariant $\rreachedset(\rallnodeset) \land \forall n. \rmember(n,\rallnodeset)$
+  invariant $\forall s. \risize(s) \geq 0$
+  invariant $\forall s. \; (\forall n.\,  \neg\rmember(n,s)) \to \risize(s) = 0$
+  invariant $\forall s_1,s_2. \; (\forall n.\, \rreachednode(n) \to (\rmember(n,s_1) \leftrightarrow \rmember(n,s_2))) \, \to$
+                                                                                                $\risize(s_1) = \risize(s_2)$
+  invariant $\forall s_1,s_2. \big((\forall n. \rmember(n,s_2) \to \rmember(n,s_1)) \,\land$
+            $(\exists n. \rmember(n,s_1) \land \neg \rmember(n,s_2) \land \rreachednode(n)) \, \land$
+            $(\forall n_1,n_2. \rmember(n_1,s_1) \land \neg \rmember(n_1,s_2) \,\land $
+                             $\rmember(n_2,s_1) \land \neg \rmember(n_2,s_2) \to n_1 = n_2)\big) \,\to$
+            $\risize(s_1) = \risize(s_2) + 1$
+  invariant $\forall n,s. \; \rreachedset(s) \land \rmember(n,s) \to \rreachednode(n)$
+  invariant $\forall s. \rreachedset(s) \to \rlen(s) = \risize(s)$
+  invariant $\forall s_1,s_2,s_3. \big((\forall n. \neg (\rmember(n,s_1) \land \rmember(n, s_2))) \,\land$
+            $(\forall n. \rmember(n,s_1) \to \rmember(n,s_3)) \,\land$
+            $(\forall n. \rmember(n,s_2) \to \rmember(n,s_3))\big) \,\to$
+            $\risize(s_1) + \risize(s_2) \leq \risize(s_3)$
+
+}
+\end{lstlisting}
+\caption{\label{fig:nodeset}$\mnodeset$ module for node sets, proving the majority intersection property.}
+\end{figure}

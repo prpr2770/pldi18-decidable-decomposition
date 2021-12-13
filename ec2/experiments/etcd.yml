@@ -1,0 +1,73 @@
+build_directory:
+  etcd-build
+provision: |
+  sudo mkdir -p /mnt/ramdisk
+  sudo mount -t tmpfs -o size=2048M tmpfs /mnt/ramdisk
+  mkdir /mnt/ramdisk/etcd
+  yes | sudo add-apt-repository ppa:avsm/ppa
+  sudo apt-get update -qq
+  sudo apt-get install -qq git g++ make ocaml ocaml-native-compilers camlp4-extra opam m4
+  sudo apt-get install -qq python-setuptools
+  yes | sudo easy_install urllib3
+  # yes | opam init
+  # eval `opam config env`
+  # opam repo add coq-released https://coq.inria.fr/opam/released
+  # opam repo add distributedcomponents-dev http://opam-dev.distributedcomponents.net
+  # yes | opam install -j 1 verdi StructTact verdi-runtime ocamlbuild cheerios cheerios-runtime
+  # # vard
+  git clone -b vard-diskless https://github.com/uwplse/verdi-raft.git
+  # pushd verdi-raft
+  # ./configure
+  # make vard
+  # popd
+  ln -s verdi-raft/extraction/vard-diskless vard
+  # # etcd
+  curl -L https://storage.googleapis.com/etcd/v3.2.10/etcd-v3.2.10-linux-amd64.tar.gz -o etcd-v3.2.10-linux-amd64.tar.gz
+  tar xzf etcd-v3.2.10-linux-amd64.tar.gz
+  mv etcd-v3.2.10-linux-amd64 etcd
+  # # ivyd
+  # mkdir ivyd
+  # pushd ivyd
+  # curl -L http://homes.cs.washington.edu/~jrw12/ivy-raft-eval.tgz -o ivy-raft-eval.tgz
+  # tar xzf ivy-raft-eval.tgz
+  # pushd ivy-raft-eval
+  # make
+  # cp build/server ../ivyd
+  # popd
+  # popd
+vars:
+  service: etcd
+instances:
+  client:
+    type: m4.xlarge
+  db1:
+    type: m4.xlarge
+  db2:
+    type: m4.xlarge
+  db3:
+    type: m4.xlarge
+setup:
+  db1: |
+    etcd/etcd --name=db1 \
+    --listen-client-urls http://$db1:8000 \
+    --advertise-client-urls http://$db1:8000 \
+    --initial-advertise-peer-urls http://$db1:9001 \
+    --listen-peer-urls http://$db1:9001 \
+    --data-dir=/mnt/ramdisk/etcd \
+    --initial-cluster "db1=http://$db1:9001,db2=http://$db2:9001,db3=http://$db3:9001"
+  db2: |
+    etcd/etcd --name=db2 \
+    --listen-client-urls http://$db2:8000 \
+    --advertise-client-urls http://$db2:8000 \
+    --initial-advertise-peer-urls http://$db2:9001 \
+    --listen-peer-urls http://$db2:9001 \
+    --data-dir=/mnt/ramdisk/etcd \
+    --initial-cluster "db1=http://$db1:9001,db2=http://$db2:9001,db3=http://$db3:9001"
+  db3: |
+    etcd/etcd --name=db3 \
+    --listen-client-urls http://$db3:8000 \
+    --advertise-client-urls http://$db3:8000 \
+    --initial-advertise-peer-urls http://$db3:9001 \
+    --listen-peer-urls http://$db3:9001 \
+    --data-dir=/mnt/ramdisk/etcd \
+    --initial-cluster "db1=http://$db1:9001,db2=http://$db2:9001,db3=http://$db3:9001"

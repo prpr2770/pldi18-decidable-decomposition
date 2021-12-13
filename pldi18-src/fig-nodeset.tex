@@ -1,0 +1,62 @@
+\begin{figure}
+\begin{lstlisting}[
+    %frame=single,
+    basicstyle=\scriptsize,%\footnotesize,
+    keepspaces=true,
+    numbers=left,
+    %numbersep=1em,
+    xleftmargin=2em,
+    numberstyle=\tiny,
+    emph={
+      %% assert, assume,
+      %% if, then else,
+      %% while, do,
+      %% sort, relation, function,
+      %% axiom,
+      %% insert,
+    },
+    emphstyle={\bfseries},
+    mathescape=true,
+  ]
+module $\mnodeset$ {
+  type t
+  relation $\rmember$ : $\snode,\text{t}$
+  relation $\rmajority$ : t
+  function $\risize$ : t $ \to \sint$
+
+  interpret t as array<$\sint$,$\snode$> $\label{line:nodeset-t}$
+  interpret $\rmember(n,s)$ as $\exists i. 0 \leq i < \rlen(s) \land \rvalue(s,i,n)$ $\label{line:nodeset-member}$
+  interpret $\rmajority(s)$ as $\risize(s) + \risize(s) > \risize(\rallnodes)$ $\label{line:nodeset-majority}$
+
+  invariant $\iintersect$ = $\forall s_1, s_2. \; \rmajority(s_1) \land \rmajority(s_2) \,\to$
+                            $\exists n. \; \rmember(n, s_1) \land \rmember(n, s_2)$ $\label{line:nodeset-intersect}$
+
+  procedure $\pemptyset()$ returns s:t {
+    ensures $\forall n. \; \neg\rmember(n,\text{s})$
+    s := array.empty()
+  }
+  procedure $\padd(\text{s}_1 : \text{t} ,\, \text{n} : \snode)$ returns $\text{s}_2 : \text{t}$ {
+    ensures $\forall n'. \; \rmember(n', \text{s}_2) \leftrightarrow (\rmember(n', \text{s}_1) \lor n' = n)$
+    if $\rmember(\text{n}, \text{s}_1)$ then { $\text{s}_2$ := $\text{s}_1$ } else { s2 := array.append($\text{s}_1$, n) }
+  }
+  procedure $\pinit()$ {
+    $\risize$ := $\lambda x. 0$;
+    for $0 \leq i < \rlen(\rallnodes)$ {
+      invariant $\forall s_1,s_2. (\forall n. \neg (\rmember(n,s_1) \land \rmember(n, s_2))) \, \to$ $\label{line:nodeset-inv}$
+          $\risize(s_1) + \risize(s_2) \leq \risize(\rallnodes)$
+      $\risize$ := $\lambda x. \big( (\risize(x) + 1)$ if $\rmember(\text{array.get}(\rallnodes,i),x)$ else $\risize(x)\big)$
+    }
+  }
+}
+\end{lstlisting}
+\caption{\label{fig:nodeset}$\mnodeset$ module for node sets, proving the majority intersection property.}
+\end{figure}
+
+\commentout{
+  ghost relation $\rreachedset$ : t
+  interpret t as array<$\sint$,$\snode$> with $\rreachedset$
+  interpret $\rreachedset(s)$ as $\rlen(s) = \risize(s)$
+
+  invariant $0 \leq i \leq \rlen(\rallnodes)$
+
+}

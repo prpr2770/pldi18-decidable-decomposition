@@ -1,0 +1,27 @@
+vars:
+  keys: 500
+  threads: 8
+  howlong: "--time 70"
+experiment:
+  client: |
+    ping -i0.2 -c 10 $db1
+    ping -i0.2 -c 10 $db2
+    ping -i0.2 -c 10 $db3
+    cd build
+    python2 common-bench/bench.py --service $service --keys $keys \
+                                  --cluster "$db1:8000,$db2:8000,$db3:8000" \
+                                  --threads $threads $howlong \
+                                  --tolerate-failover
+  db1: |
+    sleep 6
+    cd build
+    python2 common-bench/kill_local_leader.py --service $service --host $db1 --port 8000 --sleep 30
+  db2: |
+    sleep 6
+    cd build
+    python2 common-bench/kill_local_leader.py --service $service --host $db2 --port 8000 --sleep 30
+  db3: |
+    sleep 6
+    cd build
+    python2 common-bench/kill_local_leader.py --service $service --host $db3 --port 8000 --sleep 30
+    

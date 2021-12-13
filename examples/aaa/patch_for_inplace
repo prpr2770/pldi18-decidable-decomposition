@@ -1,0 +1,467 @@
+--- raft.ivy	2018-02-19 16:17:29.523302719 +0200
++++ raft.ivy.fixed	2018-02-19 16:05:56.266099223 +0200
+@@ -2,6 +2,8 @@
+ 
+ include indexset
+ include udp
++include timeout 
++
+ 
+ module bitvectorprops(t) = {
+     property X:t <= X                        # Reflexivity
+@@ -20,6 +22,8 @@
+ 
+ 
+ type value
++interpret value -> strlit
++
+ 
+ isolate index = {
+     type t
+@@ -97,8 +101,8 @@
+     function valix(H: t, IX: index.t) : value
+ 
+     action clear returns (h: t)
+-    action strip(h: t, ix: index.t) returns (h2:t)
+-    action append(h: t, ix: index.t, logt: term.t, v: value) returns (h2:t)
++    action strip(h: t, ix: index.t) returns (h:t)
++    action append(h: t, ix: index.t, logt: term.t, v: value) returns (h:t)
+     action get_next_ix(h: t) returns (ix: index.t)
+     action get_logt(h: t, ix: index.t) returns (logt: term.t)
+   
+@@ -118,9 +122,9 @@
+         }
+ 
+         after strip {
+-            assert logtix(h2, IX, LOGT) <-> logtix(h, IX, LOGT) & IX <= ix;
+-            assert IX <= ix -> valix(h2, IX) = valix(h, IX);
+-            assert filled(h2, IX) <-> IX <= ix;
++            assert logtix(h, IX, LOGT) <-> logtix(old h, IX, LOGT) & IX <= ix;
++            assert IX <= ix -> valix(h, IX) = valix(old h, IX);
++            assert filled(h, IX) <-> IX <= ix;
+         }
+ 
+         before append {
+@@ -129,11 +133,11 @@
+         }
+ 
+         after append {
+-            assert logtix(h2, IX, LOGT) <-> logtix(h, IX, LOGT) | ix = IX & logt = LOGT;
+-            assert IX < ix -> valix(h2, IX) = valix(h, IX);
+-            assert valix(h2, ix) = v;
+-            assert filled(h2, ix);
+-            assert IX > ix -> ~filled(h2, IX);
++            assert logtix(h, IX, LOGT) <-> logtix(old h, IX, LOGT) | ix = IX & logt = LOGT;
++            assert IX < ix -> valix(h, IX) = valix(old h, IX);
++            assert valix(h, ix) = v;
++            assert filled(h, ix);
++            assert IX > ix -> ~filled(h, IX);
+         }
+ 
+         after get_next_ix {
+@@ -167,13 +171,13 @@
+         }
+         implement strip {
+             var dummy_ent : ent; #Default element is not relevant when resizing down the array
+-            repr(h2) := arrlog.resize(repr(h), index.inc(ix), dummy_ent)
++            repr(h) := arrlog.resize(repr(h), index.inc(ix), dummy_ent)
+         }
+         implement append {
+             var new_ent : ent;
+             ent_logt(new_ent) := logt;
+             ent_value(new_ent) := v;
+-            repr(h2) := arrlog.resize(repr(h), index.inc(ix), new_ent)
++            repr(h) := arrlog.resize(repr(h), index.inc(ix), new_ent)
+         }
+         implement get_next_ix {
+             ix := arrlog.end(repr(h))
+@@ -231,6 +235,9 @@
+ relation appended_reply_msg(T:term.t, N:node, IX: index.t)
+ action send_appended_reply_msg(src:node, t:term.t, n:node, ix: index.t)
+ 
++action send_keepalive(src:nodeord.t, t:term.t)
++action send_nack(src:nodeord.t, t:term.t, ix: index.t)
++
+ instance udp : udp_simple(node, msg)
+ 
+ object net = {
+@@ -241,6 +248,8 @@
+     action handle_rqst_vote_nolog(self:node, t:term.t, cand: node)
+     action handle_appended_reply_msg(self:node, t:term.t, replier:node, ix: index.t)
+     action handle_vote_cand_msg(self:node, cand: node, t:term.t, voter:node)
++    action handle_keepalive(self:node, t:term.t)
++    action handle_nack(self:node, t:term.t, ix: index.t)
+ 
+     object spec = {
+         init ~msg_append(M)
+@@ -346,6 +355,21 @@
+             call broadcast(src, m);
+         }
+ 
++        implement send_keepalive {
++            var m : msg;
++            m_kind(m) := keepalive;
++            m_term(m) := t;
++            call broadcast(src, m);
++        }
++
++        implement send_nack {
++            var m : msg;
++            m_kind(m) := nack;
++            m_term(m) := t;
++            m_ix(m) := ix;
++            call broadcast(src, m);
++        }
++
+         action broadcast(src:node, m:msg) = {
+             var iter := nodeiter.create(0); # will like to change this to be iterator over set
+             while ~iter.is_end
+@@ -373,6 +397,9 @@
+             if m.m_kind = vtcandidate {
+                 call handle_vote_cand_msg(dst, m_cand(m), m_term(m), m_node(m));
+             };
++            if m.m_kind = keepalive {
++                call handle_keepalive(dst, m_term(m))
++            }
+         }
+ 
+         conjecture udp.spec.sent(M, N) & m_kind(M) = appentry -> msg_append(M)
+@@ -385,6 +412,24 @@
+ }
+ isolate inet = net with nodeiter, udp
+ 
++object typeconvert = {
++    action from_nodeid_to_term(n: nodeord.t) returns (t: term.t)
++    object spec = {
++        after from_nodeid_to_term {
++            assert n >= 0 -> t >= 0
++        }
++    }
++    object impl = {
++        implement from_nodeid_to_term {
++            <<<
++                `t` = `n`;
++            >>>
++        }
++    }
++}
++
++trusted isolate itypeconvert = typeconvert
++
+ instance replierslog:array(index.t, nodeset)
+ 
+ object localstate(self: node) = {
+@@ -393,12 +438,18 @@
+ 
+ 
+     # Current term API
++    action increase_term_by_nodeid
+     relation term_bigeq(T:term.t)
+     relation term_bigger(T:term.t) 
+     relation curr_term(T:term.t) # This is the max term already voted
+     action move_to_term(t:term.t)
+     action get_term returns (t:term.t)
+ 
++    # Timeout API
++    action increase_time
++    action delay_leader_election
++    action is_leader_too_quiet returns (res: bool)
++
+     # Is leader API    
+     action become_leader
+     relation is_leader
+@@ -433,6 +484,9 @@
+         after get_term {
+             assert curr_term(t);
+         }
++        after increase_term_by_nodeid {
++            assert old term_bigeq(T) -> term_bigger(T)
++        }
+ 
+         # Is leader contract
+         #
+@@ -530,6 +584,9 @@
+         definition curr_term(T) = term_val = T
+         definition term_bigeq(T) = term_val >= T 
+         definition term_bigger(T) = term_val > T
++        implement increase_term_by_nodeid {
++            term_val := term_val + 1 + typeconvert.from_nodeid_to_term(self);
++        }
+         implement move_to_term {
+             term_val := t;
+             my_voters := nodeset_def.empty;
+@@ -539,6 +596,24 @@
+         implement get_term {
+             t := term_val;
+         }
++
++        # Timeout representation
++        #
++        type time
++        interpret time -> int
++        individual mytime : time
++        individual last_heard_from_leader : time
++        init last_heard_from_leader = mytime
++        implement increase_time {
++            mytime := mytime + 1
++        }
++        implement delay_leader_election {
++            last_heard_from_leader := mytime
++        }
++        implement is_leader_too_quiet {
++            # The leader has not talked for more than one second
++            res := mytime - last_heard_from_leader >= 2
++        }
+    
+ 
+         # Commited index implementation
+@@ -556,7 +631,7 @@
+     }
+ } 
+ 
+-isolate ilocalstate = localstate with term, nodeset_def.spec, nodeset_def.api, index, hist, replierslog, model, net
++isolate ilocalstate = localstate with term, nodeset_def.spec, nodeset_def.api, index, hist, replierslog, model, net, typeconvert
+ 
+ 
+ object safety = {
+@@ -567,17 +642,52 @@
+     }
+ }
+ 
++
++
+ object model = {
++    #raft.get_value(5)
++    action get_value(self: nodeord.t, i: index.t) returns (v: value) = {
++        v := hist.valix(localstate.impl._myhist(self), i)
++    }
++    export get_value
++
++    implement sec.timeout(self: nodeord.t) {
++        if ~localstate.is_leader(self) {
++            call localstate.increase_time(self);
++            if localstate.is_leader_too_quiet(self) {
++                call announce_candidacy(self)
++            }
++        } else {
++            call send_keepalive(self, localstate.get_term(self))
++        }
++    }
++
++    implement net.handle_keepalive {
++        if localstate.get_term(self) < t {
++            call localstate.move_to_term(self, t);
++        };
++        if localstate.get_term(self) = t {
++            call localstate.delay_leader_election(self);
++        }
++    }
++
++    implement net.handle_nack(self:nodeord.t, t:term.t, ix: index.t) {
++        if localstate.get_term(self) = t & localstate.check_leader(self) {
++            var rejected := req_replicate_entry_from_log(self, ix)
++        }
++    }
++
++
++
+     action announce_candidacy(cand: node)
+     implement announce_candidacy {
+-        var chist := localstate.myhist(cand);
+-        var currt := localstate.get_term(cand);
+-        var t := currt.inc;
++        call localstate.increase_term_by_nodeid(cand);
++        var t := localstate.get_term(cand);
+ 
+-        if chist.filled(0) {
++        if localstate.myhist(cand).filled(0) {
+             # Has some history
+-            var ix := chist.get_next_ix.dec;
+-            var logt := chist.get_logt(ix);
++            var ix := localstate.myhist(cand).get_next_ix.dec;
++            var logt := hist.get_logt(localstate.myhist(cand), ix);
+             call send_rqst_vote_msg(cand, cand, logt, ix, t);
+         } else {
+             # Empty history
+@@ -586,11 +696,10 @@
+        
+ 
+         # VOTE FOR ITSELF AUTOMATICALLY
+-        call localstate.move_to_term(cand, t);
+         call send_vote_cand_msg(cand, cand, t, cand);
+         call localstate.add_vote(cand, cand);
++        call localstate.delay_leader_election(cand)
+     }
+-    export announce_candidacy
+ 
+ 
+     #TODO: standard order of params
+@@ -607,11 +716,10 @@
+         var previx : index.t;
+         var prevt : term.t;
+         var t := localstate.get_term(leader);
+-        var lhist := localstate.myhist(leader);
+-        var ix := lhist.get_next_ix;
++        var ix := localstate.myhist(leader).get_next_ix;
+ 
+         if localstate.is_leader(leader) {
+-            localstate.myhist(leader) := lhist.append(ix, t, v);
++            localstate.myhist(leader) := hist.append(localstate.myhist(leader), ix, t, v);
+             call modelproof.update_term_hist_ghost(t, localstate.myhist(leader));
+ 
+             # The leader is considered as appended automatically
+@@ -629,18 +737,17 @@
+         var previx : index.t;
+         var prevt : term.t;
+         var t := localstate.get_term(leader);
+-        var lhist := localstate.myhist(leader);
+-        var v := lhist.valix(ix);
++        var v := hist.valix(localstate.myhist(leader), ix);
+         var previx : index.t;
+         var logt : term.t;
+ 
+-        if localstate.is_leader(leader) & lhist.filled(ix) {
++        if localstate.is_leader(leader) & hist.filled(localstate.myhist(leader), ix) {
+             rejected := false;
+-            logt := lhist.get_logt(ix);
++            logt := hist.get_logt(localstate.myhist(leader), ix);
+ 
+             if ix ~= 0 {
+                 previx := index.dec(ix);
+-                prevt := lhist.get_logt(previx);
++                prevt := hist.get_logt(localstate.myhist(leader), previx);
+             };
+ 
+             # SEND REQUEST
+@@ -671,8 +778,7 @@
+     }
+ 
+     implement net.handle_rqst_vote_nolog {  
+-        var h := localstate.myhist(self);
+-        var ok := ~h.filled(0);
++        var ok := ~hist.filled(localstate.myhist(self), 0);
+ 
+         # Check we haven't voted before in this term
+         ok := ok & ~localstate.term_bigeq(self, t);
+@@ -680,15 +786,16 @@
+         if ok {
+             call send_vote_cand_msg(self, self, t, cand);
+             call localstate.move_to_term(self, t);
+-        }
++        };
++
++        call localstate.delay_leader_election(self)
+     }
+ 
+     implement net.handle_rqst_vote {  
+-        var h := localstate.myhist(self);
+         var ok := true;
+-        if h.filled(0) {
+-            var lastix := h.get_next_ix.dec;
+-            var lastlogt := h.get_logt(lastix);
++        if hist.filled(localstate.myhist(self), 0) {
++            var lastix := hist.get_next_ix(localstate.myhist(self)).dec;
++            var lastlogt := hist.get_logt(localstate.myhist(self), lastix);
+             
+             # Candidate has higher log term or same log term with the grater or equal lenght
+             if lastlogt > logt | (lastlogt = logt & lastix > ix) {
+@@ -703,7 +810,8 @@
+         if ok {
+             call send_vote_cand_msg(self, self, t, cand);
+             call localstate.move_to_term(self, t);  
+-        }
++        };
++        call localstate.delay_leader_election(self)
+     }
+ 
+     implement net.handle_append_entries {
+@@ -712,49 +820,68 @@
+         var logt := m_logt(m);
+         var v := m_val(m);
+         var prevt := m_prevlogt(m);
+-        var h := localstate.myhist(self);
+         var node_term := localstate.get_term(self);
+         var ok := true;
+ 
+         ok := ok & ~localstate.is_leader(self);
+         ok := ok & node_term <= t;
+         if ix ~= 0 {
+-            ok := ok & h.logtix(ix.dec, prevt); 
++            var has_previous := hist.logtix(localstate.impl._myhist(self), ix.dec, prevt); 
++            if ok & ~has_previous {
++                call send_nack(self, t, ix.dec);
++            };
++			ok := ok & has_previous;
+         };
+ 
+         if ok {
+-            if ~h.logtix(ix, logt) {
++            if ~hist.logtix(localstate.myhist(self), ix, logt) {
+                 # Replacing or appending
+                 if ix = 0 {
+-                    h := hist.clear;
++                    localstate.myhist(self) := hist.clear;
+                 } else {
+                     var previx := index.dec(ix);
+-                    h := h.strip(previx);
++                    localstate.myhist(self) := hist.strip(ocalstate.myhist(self), previx);
+                 };
+-                h := h.append(ix, logt, v);
+-                localstate.myhist(self) := h;
+-                call modelproof.set_inited_ghost(h);
+-            };
+-            if h.get_next_ix = ix {
++                localstate.myhist(self) := hist.append(ocalstate.myhist(self), ix, logt, v);
++                call modelproof.set_inited_ghost(localstate.myhist(self));
+                 call send_appended_reply_msg(self, t, self, ix);
+             };
+             call localstate.move_to_term(self, t);
+         };
+         #TODO: remove broadcast
+         #TODO: LIVENESS: make sure this can be replayed
++        call localstate.delay_leader_election(self)
++    }
++
++
++    action commited_at_ix(self:nodeord.t, ix: index.t, v: value)
++    import commited_at_ix
++
++    action report_commits(self:nodeord.t, oldix : index.t, ix: index.t) = {
++        while oldix <= ix {
++            call commited_at_ix(self, oldix, hist.valix(localstate.impl._myhist(self), oldix));
++            oldix := oldix.inc;
++        }
++
+     }
++
+     implement net.handle_appended_reply_msg(self:node, t:term.t, replier:node, ix: index.t) { 
++		var nextreportix : index.t;
+         var ok := true;
+         ok := ok & localstate.is_leader(self);
+         ok := ok & localstate.get_term(self) = t;
+ 
+         # In RAFT we can only commit things which have been stored with logt = t
+-        ok := ok & localstate.myhist(self).logtix(ix, t);
++        ok := ok & hist.logtix(localstate.myhist(self), ix, t);
+ 
+         # Go forward and never backwards
+         if localstate.commited(self, 0) {
+-            ok := ok & localstate.get_last_commited_ix(self) <= ix;
+-        };
++			var oldix := localstate.get_last_commited_ix(self);
++            ok := ok & oldix < ix;
++			nextreportix := oldix.inc;
++        } else {
++            nextreportix := 0;
++	    };
+ 
+ 
+         if ok {
+@@ -766,6 +893,7 @@
+ 
+         if ok {
+             call localstate.set_last_commited_ix(self, ix);
++            call report_commits(self, nextreportix, ix);
+             call modelproof.update_commited_ghost(localstate.myhist(self), ix, t, repliers);
+         }
+     }

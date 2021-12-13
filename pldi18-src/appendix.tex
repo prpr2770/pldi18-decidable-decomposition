@@ -1,0 +1,31 @@
+\appendix
+
+\section{Hoare logic derivation rules}
+
+These are the standard rules of Hoare logic that we apply:
+
+\[\inference{T \models (\phi' \Rightarrow \phi) \wedge (\psi \Rightarrow \psi')\\
+             P \vdash_T \bra{\phi} \sigma \ket{\psi}}
+            {P \vdash_T \bra{\phi'} \sigma \ket{\psi'}}\]
+
+\[\inference{P \vdash \bra{\phi} \sigma \ket{\psi}\\
+             P \vdash \bra{\psi} \sigma' \ket{\rho}}
+            {P \vdash \bra{\phi} (\sigma;\sigma') \ket{\rho}}\]
+
+\[\inference{P \vdash \bra{\phi \wedge p} \sigma \ket{\phi}}
+            {P \vdash \bra{\phi} \mbox{\rm while $p$ $\sigma$} \ket{\phi \wedge \neg p}}\]
+
+\[\inference{P \vdash \bra{\phi \wedge p} \sigma \ket{\psi}\\
+             P \vdash \bra{\phi \wedge \neg p} \sigma' \ket{\psi}}
+            {P \vdash \bra{\phi} \mbox{\rm if $p$ $\sigma$ $\sigma'$} \ket{\psi}}\]
+
+\[\inference{}
+            {P \vdash \bra{\phi\langle t/c\rangle} c \ \Asgn\ t \ket{\phi}}\]
+
+\[\inference{}
+            {P \vdash \bra{\phi} \mbox{skip} \ket{\phi}}\]
+
+The first is the so-called ``rule of consequence''. The remainder, respectively, give the semantics of
+sequential composition, while loops, conditionals, assignments and ``skip''.
+
+

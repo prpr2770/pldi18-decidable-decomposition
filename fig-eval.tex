@@ -1,0 +1,14 @@
+\begin{figure}
+  \begin{footnotesize}
+  \begin{tabular}{lrrrr}
+    \textbf{System} & \textbf{Throughput [req/ms]} & \textbf{Latency [ms]}\\
+    Ivy-Raft        & 13.5       & 1.2 \\
+    Ivy-Multi-Paxos & 8.7       & 1.9 \\
+    \texttt{vard}   & 4.4      & 3.7 \\
+    \texttt{etcd}   & 9.2        & 1.7 \\
+  \end{tabular}
+  \end{footnotesize}
+  \caption{\label{tab:perf}%Throughput and average request latency of gets and puts to the key-value stores.
+  Performance of SMR-based key-value stores.
+  }
+\end{figure}

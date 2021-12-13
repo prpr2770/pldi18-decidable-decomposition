@@ -1,0 +1,778 @@
+%\section{Modular Verification in Decidable Logics}
+
+%\section{A simple language and its axiomatic semantics}
+\section{Modular Proofs} \label{sec:modular}
+
+In this section we describe an illustrative modular reasoning system,
+using a very simple procedural language as a model of \Lang. This
+system is not as rich as the system actually used in the Ivy tool but
+is sufficient to capture the proof strategies we apply here.
+
+% In this section we describe our modular reasoning system, using a very
+% simple procedural language as a model of \Lang. We will point out
+% along the way the correspondence of features of \Lang\ to the model
+% language.
+
+
+\commentout{
+\subsection{Preliminaries}
+
+[TODO: define sorted FO logic here, and the decidable fragment, and so on...]
+
+If $f$ is a partial function, we will write $\Domain(f)$ for its pre-image and
+$\Codomain(f)$ for its image.
+
+Let $\Sigma$ be a vocabulary of non-logical symbols.
+The set of propositions (terms of Boolean sort) over $\Sigma$ is denoted $\Prop$.
+
+A $\Vocab$-theory $T$ is a (generally infinite) set of formulas that,
+intuitively speaking, defines the symbols in vocabulary $\Vocab$. We
+use theories to characterize sorts concretly. For example, a given
+sort might satisfy the theory of linear order, or the theory of
+arithmetic.  In particular:
+
+\begin{definition}
+  A $\Vocab$-theory $T$ is \emph{conservative} if every
+  structure $\sigma$ over $\Vars{T}\setminus \Vocab$ has an extention $\sigma'$ over $\Vars{T}$
+  such that $\sigma' \models T$.
+\end{definition}
+
+We can compose conservative theories to obtain conservative theories:
+
+\begin{theorem}
+  If $T$ is $\Vocab$-theory and $T'$ is $\Vocab'$-theory, where $\Vocab$ and $\Vars{T}$ are
+  disjoint, then $T \cup T'$ is a conservative $(\Vocab\cup\Vocab')$-theory.
+\end{theorem}
+
+That is, definitions can be combined, provided earlier definitions do
+not depend on later definitions.
+}
+
+\commentout{
+\subsection{Program state}
+
+The state of a program corresponds to a first-order structure over a vocabulary $\vocabulary$.
+To specify the state (i.e., the vocabulary), the program contains declarations of sorts (using \keyword{type} declarations), constant symbols (using \keyword{variable} declarations), function symbols (using \keyword{function} declarations) and relation symbols (using \keyword{relation} declarations).
+We denote by $\Prop$ the set of all formulas over $\vocabulary$.
+
+Some of the symbols in the vocabulary are mutable and some are immutable (i.e., cannot be modified by program statements).
+The immutable symbols may be interpreted by a \emph{background theory} $\theory$
+which must be consistent and cannot mention mutable symbols.
+%An example of a theory is arithmetic, which interprets symbols such as $+$.
+
+In our language, background theories are introduced by \keyword{interpret} declarations. For example, the declaration ``interpret $\type$ as int''
+defines the addition and subtraction %and multiplication
+functions over sort $\type$.
+Theory definitions may also be combined, provided earlier definitions do
+not depend on later definitions. For example, the declaration
+``interpet $f(X) = X+1$'' defines function $f$ in a conservative way. We can check statically that the
+union of all these theories is conservative, based on \Cref{thm:conservative-composition}.
+
+In our language, the program variables $\PVars$ are all of the symbols introduced by
+keywords \keyword{variable}, \keyword{relation} and \keyword{function} that are not defined
+by \keyword{interpret}.
+}
+
+\subsection{A Model Language}
+
+Let $\Sigma$ be a vocabulary of non-logical symbols.
+The set of propositions (terms of Boolean sort) over $\Sigma$ is denoted $\Prop$.
+
+\subsubsection{Statements}
+The statements in our model language are defined as follows:
+
+\begin{definition}
+  Let $\Names$ be a set of
+  \emph{procedure names} and $\PVars \subseteq \Sig$ a set of program variables.
+  The
+  {\em program statements} $\Stat$ are defined by the following grammar:
+\begin{eqnarray*}
+  \Stat & ::= & c:\type \ \mbox{:=}\  t:\type \ |\ (\Stat;\Stat)\ |\  \mbox{while $p$ $\Stat$} \\
+               &     & \ | \ \mbox{if $p$ $\Stat$ $\Stat$} \ | \  \mbox{call $n$} \ | \ \mbox{skip}
+\end{eqnarray*}
+where $c$ is in $\PVars$, $t$ a term over $\Sigma$, $\type$ a sort, $p \in \Prop$, and $n \in \Names$.
+\end{definition}
+
+\noindent The mutable program variables $\PVars$ are a subset of $\Sig$.
+The
+statements have the expected semantics.
+\commentout{
+That is, normal interpretation, that is, $c:\type \ \mbox{:=}\  t:\type$
+stands for assignment of a term $t$ of type $\type$ to a variable $c$ of
+type $\type$, $(\sigma;\sigma')$ stands for $\sigma$ followed by
+$\sigma'$, ``while $p$ $\sigma$'' stands for iteration of $\sigma$
+while $p$ holds, ``if $p$ $\sigma$ $\sigma'$'' stands for $\sigma$ if
+$p$ holds otherwise $\sigma'$, ``call $n$'' stands for execution of a
+procedure named $n$, and ``skip'' stands for a terminating statement with no effect.
+}
+For now, program variables $c$ are restricted to logical constants, and can only be assigned
+terms $t$ of first-order types.
+%only first-order program variables $c$ can be assigned, since a term $t$ can only have
+%a first-order type.
+We will relax this restriction in \Cref{sec:extensions}.
+
+\commentout{
+In \Lang, the mutable program variables $\PVars$ are all of the symbols introduced by
+keywords \keyword{variable}, \keyword{relation} and \keyword{function} that are not defined
+by \keyword{interpret}.
+}
+
+\subsubsection{Procedures and Modules}
+The \emph{Hoare triples} $\Hoare$ are denoted
+$\{\phi\}\ \sigma\ \{\psi\}$, where $\phi,\psi \in \Prop$ and $\sigma
+\in \Stat$.  Our notion of procedure definition is captured
+by the following definition:
+
+\begin{definition}
+  A \emph{context} is a partial function from $\Names$ to $\Hoare$. A context is denoted
+  by a comma-separated list of \emph{procedure definitions} of the form $n \Asgn H$, where
+  $n\in \Names$ and $H\in \Hoare$, such that the names $n$ are unique.
+\end{definition}
+
+Intuitively, a context is a collection of procedure definitions with
+corresponding pre/post specifications. In \Lang, the precondition~$\phi$ of a procedure
+is introduced by the \keyword{requires} keyword and the postcondition by \keyword{ensures}.
+
+
+A \emph{module} is a procedural
+program that exports procedure definitions to its environment and has
+a determined set of initial states.
+In the sequel, if $f$ is a partial function, we will write $\Domain(f)$ for its pre-image and
+$\Codomain(f)$ for its image. If $P$ is a context, we will write $\Called(P)$
+for the set of names $n$ such that ``call $n$'' occurs in $P$.
+
+\begin{definition}
+  \label{def:modulesem}
+  A \emph{module} is a tuple $(P,E,I,Q)$, where:
+  \begin{itemize}
+  \item $P$ is a context.
+  \item $E \subseteq \Domain(P)$ is the set of \emph{exports}.
+  \item $I \subseteq \Prop$ is the \emph{initial condition} of the module.
+  \item $\modinvar \subseteq \Prop$ is the \emph{module invariant}.
+  \end{itemize}
+%  The module is said to be \emph{semi-closed} if $\Called(P) \subseteq \Domain(P)$.
+\end{definition}
+
+That is, $P$ gives a set of procedure definitions with pre/post
+specifications, $E$ gives the subset of these definitions that is
+exported to the environment,
+$I$ is a set of predicates that are true in the module's initial state,
+and $\wedge \modinvar$ is an inductive invariant that holds between calls to exported procedures.
+In the sequel, we often use $I$ to denote $\wedge I$ and $\modinvar$ to denote $\wedge \modinvar$.
+% A semi-closed module calls only procedures it defines.
+We will write $P_M$, $E_M$, $I_M$, $\modinvar_M$, respectively, for the components of module $M$.
+In \Lang, a \keyword{module} declaration creates a module, with all procedures exported by default.
+The initial condition $I_M$ is specified  by \keyword{init} declarations.
+(In \Cref{sec:extensions}, we allow a module to define an $\pinit()$ procedure instead of an initial condition.)
+The invariant $\modinvar_M$ is given by the set of \keyword{invariant} declarations in the module.
+
+We define the following operations on modules:
+\begin{definition}
+  Let $M = (P,E,I,\modinvar)$ and $M' = (P',E',I',\modinvar')$ be modules such that
+  $\Domain(P) \cap \Domain(P') = \emptyset$ and $\vocabulary(I) \cap \vocabulary(I') \cap \PVars = \emptyset$.
+  The \emph{composition} of $M'$ and $M$,
+  denoted $M' \Comp M$, is $(P\cup P', E \cup E' , I \cup I',\modinvar\cup\modinvar')$.
+\end{definition}
+
+\begin{definition}
+  For a module $M = (P,E,I,\modinvar)$ and a set $E' \subseteq \Names$, the \emph{restriction} of
+  $M$ to $E'$, denoted $M \Restr E'$, is the module $(P,E \cap E',I,\modinvar)$.
+\end{definition}
+
+
+
+
+\subsection{Axiomatic Semantics} \label{sec:axiom-sem}
+We write $P \vdash_T \{\phi\}
+\sigma \{\psi\}$ to denote the judgment that, \emph{assuming} context
+$P$ and background theory $T$, if $\sigma$ starts at a $T$-model satisfying $\phi$ and terminates in a $T$-model, then this model satisfies $\psi$. In derivation rules, we
+will drop the theory $T$ if it is the same for all judgments.
+
+\commentout{
+We will say a \emph{background theory} $T$ is any conservative
+$(\Sig\setminus\PVars)$-theory such that $\Vars{T}$ is disjoint from $\PVars$.
+That is, a background theory must be consistent and cannot depend on program variables.
+We will write $P \vdash_T \{\phi\}
+\sigma \{\psi\}$ to denote the judgment that, \emph{assuming} context
+$P$ and background theory $T$, if $\sigma$ terminates then it
+terminates in a $T$-model satisfying $\psi$. In derivation rules, we
+will drop the theory $T$ if it is the same for all judgments.
+}
+
+The axiomatic semantics of the statements of  our language is given by the standard rules of Hoare logics:
+
+\begin{small}
+\[\irule{Cons}\inference{T \models (\phi' \Rightarrow \phi) \wedge (\psi \Rightarrow \psi')\\
+             P \vdash_T \bra{\phi} \sigma \ket{\psi}}
+            {P \vdash_T \bra{\phi'} \sigma \ket{\psi'}}\]
+
+\[\irule{Comp}\inference{P \vdash \bra{\phi} \sigma \ket{\psi}\\
+             P \vdash \bra{\psi} \sigma' \ket{\rho}}
+            {P \vdash \bra{\phi} (\sigma;\sigma') \ket{\rho}}\]
+
+\[\irule{While}\inference{P \vdash \bra{\phi \wedge p} \sigma \ket{\phi}}
+            {P \vdash \bra{\phi} \mbox{\rm while $p$ $\sigma$} \ket{\phi \wedge \neg p}}\]
+
+\[\irule{If}\inference{P \vdash \bra{\phi \wedge p} \sigma \ket{\psi}\\
+             P \vdash \bra{\phi \wedge \neg p} \sigma' \ket{\psi}}
+            {P \vdash \bra{\phi} \mbox{\rm if $p$ $\sigma$ $\sigma'$} \ket{\psi}}\]
+
+\[\irule{Assign}\inference{}
+            {P \vdash \bra{\phi\left[ t ~/~ c\right]} c \ \Asgn\ t \ket{\phi}}\]
+
+\[\irule{Skip}\inference{}
+            {P \vdash \bra{\phi} \mbox{skip} \ket{\phi}}\]
+
+\[{\irule{Inline}\inference{ P \vdash \bra{\phi} \sigma \ket{\psi} }
+             { n \Asgn \bra{\phi'} \sigma \ket{\psi'}, P \vdash \bra{\phi\wedge \phi'} \mbox{\rm call $n$} \ket{\psi \wedge \psi'} }
+}\]
+\end{small}
+
+\noindent
+The first is the so-called ``rule of consequence''. The remainder, respectively, give the semantics of
+sequential composition, while loops, conditionals, assignments and ``skip''.
+The last rule is the Inline rule that gives the semantics of non-recursive procedure calls:
+any fact that can be proved about the body of procedure $n$ in a
+given context can be used at a call site of $n$. Notice that we must still satisfy any
+specified pre-condition $\phi'$ and may use the specified post-condition~$\psi'$.
+In effect, this allows us to inline a procedure definition at a call site.
+This is relatively complete for non-recursive programs, which include the examples we treat here.
+
+%
+% Saving this for a future version that handles recursion
+%
+% \subsubsection{Recursive programs}
+% To prove recursive programs, we need a way to strengthen the pre/post
+% specifications so that they become inductive.
+
+% \begin{definition}
+%   Context $P$ is \emph{stronger} than context $P'$, denoted $P
+%   \Rightarrow P'$, if $\Domain(P) \supseteq \Domain(P')$ and, for all
+%   $n\in \Domain(P')$, if $P(n) = \bra{\phi} \sigma \ket{\psi}$ and
+%   $P'(n) = \bra{\phi'} \sigma' \ket{\psi'}$, then $\phi' \models \phi$
+%   and $\sigma = \sigma'$ and $\psi \models \psi'$.
+% \end{definition}
+
+% \TODO{verifying: so the stronger context has weaker specs? (stronger pre but weaker post?)}
+% \ken{fixed, thanks}
+
+% The following derivation rule defines the semantics of recursive programs:
+% \[{\inference{ P \Rightarrow P' \\
+%     {\begin{array}{l}
+%     \mbox{ for $n \Asgn \{ \phi \} \ \sigma\ \{ \psi \}$ in $P$: }\ {P \vdash \{ \phi \} \ \sigma \ \{ \psi \} }   \end{array}} \\
+%     P \vdash \bra{\phi'} \sigma' \ket{\psi'}
+% }
+%             { P' \vdash \bra{\phi'} \sigma' \ket{\psi'} }}\]
+
+% \oded{This is a bit hard to understand, if we keep this, we should add an example}
+% %\oded{I couldn't understand this. Isn't it trivial that if $P \Rightarrow P'$ and $P \vdash \bra{\phi'} \sigma' \ket{\psi'}$ then $P' \vdash \bra{\phi'} \sigma' \ket{\psi'}$? Is it a typo or I'm just misunderstanding?}
+
+% \subsection{Inlining}
+
+% From the recursion rule, we can derive a rule that effectively
+% ``inlines'' a procedure definition at a call site:
+
+% \begin{theorem}
+%   The following inference rule can be derived:
+% \[{\inference{ P \vdash \bra{\phi} \sigma \ket{\psi} }
+%              { n \Asgn \bra{\phi'} \sigma \ket{\psi'}, P \vdash \bra{\phi\wedge \phi'} \mbox{\rm call $n$} \ket{\psi \wedge \psi'} }
+% }\]
+% \end{theorem}
+
+% That is, any fact that can be proved about the body of procedure $n$ in a
+% given context can be used at a call site of $n$.
+
+%To discharge such an assuption, we add the Inline rule, as follows:
+
+We will write $I;P \vdash M$ to represent the judgment
+that, in context $P$, if formulas $I$ hold initially, then module $M$
+maintains its invariant and satisfies its pre/post specifications. It is assumed that the environment only calls $M$'s exported procedures, and otherwise never modifies its program variables. We elide $I$ or $P$ if they are empty sets.
+The axiomatic semantics of modules is given by the following Module rule:
+
+\commentout{
+\[{\inference{ I,I_M \models \modinvar_M\\
+    {\begin{array}{l}
+    \mbox{ for $n \Asgn \{ \phi \} \ \sigma\ \{ \psi \}$ in $P_M$: }\\ \ \ \ \ {\begin{array}{ll} P,P_M \vdash \{ \phi \} \ \sigma \ \{ \psi \} & \mbox{if $n \in \Called(P_M)$} \\ P,P_M \vdash \{ \modinvar_M \wedge \phi \} \  \sigma\  \{ \modinvar_M \wedge \psi \}  & \mbox{if $n \in E_M$} \end{array}}   \end{array}} }
+            { I;P \vdash M }}\]
+}
+
+\begin{small}
+\[\arraycolsep=1.4pt{\irule{Module}\inference{ I,I_M \models \modinvar_M\\
+    %\mbox{for $n \Asgn \{ \phi \} \ \sigma\ \{ \psi \}$ in $P_M$:}\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\\
+    \mbox{for $n \Asgn \{ \phi \} \ \sigma\ \{ \psi \}$ in $P_M$:}\quad\quad\quad\quad\quad\quad\quad\quad\quad\,\,\,\,\\
+    {\quad\begin{small}\begin{array}{ll}
+        P,P_M \vdash \{ \phi \} \ \sigma \ \{ \psi \} & \mbox{if $n \in \Called(P_M)$} \\
+        P,P_M \vdash \{ \modinvar_M \wedge \phi \} \  \sigma\  \{ \modinvar_M \wedge \psi \} & \mbox{if $n \in E_M$}
+  \end{array}\end{small}}}
+  { I;P \vdash M }}\]
+\end{small}
+
+\noindent In this rule, $\modinvar_M$ is an inductive invariant that holds between calls to exported procedures.
+It must hold in the initial states and be preserved by all exported procedures. In addition, internally called procedures must satisfy their specifications \emph{without} assuming the invariant, since the invariant may be violated during execution of the module's procedures.
+%In \Lang, the invariant $\modinvar_M$ is given by the conjunction of the ``invariant'' declarations in the module.
+
+%\subsection{The assume/guarantee rule}
+\subsection{Rules for Decidable Decomposition}
+\label{sec:theory}
+
+The rules defined in \Cref{sec:axiom-sem} provide the full axiomatic semantics.
+In particular, they enable to verify a program which consists of multiple modules, say $M_1,\ldots, M_n$,
+and exports procedures $E$ to its environment, by proving
+$\vdash (M_1 +\ldots + M_n) \Restr E$.
+However, the class of verification conditions generated is undecidable.
+In this section, we provide \emph{derived} inference rules that can be used
+to decompose the proof such that the verification conditions are in a decidable fragment.
+For simplicity, we only present the rules needed for the {\Toy} example.
+Our implementation includes more flexible rules that are similar in spirit.
+\oded{Can we say  in a better way?}
+
+\TODO{From reviews: Q: Mark how novel are the techniques, maybe cite some paper:
+A: The modular proof rules alone are not a contribution of this paper (the rules on section 4 are similar to the ones used in Dafny and VCC). The contribution of this paper is to develop a strategy for using these rules to obtain decidability. To the best of our knowledge this is the first work to exploit modularity in this way.
+}
+
+First, we introduce a rule that allows to verify a procedure call without inlining the procedure's body,
+by using the assumption that the procedure satisfies its pre/post specification at the call site:
+%First, add the Assumption rule, which allows us to use the assumption that a procedure
+%satisfies its specification at a call site:
+
+\begin{theorem}
+The following rule can be derived:
+\begin{small}
+\[\irule{Call}\inference{}
+            {n \Asgn \bra{\phi} \sigma \ket{\psi}, P \vdash \bra{\phi} \mbox{\rm call $n$} \ket{\psi}}
+\]
+\end{small}
+\end{theorem}
+
+The next rules allow to verify the composition of modules by verifying the individual modules.
+We begin by defining some notation.
+
+\begin{definition}
+The \emph{callset} $\CallSet(M,P)$ of module $M$ in context $P$ is the least set of procedures $n$ such that either $n$ is exported from $M$, or $n$ is in $\Domain(P_M \cup P)$ and $n$ is called from $\CallSet(M,P)$.
+\oded{Is the following correct?}
+Formally, $\CallSet(M,P) = \textit{LFP}. \, \lambda X. \, E_M \cup X \cup (called(X) \cap \Domain(P_M \cup P))$.
+The \emph{refset} $\Ref(M,P)$ is
+the subset of $\PVars$ occurring in $\CallSet(M,P)$ or in $I_M$.
+The \emph{modset} $\Mod(M,P)$ is the subset of $\PVars$ \emph{assigned} in~$\CallSet(M,P)$, or occurring in $I_M$.
+%
+Module $M$ is said to \emph{interfere} with module $M'$ in context $P$, denoted $M,P
+\Interf M'$, if $\Mod(M,P) \cap \Vars{\modinvar_{M'}} \neq \emptyset$ or if $\Called(\CallSet(M,P)) \cap \Domain(P_{M'}) \not\subseteq E_{M'}$.
+\end{definition}
+
+\oded{It took me while to realize that $\CallSet(M,P)$ is used when not all procedures called from $M$ are in $P_M \cup P$.
+This is actually important, so maybe we should clarify that somehow}
+
+In other words, $M$ interferes with $M'$ if it either modifies a
+variable occurring in the invariant of $M'$, or if it calls an internal procedure of
+$M'$. Module $M$ can interfere with $M'$ directly, or by calling
+procedures defined in the context $P$.
+
+To export an invariant from one module to another, we introduce two
+notations.  If $M$ is a module and $\Gamma$ is a set of formulas, we
+say $\PostAssume{M}{\Gamma}$ is the module that results from
+conjoining $\wedge \Gamma$ to the postcondition of every exported procedure of $M$.
+On the other hand, $\PreAssume{M}{\Gamma}$ results from conjoining $\wedge \Gamma$ to
+the precondition of every exported procedure of $M$.
+\oded{Another point: this gets a little weird in case the module calls its own exported procedure. I think it's still sound, but for me things make more sense if we just say a module cannot internally call its exported procedures.}
+\ken{It's sound, though not exactly what Ivy does. I would leave it as is.}
+% \begin{definition}
+%   If $P$ is a context, the \emph{abstraction} of $P$, denoted $\Abs{P}$ is the set of procedure definitions
+%   $n \Asgn \{\phi\} \mbox{havoc $\Vars{P}$} \{\psi\}$ for each $n \Asgn \{\phi\} \sigma \{\psi\}$ in $P$.
+% \end{definition}
+
+% That is, we abstract a set of procedure definitions by replacing each
+% procedure body with a nondeterministic assignment to all modified
+% variables.
+
+% For simplicity, we will restrict our attention to
+% \emph{layered }compositions. This is a composition $M \Comp M'$ in
+% which $M$ is semi-closed, $M'$ does not interfere with $M$, and the
+% composition $M \Comp M'$ is itself semi-closed (that is, all external
+% calls of $M'$ are satisfied by $M$). We can think of this as the case
+% when service $M'$ is layered on top of service $M$.
+
+Now we can derive a compositional rule that allows us to verify a
+service $M'$ layered on a service $M$, while \emph{assuming} the
+invariants and pre/post specifications of $M$.
+
+\begin{theorem}
+The following rule can be derived:
+\begin{small}
+\[\irule{Layer}\inference{ I;P \vdash M  \\
+              I,\Theta;\ P, P_{\PostAssume{M}{\Gamma}} \vdash \PreAssume{M'}{\Gamma}}
+            { I;P \vdash (M \Comp M') \Restr E }
+            {\begin{array}{l}
+              M' \Restr E,P \not \Interf M\\
+              M\Restr E,P \not \Interf M'\\
+              \Gamma \subseteq \modinvar_M\\
+              \Theta \subseteq I_M
+            \end{array}}
+ \]
+\end{small}
+\end{theorem}
+
+% \oded{This rule is really beautiful, and I think it gets everything we wanted.
+% It also maintains the intuition of the overview that each module is verified separately.
+% However, there is still a correctness issue with initialization. When we verify the toy system module,
+% we must also use the initial condition of the toy protocol module. Without it, the invariant is not implied by init.
+% I thought of two ways to solve this (none is very nice):
+% 1) in the second premise of the Layer rule, require
+% $P, P_{\PostAssume{M}{\Gamma}} \vdash \PreAssume{(P_{M'},E_{M'},I_{M} \land I_{M'},\modinvar_{M'}}{\Gamma}$.
+% 2) Change the $\vdash$ that talks about modules to be $I ; P \vdash M$ meaning that module $M$ satisfies its specification
+% in context $P$ and if starting in a state satisfying $I$.
+% Then change the first premise of the Module rule to be $I \land I_M \models \modinvar_M$,
+% and the second premise of the Layer rule to be $(I \land I_M) ;  P \cup P_{\PostAssume{M}{\Gamma}} \vdash \PreAssume{M'}{\Gamma}$.}
+%% \ken{
+%% I decided to add initial assumptions
+%% on the left of turnstyle (and give modules sets of initial conditions. The rule is set up so we can use a subset of the initial conditions of $M_1$, which we need in the case $M$ is a composition (as in \Toy).
+%% }
+
+Ignore for the moment the expressions in square brackets. The rule states that,
+to verify $M'$ layered on $M$, we first verify $M$,
+then verify $M'$ assuming the proved specifications of the
+exported procedures of $M$. Intuitively, this works because external calls
+to one module cannot invalidate the invariant of the other. Note the asymmetry, however.
+Module $M$ must be proved in context $P$, which means that it
+contains no calls to procedures outside of $P$, and in particular, no call-backs
+into $M'$. At a call-back, the invariant of $M'$ would not hold, violating the
+precondition under which $M'$ is verified. Technically, this rule can be derived by
+annotating every statement of $M'$ with the invariants of $M$. The rule also allows us to
+use initial conditions of $M$.
+
+The bracketed expressions allow us to assume the proved invariants of
+$M$ when proving $M'$.  We do this by assuming these invariants on entry
+to every exported procedure of $M'$ and on exit of every exported
+procedure of~$M$.
+
+
+% This simple rule is
+% very restrictive, since it requires hiding all of the exports of $M$.
+% We can extend it to allow exporting procedures from $M$ as well,
+% under the condition that they preserve the
+% invariant of $M'$.
+
+% When proving the second premise of this rule, we have two options. We
+% can apply the Assumption rule at the procedure calls of $M'$, and thus use
+% \emph{only} the specifications of $M'$.  Or, we can apply the Inline
+% rule, in which case we use both the proved specifications and the
+% procedure body.  Both of these options are useful.
+% In \Toy\, we applied the first
+% approach to the abstract data type for sets, and the second approach to
+% the abstract protocol model. This allowed us to write an invariant relating the states
+% of the two models.
+% \commentout{
+%   In both cases, a non-modular proof would
+% have resulted in non-stratified VC's, but by decomposing the problem,
+% we obtained VC's in the decidable fragment.
+% }
+
+% The Layer rule gives us no direct access to invariants
+% that may have been proved about the lower module $M$. If an invariant
+% $\phi$ of $M$ is needed, we can add an empty procedure to $M$ with
+% post-condition~$\phi$ and call it where needed in $M'$. In \Lang\, the ``use'' keyword indicates an invariant of another module
+% that should be used in this way. The given invariant of the sub-module
+% will be used at entry to every exported procedure, and after every
+% call to a procedure of the sub-module.
+
+% \commentout{
+% % oded: tried to shorten but abandoned it
+% The Layer rule gives us no direct access to invariants
+% that may have been proved about the lower module $M$.
+% To use an invariant $\phi$ of $M$ in $M'$,
+% we can add an empty procedure to $M$ with post-condition~$\phi$ and call it where needed in $M'$.
+% In \Lang\, the ``use'' keyword indicates an invariant of another module that should be used in this way.
+% }
+
+
+% To export an invariant from one module to another, we introduce two
+% operators.  If $M$ is a module and $\Gamma$ is a set of formulas, we
+% say $M_{\overrightarrow{\Gamma}}$ is the module that results from
+% assuming $\wedge \Gamma$ at the end of every exported action of $M$
+% and removing $\Gamma$ from its invariant. On the other hand
+% $M_{\overleftarrow{\Gamma}}$ results from assuming $\wedge \Gamma$ at
+% the \emph{beginning} of every exported action of $M$.
+
+% \begin{theorem}
+% The following rule \emph{InvarExp} can be derived:
+% \[\inference{ P \vdash M  \\
+%               P \vdash (M_{\overrightarrow{\modinvar_M}} + M'_{\overleftarrow{\modinvar_M}}) \Restr E_{M'} }
+%             { P \vdash (M \Comp M') \Restr E_{M'} } {M',P \not \Interf M} \]
+% \end{theorem}
+
+% That is, if we can prove the invariants of $M$ in isolation, we can
+% use these invariants in proving the composition of $M$ and $M'$,
+% provided $M'$ does not interfere with $M$.  We do this by assuming the
+% invariants on entry to every exported procedure of $M'$ and on exit of
+% every exported procedure of~$M$.
+
+\subsection{Ghost Modules and Slicing}
+
+
+\begin{definition}
+  If $P$ is a context, the \emph{slice} of $P$, denoted $\Slice{P}$ is the set of procedure definitions
+  which contains $n \Asgn \{\true\} \mbox{skip} \{\true\}$ for each $n \Asgn \{\phi\} \sigma \{\psi\}$ in $P$.
+  If $M$ is a module, $\Slice{M}$ denotes $(\Slice{P_M},E_M,\emptyset,\emptyset)$.
+\end{definition}
+
+The following derived rule can be used to slice out a ``ghost'' module
+that is used only for the purpose of the proof. We say a module $M$ is \emph{invisible} to
+$M'$ in context $P$, denoted $M,P \not \hookrightarrow M'$, if $M,P\not\Interf M'$ and $\Mod(M,P) \cap \Ref(M',P) = \emptyset$ and $I_M$ is $\PVars$-conservative (\cref{def:conservative}) and every exported procedure of $M'$ terminates in context $P$,
+starting in all states satisfying its precondition.
+
+\begin{theorem}
+The following rule can be derived:
+\begin{small}
+\[{\irule{Slice}\inference{ P \vdash (M \Comp M') \Restr E_{M'} }
+            { P \vdash (\Slice{M} \Comp M') \Restr E_{M'} }} {M,P \not \hookrightarrow M'} \]
+\end{small}
+\end{theorem}
+
+% \oded{Now that our definition of interference only requires that you do not interfere with the invariant,
+% I am not sure that this is sound. I think here we need the stronger non-interference, i.e., also mention the refset,
+% and maybe the refset must also be defined to recur on procedure calls. For example, suppost the ghost module provides a
+% symbol $p$ and a procedure $f$ that sets $p$ to false. Then, some procedure of $M'$ does \texttt{call f; if p then do something bad}. In this case, $(M+M')$ is correct, but you cannot slice $M$ and replace $f$ with skip. Note that the \texttt{if p ...} can
+% also be inside some called procedure, so I think the refset should recur on calls.}
+% \ken{Replaced ``interference'' with ``visiblity''.}
+
+To prove termination for the examples presented here, it suffices to verify that there is no recursion
+and that $P_M$ contains no ``while'' statements (Ivy supports proof of termination using a ranking).
+We must also show that every model of the theory
+has an extension to the program variables satisfying~$I_M$. In practice we must prove this using
+Theorem~\ref{thm:defcompose}, which means that $I_M$ must be a conjunction of a sequence of definitions.
+
+The invisible module $M$ can be used like a lemma in the proof of
+$M'$. That is, we make use of its properties and then discard
+it, as we did with the abstract protocol model in \Toy.
+
+\commentout {
+In \Toy, we first created an
+abstract interleaving model of the protocol as a ghost module
+$M$, in which each abstract protocol action corresponds to an exported
+procedure of $M$.  We then instrumented the protocol implementation
+module $M'$ with calls to $M$ at moments that correspond to the
+``commit points'' of the abstract actions. We use the postconditions
+of $M$ to help prove correctness of $M'$ (with the \Layer\ rule) then sliced away
+$M$ (with the Slice rule). We found that the separate proofs by
+inductive invariant of $M$ and $M'$ can each be accomplished within
+the decidable fragment, while the combination of the two invariants
+is outside the fragment.
+}
+
+\subsection{Theory Abstractions}
+
+\commentout{
+Modularity is useful for simplifying the proof of a complex
+system. Here, though, we are interested in using modularity to
+separate theories whose combination would be undecidable. In \Toy, if
+we combined the three modules into one large module, the verification
+conditions would be outside the decidable fragment.  This can occur
+for multiple reasons. Two modules separately may be stratified, but in
+combination have a function cycle. Or perhaps one module can be
+verified with EUF and another with Presburger arithmetic, while the
+combination of these theories is undecidable.
+}
+
+To allow us to abstract theories, we add one derived rule Theory to our system:
+
+\begin{theorem}
+The following rule can be derived:
+\begin{small}
+\[{\irule{Theory}\inference{ T,T' \models T'' \\ P \vdash_{T \cup T''} \bra{\phi} \sigma \bra{\psi}}
+            {P \vdash_{T \cup T'} \bra{\phi} \sigma \bra{\psi}}}
+ \]
+\end{small}
+\end{theorem}
+
+In other words, what can be proved in a weaker theory can be proved in
+a stronger theory.  This allows us, for example, to replace the theory
+of arithmetic with the theory of linear order, or to drop function
+definitions that are not needed in a given module. In \Toy, for example, we dropped
+the theory LIA and the definition of $\mnodeset.\rmajority$ when verifying the
+abstract model and the implementation, but used them when verifying the $\mnodeset$ module.
+
+\commentout{
+Notice that the first premise of this rule is a
+verification condition that must fall into a decidable fragment. For
+example, suppose the $T'$ is QFLIA and $T''$ is the axioms of total
+order. The resulting VC is still in QFLIA because negating and
+skoleming the order axioms eliminates the quantifiers.
+}
+
+\subsection{Language Extensions}
+\label{sec:extensions}
+
+In this section we introduce some useful extensions to the basic
+language which, while straightforward, cannot be detailed here due to
+space considerations.
+
+Though we have modeled procedure calls as having no parameters, it is
+straightforward to extend the language to include call-by-value with
+return parameters. In the following we assume such an extension.
+
+We allow assignments of the form $f \Asgn \lambda x.\ e$, where $f$ is
+function, since the resulting verification conditions can still be
+expressed in first order logic~\cite{Ivy}. In the compiled code, the
+resulting value of $f$ is a function closure.  The assignment $f(a)
+\Asgn e$ is a shorthand for $f \Asgn \lambda x.\ \mbox{if $x=a$ then
+  $e$ else $f(x)$}$.
+
+We provide built-in theories for integers and bit vectors (both with the usual arithmetic operators). In Ivy, these theories are provided natively
+by Z3. Finite immutable
+arrays are provided as an abstract data type, with functions provided for length and select,
+and axiomatically specified procedures for update and element append. For each finite sort $\type$ (such as $\snode$ in \Toy) the
+language provides an array constant $\type.\rall$ that contains
+all elements of sort $\type$. We used this feature to define the
+notion of a majority of nodes in \Toy.
+%\sharon{can we explain that our built-in theories are
+%  encoded/embedded if FAU?} \TODO{check this} \ken{The built-in
+%  theories are built in to Z3. The VC's are in FAU.}  \oded{We meant
+%  to say that our array theory is encoded in FAU, we also have a
+%  reference to this section claiming we explain it here. Do we use
+%  Z3's array theory? Is it OK to say that we encode arrays in FAU?
+%  what should we say?}\ken{I tried to say something a little more accurate here.}
+
+%\oded{I think we should remove this or move to somewhere else:
+A module $M$ may have a special initialization procedure
+$M.\pinit()$ that is called by the environment before any
+exports. In this case, the Module rule is modified to require that this procedure establishes the module invariant with no
+precondition (as it does, for example, in the $\mnodeset$ module).
+%}\ken{If not in language extensions, then where?}
+%\oded{now it's presented as a way to give the initial condition upfront (without going into full detail, that the initial condition is the strongest postcondition of this procedure). It's mentioned both in the overview, and after \Cref{def:modulesem}.}
+%\sharon{I am in favor of keeping it (and maybe add forward reference to here after definition 4.3) -- it is more flexible than having to "derive" the postcondition to define init in the sense that this procedure may have loops and its strongest postcondition may not be first-order expressible, etc.}
+
+\subsection{Modeling Network Communication}
+
+For simplicity, we will introduce only a model of a broadcast datagram
+service, as used in \Toy. Other services can be modeled similarly. For
+each sort $\Msg$ of mesages transmitted on the network, we introduce an
+abstract relation $\Sent(m:\Msg)$ to represent the fact that message
+$m$ has been broadcast in the past.  We add to the language a
+primitive ``send $m:\Msg$'' whose semantics is defined by the
+following rule:
+\begin{small}
+\[{\irule{Send}\inference{ P \vdash \bra{\phi} \Sent(m:\Msg) \Asgn \mbox{true} \ket{\psi} }
+            { P \vdash \bra{\phi} \mbox{send $m:\Msg$} \ket{\psi} }}
+ \]
+\end{small}
+
+That is, the effect of ``send $m$'' is to add message $m$ to the set
+of broadcast messages of sort $\Msg$. A module using network services
+for sort $\Msg$ exports a procedure ``$\Recv{\Msg}$'' that is called
+by the network. This procedure takes two parameters: $p:\Pid$ to
+represent the receiving process id and $m:\Msg$ to represent the
+received message.  We use $\vdash^\Msgs M$, where $\Msgs$ is a
+collection of message sorts, to represent the judgment that $M$
+satisfies its specifications when composed with a network that handles
+messages of sorts in $\Msgs$.
+%This judgment can be derived by the following rule:
+The semantics of this judgment is defined by the following rule:
+\begin{small}
+\[{\irule{Network}\inference{ \Sent(m:\Msg) \models_T \phi \\ \vdash_T^{\Msgs} M}
+             { \vdash_T^{\Msgs,\Msg} M \Restr (E_M \setminus \Recv{\Msg}) }}
+{
+  \begin{small}
+  \begin{array}{l}
+    \Recv{\Msg} \in E_M \\
+%    P_M(\Recv{\Msg}) = \bra{\phi} \sigma \ket{\psi}
+    P_M(\Recv{\Msg}) = \{ \phi \} \sigma \{ \psi \}
+  \end{array}
+  \end{small}
+}
+ \]
+\end{small}
+
+ \begin{sloppypar}
+In other words, we can assume that the system calls $\mbox{recv}(p,m)$ only
+ with messages $m$ that have already been broadcast.  This
+ yields a very weak network semantics, allowing messages to be
+ dropped, reordered and duplicated. In \Lang, we used the keyword \keyword{handles} to indicate
+which procedures are used to handle received messages of a given sort. The keyword \keyword{system} indicates
+a top-level module, to which the above rule should be applied.
+\end{sloppypar}
+
+\subsection{Proof of \Toy}
+
+To illustrate the inference rules, we explain how to prove {\Toy} by chaining them.
+%To prove \Toy, Ivy chains together the inference rules as follows.
+Let $M^1,M^2,M^3$ be, respectively, the modules \mnodeset, \mtoyprotocol\ and \mtoysystem.
+First, we prove $\vdash_T M^1$ where theory $T$ consists of
+the integer arithmetic and array theories, and the definitions of the
+$\rmajority$ and $\rmember$ relations. Next we prove $P_{\PostAssume{M^1}{\Gamma}} \vdash \PreAssume{M^2}{\Gamma}$ (using the Module and Call rules). Here, $\Gamma$ is the majority intersection invariant of \mnodeset. Notice we do not use theory $T$, to preserve decidability. We then add theory $T$ using the
+Theory rule, and combine with the above using the Layer rule, to obtain $\vdash_T M^1 + M^2$. Then we prove:
+\[ I_{M^2};P_{\PostAssume{(M^1+M^2)}{\Gamma'}} \vdash \PreAssume{M^3}{\Gamma'} \]
+Here $\Gamma'$ is the invariant of \mtoyprotocol\ used by \mtoysystem. By separating
+the proof of this invariant, we avoided a function cycle.
+In this proof, we inline the procedures of the abstract model $M_2$ and use the Send rule to capture
+the semantics of message sending. Again using the Theory and Layer rules, we obtain
+$\vdash_T (M_1 + M_2 + M_3) \Restr E_{M^3}$. We use the Slice rule to remove the ghost module,
+obtaining $\vdash_T (M_1 + \Slice{M_2} + M_3) \Restr E_{M^3}$.
+Finally, the network rule hides the message handlers, giving the conclusion:
+\[\vdash^{\Msgs}_T (M^1 + \Slice{M^2} + M^3) \Restr \left\{ \prequestvote \right\}.\]
+This leaves $\prequestvote$ as the only exported procedure, which is
+called in responce to a client request to initiate the protocol. The
+result is a verified equivalent to the code of \Cref{fig:toy-c}.
+%
+Note that these steps are not written explicity, and are inferred
+from \keyword{uses}, \keyword{open}, \keyword{ghost}, and \keyword{system}
+directives.
+%
+%% Note we don't write these steps explicity. Rather, the tool infers
+%% them based the \keyword{uses}, \keyword{open}, \keyword{ghost}, and \keyword{system}
+%% directives in code.
+
+
+\subsection{Concurrency and Parametricity}
+
+Thus far, we have considered a purely sequential program that presents
+exported procedures to be called by its environment and assumes that
+each call terminates before the next call begins.  This semantics is
+implicit in Definition~\ref{def:modulesem} and the Module rule. In
+reality, calls with different values of the process id parameter $p$
+will be executed concurrently. We need to be able to infer that every
+concurrent execution is sequentially consistent, that is, it is
+equivalent to some sequential execution when only the local histories
+of actions are observed. To do this, we use Lipton's theory of
+left-movers and right-movers~\cite{Lipton}
+%in much the same way as is done in the IronFleet project~\cite{IronFleet}
+(similarly to, e.g., IronFleet~\cite{IronFleet}).
+Since this argument does not relate directly to the use of decidable theories, we only
+sketch it here.
+
+First, we need to show that any two statements executed by two
+different processes, excepting ``send'' statements, are independent.
+To do this, we require that every exported procedure have a first
+parameter $p:\Pid$ (representing the process id). We verify statically
+that every program variable reference (after slicing the ghost
+modules) is of the form $f(p,\ldots)$ where $p$ is the process id
+parameter. Another way to say this is that all statements except send
+statements are ``both-movers'' in Lipton's terminology. Moreover, by
+construction, every call from the environment consists of an optional
+message receive operation, followed by a combination of both-movers
+and sends. Since receive is a right-mover and send is a left-mover, it
+follows that every call can be compressed to an atomic operation, thus
+the system is sequentially consistent by construction.
+
+When we compile a module to executable code, we take the parameter $p$
+as a fixed value given at initialization of the process. We use this
+constant value to partially evaluate all program variable references,
+thus allowing the compiled code to store the only the state of one
+process.
+
+\subsection{Verification Conditions}
+
+We use the inference rules above to generate verification conditions
+(VC's) in the usual manner, as in tools such as ESC Java~\cite{ESC}
+and Dafny~\cite{Dafny}. These are validity checks that result from the
+side conditions of the Module, Network, and Theory rules, and the
+standard rule of consequence. The verifier checks that each VC is in
+one of our decidable fragments (taking into account any built-in
+theories used) and issues a warning if it is not. The warning may
+exhibit, for example, a bad cycle in the quantifer alternation
+graph. In case a VC is determined to be invalid by the Z3 prover, the
+counter-model produced by Z3 is used to create a program execution
+trace that demonstrates the failure of the VC.
+
+%\newpage
+%\bibliographystyle{plain}
+%\bibliography{bib}
+%\end{document}

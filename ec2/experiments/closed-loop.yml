@@ -1,0 +1,10 @@
+experiment:
+  client: |
+    sleep 5
+    ping -i0.2 -c 20 $db1
+    ping -i0.2 -c 20 $db2
+    ping -i0.2 -c 20 $db3
+    cd build
+    python2 common-bench/bench.py --service $service --keys $keys \
+                                  --cluster "$db1:8000,$db2:8000,$db3:8000" \
+                                  --threads $threads $howlong

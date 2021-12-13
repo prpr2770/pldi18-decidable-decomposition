@@ -1,0 +1,15 @@
+
+$ python experiment.py -f experiments/ivyd-raft.yml -f experiments/closed-loop.yml marcelo
+experiment_logs/marcelo-2018-04-10-101902/experiment-client.log
+    Total time: 1.204109
+    Throughput: 8345.590298 reqs/s
+    4963.000000 gets, avg = 0.005842
+    5086.000000 puts, avg = 0.005858
+
+$ python experiment.py -f experiments/ivyd-raft.yml -f experiments/closed-loop-100k.yml marcelo
+experiment_logs/marcelo-2018-04-10-102833/experiment-client.log
+    Total time: 8.560745
+    Throughput: 11686.950142 reqs/s
+    50045.000000 gets, avg = 0.004261
+    50004.000000 puts, avg = 0.004263
+

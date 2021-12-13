@@ -1,0 +1,178 @@
+\section{Introduction}
+
+
+%% Motivation
+Distributed protocols play an essential role in important emerging technologies such as blockchains and autonomous vehicles.
+%in these technologies.
+Testing such systems is not always effective, and the cost of failures can be large.
+This is well-recognized, e.g., in the ISO 26262 Functional Safety Standard \cite{ISO26262}.
+Therefore, the systems community is increasingly receptive to formal methods \cite{Verdi,IronFleet,DBLP:conf/sosp/ChenZCCKZ15,DBLP:conf/sosp/NelsonSZJBTW17,DBLP:conf/sosp/ChenCKWICKZ17,DBLP:conf/sosp/FerraiuoloBHP17}.
+However, existing verification techniques are difficult to apply
+and require a large proof engineering effort. For example, the Verdi proof of the Raft protocol~\cite{raft} includes 50000 lines of proof for 530 lines of
+implementation~\cite{VerdiCPP}, which required several person-years.
+
+%SMT and their limitation.
+Automated provers, such as the Z3 SMT solver~\cite{Z3} are capable of
+greatly reducing the verification effort, as seen, e.g., in the
+IronFleet project~\cite{IronFleet}.  By annotating the program with
+invariants, the programmer reduces the proof to lemmas called
+\emph{verification conditions} that can be discharged by the automated
+prover.  In case these lemmas fail, the prover can sometimes produce
+counterexamples that explain the failure and allow the
+programmer to correct the annotations.
+
+Unfortunately, the behavior of provers can be quite unpredictable,
+especially when applied to formulas with quantifiers, which are common
+when verifying distributed protocols. Since the problem presented to
+the prover is in general undecidable, it is no surprise that the
+prover sometimes diverges or produces inconclusive results on small
+instances, or suffers from the ``butterfly effect'', when a seemly
+irrelevant change in the input causes the prover to fail. As observed
+in the IronFleet project, SMT solvers can fail even on tiny
+examples. When this happens, the user has little information with
+which to decide how to proceed.  This was identified in IronFleet as
+the main hurdle in the verification task.
+
+\paragraph{Decidable Reasoning} %Decidable Verification
+
+We address this problem here by showing how to verify the safety of realistic
+implementations of distributed systems using only \emph{decidable} verification
+conditions. This is accomplished in part by an appropriate choice of
+language to express the program, as in previous work~\cite{Ivy, dragoi_psync:_2016}, but also by using
+modular reasoning techniques to structure the correctness proof such that
+difference components can be proved using decidable fragments of first-order logic with various background theories.
+%We will refer to this approach as \emph{theory segregation}\gl{segregation has negative connotation}.
+We will refer to this approach as \emph{decidable decomposition}.
+%\gl{segregation has negative connotation}.
+
+\commentout{
+separate the correctness proof into components
+that can be proved using decidable fragments of first-order logic with
+various background theories.
+%We will refer to this approach as \emph{theory segregation}\gl{segregation has negative connotation}.
+}
+
+Because our prover is a decision procedure
+for the logical fragments we use, we can guarantee that in principle
+it will always terminate with a proof or a counter-model. In
+practice, decidability means that the behavior of the prover is much
+more predictable~\cite{oopsla17-epr}.
+%We will observe that the additional
+%human effort needed to achieve this result is modest, and that we
+%can develop and verify realistic implementations of distributed
+We observe in our evaluation that the
+human effort needed to achieve %theory segregation
+decidable decomposition is modest, and that we
+can develop and verify realistic implementations of distributed
+protocols without relying on the automated prover to solve undecidable
+problems.
+
+A key aspect of our methodology is the separation between the abstract
+model and its\sharon{ removed "concurrent"} implementation using concrete data
+structures. We prove system-level properties of the protocol using the
+abstract model and use these properties as a lemma in proving the
+implementation. This is important for obtaining stratification in the use of quantifiers.
+In addition, we use abstract datatypes to hide the
+theory needed to implement a data structure behind a set of abstract
+properties. The resulting %theory segregation
+decidable decomposition allows us to prove each
+module locally with decidable logics, even though a global proof would take us
+outside the decidable range.
+
+
+\commentout{
+This paper shows how to simplify the verification of realistic distributed systems using decidable logic.
+The main idea is that the verification system enforces conditions on the program and the specification which guarantee that
+the generated verification conditions are expressible in a decidable logic, i.e., there exists a terminating algorithm
+which either proves the verification conditions or generates a counterexample.
+Specifically, our system guarantees that SMT solvers must terminate with conclusive answers when checking these verification conditions.
+This limits the class of programs and specifications.
+However, we demonstrate that these limitations are reasonable for distributed systems.
+In practice, this significantly reduces the complexity of the
+verification, and our experience shows that in many cases an
+undecidable logical formulation of a system and its proof can be simulated using multiple different decidable logics
+(e.g., pure uninterpreted first-order logic without quantifier alternations, and decidable fragments based on theories).
+%(pure first-order logic without quantifier alternation and quantifier free decidable theories)
+For example, the verification of Raft in our system took $X$ lines of code and proof and $0.25$ person years.
+This is in contrast to the Verdi project.
+%which includes 50000 lines of proof for 530 lines of
+%implementation~\cite{VerdiCPP}, which required several human years.
+
+\paragraph{Modularity for Decidability}
+Reasoning about distributed systems in decidable logics is hard since the one needs to account
+for several features including: unbounded nodes, set cardinalities (e.g., majority), and arithmetics.
+The combinations of these features are beyond the reach of existing decidable logics.
+Indeed, this is where SMT tools fail.
+
+This paper shows that existing modularity principles e.g., \cite{Larch} can be used to guarantee that verification
+conditions are expressed in decidable logics.
+The idea is that different parts of the code and proof actually need different decidable logics.
+% and the system can actually figure this based on on their types.
+Technically, the system deploys assume/guarantee reasoning where proofs are broken into several parts (modules) expressed
+in different logics.
+
+Decidability is enabled by the well-known separation between the abstract interface of a data types and its concrete implementation.
+Thus, the concrete implementation can be verified to satisfy its interface in a suitable theory,
+while code using the data type can be verified against the abstract interface, which can often be specified in uninterpreted first-order logic.
+However, this does not usually suffice to obtain decidability.
+
+A key enabling feature of proof modularity in distributed systems is the existence of an abstract design which omits many of
+the implementation details.
+This design is usually similar to the published article and abstracts some details of the actual code.
+%which our system automatically generates.
+Conceptually the design can be viewed as ``a lemma in the implementation'', which is proved separately.
+Technically, the design implements abstract operations.
+The implementation code uses these abstract operations as ghost code, and is verified in an assume/guarantee fashion by (i) verifying that before every abstract operation,
+its precondition is met and assuming that after the operation its postcondition holds.
+
+Notice that since we are working in decidable logic, this process is also useful to identify bugs in the designs and
+the implementation.
+When failed, the system generates counterexamples and error messages for bugs in the implementation, the design, and the
+interface specification.
+
+
+\paragraph{Generating Executable Code}
+}
+
+At the end of the process, we compile the verified system to executable code (which uses a small set of trusted libraries, e.g., to implement a built-in array type).
+%Built-in language features are implemented as part of the trusted code based.  by connecting several trusted libraries.
+Our preliminary experience indicates that this can be used to generate reasonably efficient verified distributed systems.
+
+
+\paragraph{Contributions}
+The contributions of our paper are: % as follows:
+\begin{compactenum}
+%\item A new methodology for decomposing the safety verification of realistic distributed systems, from protocol to implementation, into decidable sub-problems.
+\item A new methodology, \emph{decidable decomposition}, for verifying realistic distributed systems
+  using existing modularity principles to decompose the verification into lemmas proved in (different) decidable logics.
+\item Verified implementations of two popular distributed algorithms, Raft and Multi-Paxos,
+  showing that proofs of practical systems naturally decompose into decidable sub-problems.
+%by decomposing the problem into decidable sub-problems.
+\item An evaluation of the verification effort and run-time performance of these systems,
+  showing that the effort required by our methodology is an order of magnitude smaller than with previous methodologies such as Verdi or IronFleet, and the obtained performance is comparable.
+\end{compactenum}
+\commentout{
+\begin{compactenum}
+\item A new methodology for verifying distributed systems from design to efficient implementation,
+based on modular reasoning and SMT solvers. % SMT solvers.
+\item Showing that existing modular proof systems can be used to
+compositionally reason about real systems using decidable logics.
+\commentout {
+Here, the programmer decides the modularity boundaries and the interfaces and the
+system automatically verifies the correctness or identifies errors or interface
+mismatch.}
+\item Showing that the methodology is effective to
+obtain efficient verified implementations of protocols such as Raft with reasonable human effort and reliable prover performance.
+\end{compactenum}
+}
+
+\ken{Added the following paragraph in response to first shepherd
+  request.}  The practical results in this paper are based on a tool
+called IVy. IVy was introduced in~\cite{Ivy} as a tool for interactive
+verification of distributed protocols using the decidable logic
+EPR. IVy's modular proof system was introduced
+in~\cite{ken_fmcad16}. We use that system here (with some extensions
+to the logic) to demonstrate a new methodology of decidability through
+modularity. This methodology allows us to formally refine abstract
+distributed protocol models from~\cite{oopsla17-epr} into executable
+implementations, while keeping the verification conditions decidable.

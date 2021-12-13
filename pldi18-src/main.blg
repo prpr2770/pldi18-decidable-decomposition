@@ -1,0 +1,102 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: refs.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty address in alberti_counting_2016
+Warning--empty publisher in SmallFootDecidable
+Warning--empty address in SmallFootDecidable
+Warning--empty address in coq
+Warning--empty address in vienna_book
+Warning--empty publisher in BradleyManna
+Warning--empty address in BradleyManna
+Warning--empty address in chand_formal_2016
+Warning--empty address in chaudhuri_tla+proof_2010
+Warning--empty address in VCC
+Warning--empty author in etcd
+Warning--empty address in Z3
+Warning--empty address in dragoi_logic-based_2014
+Warning--empty address in ESC
+Warning--numpages field, but no articleno or eid field, in ESC
+Warning--empty publisher in paxos_destructed_abstracted
+Warning--empty address in paxos_destructed_abstracted
+Warning--page numbers missing in both pages and numpages fields in paxos_destructed_abstracted
+Warning--empty publisher in ge2009complete
+Warning--empty address in ge2009complete
+Warning--empty publisher in IronFleet
+Warning--empty address in IronFleet
+Warning--empty publisher in DBLP:conf/tacas/HenriksenJJKPRS95
+Warning--empty address in DBLP:conf/tacas/HenriksenJJKPRS95
+Warning--no journal in Hoare:DataRepCorrectness
+Warning--empty address in alloy
+Warning--empty address in konnov_short_2017
+Warning--empty address in konnov_smt_2015
+Warning--empty address in DBLP:conf/ershov/KonnovVW15
+Warning--empty publisher in Dafny
+Warning--empty address in Dafny
+Warning--page numbers missing in both pages and numpages fields in DistAlgo
+Warning--empty publisher in MadhusudanPQ11
+Warning--empty address in MadhusudanPQ11
+Warning--empty address in MSB17
+Warning--empty address in ken_fmcad16
+Warning--empty address in nipkow_isabelle/hol:_2002
+Warning--empty publisher in raft
+Warning--empty address in raft
+Warning--empty publisher in Ivy
+Warning--empty address in Ivy
+Warning--empty publisher in EPR
+Warning--empty address in EPR
+Warning--page numbers missing in both pages and numpages fields in EPR
+Warning--empty address in gleissenthall_cardinalities_2016
+Warning--empty publisher in Verdi
+Warning--empty address in Verdi
+Warning--empty address in VerdiCPP
+You've used 46 entries,
+            5732 wiz_defined-function locations,
+            1671 strings with 27316 characters,
+and the built_in function-call counts, 56998 in all, are:
+= -- 6462
+> -- 2208
+< -- 0
++ -- 724
+- -- 727
+* -- 4264
+:= -- 5862
+add.period$ -- 234
+call.type$ -- 46
+change.case$ -- 344
+chr.to.int$ -- 45
+cite$ -- 94
+duplicate$ -- 5195
+empty$ -- 3626
+format.name$ -- 862
+if$ -- 13403
+int.to.chr$ -- 3
+int.to.str$ -- 1
+missing$ -- 196
+newline$ -- 437
+num.names$ -- 371
+pop$ -- 1986
+preamble$ -- 1
+purify$ -- 756
+quote$ -- 0
+skip$ -- 1826
+stack$ -- 0
+substring$ -- 4368
+swap$ -- 557
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1117
+warning$ -- 48
+while$ -- 351
+width$ -- 0
+write$ -- 884
+(There were 48 warnings)

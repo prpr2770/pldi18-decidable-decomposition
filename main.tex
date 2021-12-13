@@ -1,0 +1,203 @@
+\documentclass[sigplan,screen]{acmart}
+%Marcelo: Removed this line as part of author instructions\documentclass[sigplan,10pt,review]{acmart}
+\settopmatter{printfolios=true}
+
+%% Conference information
+%% Supplied to authors by publisher for camera-ready submission;
+%% use defaults for review submission.
+
+\setcopyright{acmcopyright}
+\acmPrice{}
+\acmDOI{10.1145/3192366.3192414}
+\acmYear{2018}
+\copyrightyear{2018}
+\acmISBN{978-1-4503-5698-5/18/06}
+\acmConference[PLDI'18]{39th ACM SIGPLAN Conference on Programming Language Design and Implementation}{June 18--22, 2018}{Philadelphia, PA, USA}
+
+\startPage{1}
+\pagenumbering{gobble}
+
+%% Bibliography style
+\bibliographystyle{ACM-Reference-Format}
+%% Citation style
+%\citestyle{acmauthoryear}  %% For author/year citations
+%\citestyle{acmnumeric}     %% For numeric citations
+%\setcitestyle{nosort}      %% With 'acmnumeric', to disable automatic
+                            %% sorting of references within a single citation;
+                            %% e.g., \cite{Smith99,Carpenter05,Baker12}
+                            %% rendered as [14,5,2] rather than [2,5,14].
+%\setcitesyle{nocompress}   %% With 'acmnumeric', to disable automatic
+                            %% compression of sequential references within a
+                            %% single citation;
+                            %% e.g., \cite{Baker12,Baker14,Baker16}
+                            %% rendered as [2,3,4] rather than [2-4].
+
+
+%
+\usepackage{amsthm}
+\usepackage{amsmath}
+%\usepackage{SIunits}            % typset units correctly
+%\usepackage{courier}            % standard fixed width font
+\usepackage[scaled]{helvet} % see www.ctan.org/get/macros/latex/required/psnfss/psnfss2e.pdf
+\usepackage{url}                  % format URLs
+\usepackage{listings}          % format code
+\usepackage{xspace}
+%\usepackage{nth}
+%\usepackage{enumitem}      % adjust spacing in enums
+%\usepackage[colorlinks=true,allcolors=blue,breaklinks,draft=false]{hyperref}   % hyperlinks, including DOIs and URLs in bibliography
+% known bug: http://tex.stackexchange.com/questions/1522/pdfendlink-ended-up-in-different-nesting-level-than-pdfstartlink
+%\newcommand{\doi}[1]{doi:~\href{http://dx.doi.org/#1}{\Hurl{#1}}}   % print a hyperlinked DOI
+
+\usepackage{color}
+
+\usepackage{paralist}
+
+\usepackage{hhline}
+
+\usepackage[ruled,noline,noend,linesnumbered]{algorithm2e}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{alltt}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{listings}
+%\usepackage{syntax}
+\usepackage{semantic}
+\usepackage[rightcaption]{sidecap}
+\sidecaptionvpos{figure}{c}
+
+\usepackage{flushend}
+
+%% \newtheorem{theorem}{Theorem}[section]
+%% \newtheorem{fact}[theorem]{Fact}
+%% \newtheorem{lemma}[theorem]{Lemma}
+%% \newtheorem{corollary}[theorem]{Corollary}
+%% \newtheorem{proposition}[theorem]{Proposition}
+%% %\newtheorem{lemma}[theorem]{Lemma}
+%% %\newtheorem{corollary}[theorem]{Corollary}
+%% %\newtheorem{proposition}[theorem]{Proposition}
+
+%% \theoremstyle{definition}
+%% \newtheorem{definition}{Definition}
+%% %\newtheorem{definition}[theorem]{Definition}
+
+%% \theoremstyle{remark}
+%% \newtheorem{remark}[theorem]{Remark}
+%% \newtheorem{example}{Example}
+%% %\newtheorem{remark}{Remark}
+%% %\newtheorem{example}[theorem]{Example}
+%% %\newtheorem{remark}[theorem]{Remark}
+%% %\newtheorem{observation}{Observation}
+%% %\newtheorem{notation}{Notation}
+
+\input{macros}
+
+\begin{document}
+
+%\title{Decidable Reasoning about Distributed Systems Implementations}
+%\title[Modularity for Decidability]{Modularity for Decidability: Verifying Distributed Systems Implementations}
+%\title[Modularity for Decidability]{Modularity for Decidability: Implementing and Semi-Automatically Verifying Distributed Systems}
+\title[Modularity for Decidability]{Modularity for Decidability of Deductive Verification with Applications to Distributed Systems}
+\author{Marcelo Taube}
+\affiliation[obeypunctuation]{
+  \institution{Tel Aviv University},
+  \country{Israel}
+}
+\email{mail.marcelo.taube@gmail.com}
+
+\author{Giuliano Losa}
+\affiliation[obeypunctuation]{
+  \institution{UCLA},
+  \country{USA}
+  %
+}
+\email{giuliano@cs.ucla.edu}
+
+\author{Kenneth L. McMillan}
+\affiliation[obeypunctuation]{
+  \institution{Microsoft Research},
+  \country{USA}
+  %
+}
+\email{kenmcmil@microsoft.com}
+
+\author{Oded Padon}
+\affiliation[obeypunctuation]{
+    \institution{Tel Aviv University},
+    \country{Israel}
+    %
+}
+\email{odedp@mail.tau.ac.il}
+
+\author{Mooly Sagiv}
+\affiliation[obeypunctuation]{
+  \institution{Tel Aviv University},
+  \country{Israel}
+%
+}
+\email{msagiv@post.tau.ac.il}
+
+\author{Sharon Shoham}
+\affiliation[obeypunctuation]{
+  \institution{Tel Aviv University},
+  \country{Israel}
+  %\country{Israel}
+}
+\email{sharon.shoham@gmail.com}
+
+\author{James R. Wilcox}
+\affiliation[obeypunctuation]{
+    \institution{University of Washington},
+    \country{USA}
+    %\country{USA}
+}
+\email{jrw12@cs.washington.edu}
+
+\author{Doug Woos}
+\affiliation[obeypunctuation]{
+    \institution{University of Washington},
+    \country{USA}
+    %\country{USA}
+}
+\email{dwoos@cs.washington.edu}
+
+\renewcommand{\shortauthors}{M. Taube et al.}
+
+\input{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10011007.10011074.10011099.10011692</concept_id>
+<concept_desc>Software and its engineering~Formal software verification</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Software and its engineering~Formal software verification}
+%\ccsdesc[300]{Computer systems organization~Dependable and fault-tolerant systems and networks}
+
+\keywords{Formal verification, Modularity, Decidable logic, Ivy, Distributed systems, Paxos, Raft}
+
+\maketitle
+
+%\oded{for the final version: use ``decidable decomposition'' more often, maybe instead of theory segregation}
+\input{intro2}
+\input{overview}
+\input{prelim2}
+%\input{language}
+%\input{extract}
+\input{modular}
+\input{evaluation}
+\input{related}
+\input{conclusion}
+\input{acks}
+\bibliography{refs}
+%\newpage
+%\input{appendix}
+\end{document}

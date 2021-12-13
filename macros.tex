@@ -1,0 +1,430 @@
+\newcommand{\hlight}[1]{\textcolor{red}{#1}}
+
+\newcommand{\para}[1]{\vspace{0.2cm} {\em #1.}}
+
+\newcommand{\til}{,\ldots,}
+\newcommand{\etc}{,\ldots}
+\newcommand{\Nat}{{\mathbb{N}}}
+
+%\newcommand{\dom}[1]{dom({#1})}
+\newcommand{\dom}{dom}
+\newcommand{\ov}{\overline}
+\renewcommand{\Box}{\fbox{\rule{0cm}{.04cm}\rule{.04cm}{0cm}}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\suc}{\mbox{{\rm Suc}}}
+\newcommand{\A}{{\cal A}}        % the first order structure A
+\newcommand{\abs}[1]{ \vert #1 \vert }
+\newcommand{\sland}{\;\land\;}
+\newcommand{\sra}{\;\rightarrow\;}
+\newcommand{\bigand}{\bigwedge}
+\newcommand{\maxp}{{\max}'}
+\newcommand{\free}{\mbox{{\rm free}}}
+\newcommand{\qsep}{{\;\;}}  % the separator in a quantified formula
+\newcommand{\from}{{\colon}}
+\newcommand{\card}[1]{{\left\vert{#1}\right\vert}} % set cardinality
+%\newcommand{\cone}{\!\uparrow}
+\newcommand{\cone}[1]{{#1}^\uparrow}
+%\newcommand{\compl}[1]{\overline{#1}}
+\newcommand{\compl}[1]{\States\setminus {#1}}
+\newcommand{\Pfin}[1]{\mathcal{P}_{\textit{fin}}(#1)}
+
+\renewcommand{\implies}{{\Rightarrow}}
+\newcommand{\liff}{{\;\leftrightarrow\;}}
+
+
+%%%%% Programs
+
+\renewcommand{\program}{\mathit{Prog}}
+\newcommand{\Cmd}{\mathit{C}}
+\newcommand{\Decls}{\mathit{decls}}
+\newcommand{\vars}{{\ensuremath{\mathcal{V}}}}
+\newcommand{\relations}{{\ensuremath{\mathcal{R}}}}
+\newcommand{\functions}{{\ensuremath{\mathcal{F}}}}
+\newcommand{\sorts}{{\ensuremath{\mathcal{S}}}}
+\newcommand{\axioms}{{\ensuremath{\mathcal{A}}}}
+\newcommand{\Identity}{id}
+\newcommand{\eqdef}{\buildrel \mbox{\tiny\rm def} \over =}
+
+\renewcommand{\wp}{\mathit{wp}}
+%\newcommand{\sp}{\mathit{sp}}
+\newcommand\substitute[3]{{{#1} \left[ #3 ~/~ #2 \right]}}
+\newcommand{\unroll}[2]{{{#1^{\leq {#2}}}}}
+
+\newcommand{\type}{\tau}
+
+%%%%% First order
+
+\newcommand{\true}{{\textit{true}}}
+\newcommand{\false}{{\textit{false}}}
+\newcommand{\vocabulary}{{\ensuremath{\Sigma}}}
+\newcommand{\letter}{{a}}
+\newcommand{\dvoc}[1]{{(#1,#1')}}
+%\newcommand{\theory}{{\Gamma}}
+\newcommand{\structures}{{\mbox{STRUCT}}}
+\newcommand{\structOfVoc}[1]{{\structures[#1]}}
+\newcommand{\structOfTheory}[2]{{\structures[#1,#2]}}
+\newcommand{\struct}{{s}}
+\newcommand{\Dom}{{D}}
+\newcommand{\Int}{{\mathcal{I}}}
+\newcommand{\diag}[1]{{\textit{Diag}(#1)}}
+\newcommand{\subst}[2]{{\left\{#1 / #2\right\}}}
+
+\newcommand{\conjecture}{\varphi}
+
+%%%% transition system
+
+\newcommand{\Class}{{\mathcal{C}}}
+\newcommand{\Lclass}{{\mathcal{L}}}
+
+\newcommand{\Init}{\phi_{0}}
+%\newcommand{\PhiProp}{\phi_{\Property}}
+\newcommand{\Bad}{Bad}
+\newcommand{\Trans}{\tau}
+\newcommand{\IndInv}{\varphi}
+\newcommand{\Lset}{L}
+\newcommand{\ToLset}[1]{{L({#1})}}
+\newcommand{\INV}{\mathcal{I}}
+%\newcommand{\Inv}[2]{{\INV[{#1},{#2}]}}
+\newcommand{\Inv}{{\mathit{Inv}}}
+\newcommand{\InvSet}[2]{{\INV[{#1},{#2}]}}
+\newcommand{\SafeSet}[1]{{\texttt{SAFE}[{#1}]}}
+\newcommand{\image}[1]{{\TR({#1})}}
+\newcommand{\preimage}[1]{{\TR^{-1}({#1})}}
+\newcommand{\TS}{{\textit{TS}}}
+\newcommand{\TSr}[1]{\TS^{#1}}
+\newcommand{\States}{S}
+\newcommand{\InitStates}{{S_0}}
+\newcommand{\TR}{{\tau}}
+\newcommand{\TRr}[1]{\TR^{#1}}
+\newcommand{\Property}{{\varphi_P}}
+%\newcommand{\state}{s}
+\newcommand{\reachStates}{{\textit{Reach}}}
+\newcommand{\Istar}{{I^{*}}}
+\newcommand{\TSlogic}{\TS}
+\newcommand{\Invar}{I}
+
+\newcommand{\BMC}{\text{BMC}}
+
+%%%% L
+
+\newcommand{\Univ}{{\forall^*}}
+%\newcommand{\leqLof}[1]{{\leq_{#1}}}
+\newcommand{\leqLof}[1]{\sqsubseteq_{#1}}
+\newcommand{\leqL}{\leqLof{\Lset}}
+\newcommand{\leqU}{\leqLof{\Univ}}
+\newcommand{\leqTree}{\preceq}
+%\newcommand{\leqTree}{\preccurlyeq}
+\newcommand{\Avoid}{{\text{Avoid}}}
+\newcommand{\AvoidOfL}[1]{{\text{Avoid}_{#1}}}
+\newcommand{\AvoidL}{{\AvoidOfL{\Lset}}}
+\newcommand{\AvoidLstate}[1]{{\AvoidL({#1})}}
+
+%%%% Modeling language
+
+\newcommand{\gV}[1]{\langle \textit{#1}\rangle}
+\newcommand{\btuple}[1]{\overline{#1}}
+\newcommand{\bvar}{\textbf{v}}
+\newcommand{\brel}{\textbf{r}}
+\newcommand{\bfun}{\textbf{f}}
+\newcommand{\bsort}{\textbf{s}}
+\newcommand{\binsert}{\texttt{insert}}
+\newcommand{\bremove}{\texttt{remove}}
+\newcommand{\babort}{\texttt{abort}}
+\newcommand{\bskip}{\texttt{skip}}
+\newcommand{\bdo}{\texttt{do}}
+\newcommand{\bwhile}{\texttt{while}}
+\newcommand{\bassume}{\texttt{assume}}
+\newcommand{\bassert}{\texttt{assert}}
+\newcommand{\bif}{\texttt{if}}
+\newcommand{\bthen}{\texttt{then}}
+\newcommand{\belse}{\texttt{else}}
+\newcommand{\bite}{\texttt{ite}}
+
+\newcommand{\cinit}{\Cmd_{\texttt{init}}}
+\newcommand{\cbody}{\Cmd_{\texttt{body}}}
+\newcommand{\cfinal}{\Cmd_{\texttt{final}}}
+\newcommand{\phiinit}{\varphi_{\texttt{init}}}
+\newcommand{\phiqf}{\varphi_{\texttt{QF}}}
+\newcommand{\phiea}{\varphi_{\texttt{EA}}}
+\newcommand{\phiae}{\varphi_{\texttt{AE}}}
+\newcommand{\phiaf}{\varphi_{\texttt{AF}}}
+\newcommand{\gVphiqf}{{\langle \phiqf \rangle}}
+\newcommand{\gVphiea}{{\langle \phiea \rangle}}
+\newcommand{\gVphiae}{{\langle \phiae \rangle}}
+\newcommand{\gVphiaf}{{\langle \phiaf \rangle}}
+
+\newcommand{\Nodes}{\text{Nodes}}
+
+\newcommand{\IF}{\texttt{if}}
+\newcommand{\THEN}{\texttt{then}}
+\newcommand{\ELSE}{\texttt{else}}
+\newcommand{\WHILE}{\texttt{while}}
+%\newcommand{\LOOP}{\texttt{loop}}
+%\newcommand{\INSERT}{\texttt{insert}}
+%\newcommand{\INSERTM}[3]{\INSERT\,(#1.\texttt{insert}(#2, #3))}
+%\newcommand{\INSERTM}[3]{#1.\texttt{insert}(#2 \mid #3))}
+\newcommand{\INSERTM}[2]{#1 := #1 \cup \{ #2\}}
+\newcommand{\INSERTMU}[3]{#1 := #1 \cup \{ #2 \mid #3 \}}
+%\newcommand{\REMOVE}{\texttt{remove}}
+%\newcommand{\REMOVEM}[3]{#1.\texttt{remove}(#2 \mid #3))}
+\newcommand{\REMOVEM}[2]{#1 := #1 \setminus \{ #2 \}}
+\newcommand{\REMOVEMU}[3]{#1 := #1 \setminus \{ #2 \mid #3 \}}
+\newcommand{\ASSUME}{\texttt{assume}}
+\newcommand{\ASSUMEM}[1]{\ASSUME\,#1}
+\newcommand{\ASSERT}{\texttt{assert}}
+\newcommand{\ASSERTM}[1]{\ASSERT\,#1}
+\newcommand{\COMMENT}[1]{\texttt{\# #1}}
+\newcommand{\INDENT}{\quad}
+
+
+\newcommand{\Plink}{\textit{link}}
+\newcommand{\Ptree}{\textit{tree}}
+\newcommand{\Ptreestar}{{\textit{tree}^*}}
+\newcommand{\Ppending}{\textit{pending}}
+%\newcommand{\Pmarked}{\textit{marked}}
+\newcommand{\Plearned}{\textit{learned}}
+
+\newcommand{\mLink}{{\textit{link}}}
+\newcommand{\mRoute}{{\textit{route}}}
+\newcommand{\mRoutestar}{{\mRoute^*}}
+\newcommand{\mPending}{{\textit{pending}}}
+\newcommand{\mLearned}{{\textit{learned}}}
+
+\newcommand{\rroot}{\mathit{root}}
+%\newcommand{\sw}{\textit{sw}}
+\newcommand{\sw}{\mathit{sw}}
+\newcommand{\src}{\mathit{src}}
+\newcommand{\dst}{\mathit{dst}}
+
+%%%%%% RML
+
+\newcommand{\sort}[1]{{\text{#1}}}
+\newcommand{\snode}{\sort{node}}
+\newcommand{\squorum}{\sort{quorum}}
+\newcommand{\sround}{\sort{round}}
+\newcommand{\svalue}{\sort{value}}
+\newcommand{\sinst}{\sort{instance}}
+\newcommand{\svotemap}{\sort{votemap}}
+\newcommand{\snodeset}{\sort{nset.t}}
+\newcommand{\smap}{\sort{map}}
+\newcommand{\sfquorum}{\sort{f\_quorum}}
+\newcommand{\scquorum}{\sort{c\_quorum}}
+\newcommand{\sconfig}{\sort{config}}
+\newcommand{\sint}{\sort{int}}
+\newcommand{\Integer}{\sint}
+\newcommand{\sterm}{\sort{term}}
+
+\newcommand{\relation}[1]{{\text{#1}}}
+\newcommand{\rvoted}{\relation{voted}}
+\newcommand{\risleader}{\relation{isleader}}
+\newcommand{\rmember}{\relation{member}}
+\newcommand{\rmajority}{\relation{majority}}
+\newcommand{\rlen}{\relation{array.len}}
+\newcommand{\rvalue}{\relation{array.value}}
+\newcommand{\rreachedset}{\relation{r}_\relation{s}}
+\newcommand{\rreachednode}{\relation{r}_\relation{n}}
+\newcommand{\risize}{\relation{card}}
+\newcommand{\ralreadyvoted}{\relation{alreadyvoted}}
+\newcommand{\rvoters}{\relation{voters}}
+\newcommand{\rempty}{\relation{empty}}
+\newcommand{\rall}{\relation{all}}
+\newcommand{\rallnodes}{\snode.\rall}
+\newcommand{\rallnodeset}{\relation{allnodes}}
+\newcommand{\rquorum}{\relation{quorum}}
+\newcommand{\msgrequestvote}{\relation{request\_vote\_msg}}
+\newcommand{\msgvote}{\relation{vote\_msg}}
+\newcommand{\msgleader}{\relation{leader\_msg}}
+
+
+\newcommand{\action}[1]{{\text{#1}}}
+\newcommand{\pvote}{\action{vote}}
+\newcommand{\pbecomeleader}{\action{become\_leader}}
+\newcommand{\prequestvote}{\action{request\_vote}}
+\newcommand{\padd}{\action{add}}
+\newcommand{\pemptyset}{\action{emptyset}}
+\newcommand{\pinit}{\action{init}}
+\newcommand{\pcastvote}{\action{cast\_vote}}
+\newcommand{\preceivevote}{\action{receive\_vote}}
+
+\newcommand{\module}[1]{{\text{#1}}}
+\newcommand{\mtoyprotocol}{\module{toy\_protocol}}
+\newcommand{\mtoysystem}{\module{toy\_system}}
+\newcommand{\mnodeset}{\module{nset}}
+\newcommand{\tnodeset}{\module{nodeset.t}}
+\newcommand{\keyword}[1]{{\bf{#1}}}
+\newcommand{\irule}[1]{{\textup{\textsc{#1}}}}
+
+\newcommand{\invariant}[1]{{\text{#1}}}
+\newcommand{\ioneleader}{\invariant{one\_leader}}
+\newcommand{\iintersect}{\invariant{majorities\_intersect}}
+\newcommand{\isafe}{\invariant{safe}}
+\newcommand{\modinvar}{Q}
+
+
+\newcommand{\self}{\text{self}}
+
+%%%%%% quasi
+
+\newcommand{\QR}{QR}
+
+%%%%% Singly linked lists
+
+\newcommand{\nstar}{{n^*}}
+\newcommand{\mstar}{{m^*}}
+\newcommand{\LinOrd}{{\theory_{\nstar}}}
+%\newcommand{\next}{{next}}
+\newcommand{\phinext}{{\phi_\next}}
+\newcommand{\Vnstar}{{\vocabulary_{\nstar}}}
+\newcommand{\T}{{\cal T}}
+\newcommand{\Trees}[1]{{\T({#1})}}
+\newcommand{\Tnstar}{{\T_\nstar}}
+\newcommand{\Snstar}{{\structOfTheory{\Vnstar}{\LinOrd}}}
+
+\newcommand{\Forests}[1]{{{\cal F}({#1})}}
+\newcommand{\tree}{{T}}
+\newcommand{\forest}{{F}}
+\newcommand{\Root}{{root}}
+\newcommand{\lroot}{{l_\Root}}
+\newcommand{\phiroot}{{\phi_\Root}}
+\newcommand{\vroot}{{v_\Root}}
+
+%%%%% Backward Reachability
+
+\newcommand{\reduceKw}{\mathit{reduct}}
+\newcommand{\reduce}[1]{\reduceKw(#1)}
+\newcommand{\SATKw}{\mathit{SAT}}
+\newcommand{\SAT}[1]{\SATKw(#1)}
+\newcommand{\findMinModelKw}{\mathit{min\mbox{-}model}}
+\newcommand{\findMinModel}[1]{\findMinModelKw(#1)}
+\newcommand{\findModelKw}{\mathit{model}}
+\newcommand{\findModel}[1]{\findModelKw(#1)}
+
+%%%%% Undecidability
+
+\newcommand{\enc}{{\mathcal{E}}}
+\newcommand{\inc}{\texttt{INC}}
+\newcommand{\dec}{\texttt{DEC}}
+\newcommand{\testzero}{\texttt{TEST-ZERO}}
+\newcommand{\head}{{h}}
+\newcommand{\tail}{{t}}
+\newcommand{\OP}{{OP}}
+\newcommand{\phiconfig}{{\phi_{config}}}
+\newcommand{\phienc}{{\phi_\enc}}
+\newcommand{\distinct}[1]{{\texttt{distinct}({#1})}}
+\newcommand{\len}{{\ell}}
+\newcommand{\goal}{{\mbox{goal}}}
+
+%%%%% Abbrevs
+
+\newcommand{\EPR}{\textsc{EPR}\xspace}
+\newcommand{\SDN}{\textsc{SDN}\xspace}
+\newcommand{\RML}{\textsc{RML}\xspace}
+
+%%%%% Misc
+
+\newcommand{\sharon}[1]{{\textcolor{blue}{SS: {\em #1}}}}
+\newcommand{\oded}[1]{{\textcolor{brown}{OP: {\em #1}}}}
+\newcommand{\ken}[1]{{\textcolor{cyan}{KLM: {\em #1}}}}
+\newcommand{\TODO}[1]{{\textcolor{red}{TODO: {\em #1}}}}
+\newcommand{\jrw}[1]{{\textcolor{violet}{JRW: {\em #1}}}}
+\newcommand{\dw}[1]{{\textcolor{blue}{DW: {\em #1}}}}
+\newcommand{\gl}[1]{{\textcolor{green}{GL {\em #1}}}}
+\newcommand{\mooly}[1]{{\textcolor{yellow}{MS {\em #1}}}}
+\newcommand{\commentout}[1]{}
+\newcommand{\adam}[1]{{\textcolor{red}{AD {\em #1}}}}
+\newcommand{\OMIT}[1]{}
+
+ \renewcommand{\sharon}[1]{}
+ \renewcommand{\oded}[1]{}
+ \renewcommand{\TODO}[1]{}
+ \renewcommand{\ken}[1]{}
+ \renewcommand{\jrw}[1]{}
+ \renewcommand{\gl}[1]{}
+ \renewcommand{\dw}[1]{}
+ \renewcommand{\adam}[1]{}
+ \renewcommand{\mooly}[1]{}
+
+\newcommand{\remove}[1]{\xspace}
+
+\newcommand{\allnotes}[1]{}
+% To make the FIXMEs go away, comment out this line...
+%% \renewcommand{\allnotes}[1]{\textit{#1}}
+%% \newcommand{\fixme}[1]{{\allnotes{\bf\textcolor{red}{[#1]}}}}
+%% \newcommand{\notepanda}[1]{\allnotes{\textcolor{cyan}{[Panda: #1]}}}
+\newcommand{\ie}{{\it i.e.,}\xspace}
+
+%\newcommand{\Vars}[1]{\mbox{\em Vars}(#1)}
+\newcommand{\Sorts}{\mathcal{S}}
+\newcommand{\Bool}{\mathbb{B}}
+\newcommand{\Vars}[1]{\vocabulary(#1)}
+\newcommand{\Before}[2]{(#2 \triangleright #1)}
+\newcommand{\After}[2]{(#1 \triangleright #2)}
+\newcommand{\Names}{\mathcal{N}}
+\newcommand{\Stat}{\mathcal{S}}
+\newcommand{\Prop}{\mathcal{P}}
+\newcommand{\Logic}{\mathcal{L}}
+\newcommand{\Hoare}{\mathcal{H}}
+\newcommand{\Domain}{\mbox{\rm pre}}
+\newcommand{\Codomain}{\mbox{\rm img}}
+\newcommand{\Called}{\mbox{\rm called}}
+\newcommand{\ModInvar}{\mathcal{I}}
+\newcommand{\Asgn}{\mbox{:=}}
+\newcommand{\Restr}{\downarrow}
+\newcommand{\Ref}{\mbox{\rm ref}}
+\newcommand{\Mod}{\mbox{\rm mod}}
+\newcommand{\CallSet}{\mbox{\rm calls}}
+\newcommand{\PreAssume}[2]{[#2]#1}
+\newcommand{\PostAssume}[2]{#1[#2]}
+
+
+\newcommand{\Interf}{\leadsto}
+\newcommand{\Abs}[1]{{#1}\uparrow}
+\newcommand{\Comp}{+}
+\newcommand{\Compat}{\smile}
+\newcommand{\Layer}{Layer}
+\newcommand{\Slice}[1]{\mbox{\rm slice}(#1)}
+\newcommand{\bra}[1]{\left\{#1\right\}\ }
+\newcommand{\ket}[1]{\ \left\{#1\right\}}
+\newcommand{\Vocab}{\mathcal{V}}
+\newcommand{\Sig}{\Sigma}
+\newcommand{\PVars}{\Vocab_{P}}
+\newcommand{\Msg}{\mu}
+\newcommand{\Msgs}{\mathcal{M}}
+\newcommand{\Sent}{\mbox{sent}}
+\newcommand{\Pid}{\mbox{pid}}
+\newcommand{\Recv}[1]{\mbox{recv}_{#1}}
+\newcommand{\Toy}{Toy Leader Election}
+\newcommand{\Lang}{MDL}
+\newcommand{\srt}{\textsf{srt}}
+\newcommand{\theory}{T}
+
+% setting for lstlisting
+\lstset{ %
+%  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+%  basicstyle=\scriptsize,        % the size of the fonts that are used for the code
+%  basicstyle=\normalsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+%  breaklines=true,                 % sets automatic line breaking
+%  captionpos=b,                    % sets the caption-position to bottom
+%  commentstyle=\color{mygreen},    % comment style
+%  deletekeywords={...},            % if you want to delete keywords from the given language
+%  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+%  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+%  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\bf,       % keyword style
+  language=C,                 % the language of the code
+  otherkeywords={module,ghost,invariant,uses,procedure,requires,ensures,system,message,send,handles,type,interpret,as,individual,init,action,returns,assert,assume,instantiate,isolate,mixin,before,relation,function,sort,variable,axiom,then,constant,let,*,local,open},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny,               % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+%  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+%  showstringspaces=false,          % underline spaces within strings only
+%  showtabs=false,                  % show tabs within strings adding particular underscores
+%  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+%  stringstyle=\color{mymauve},     % string literal style
+  tabsize=8,                       % sets default tabsize to 2 spaces
+%  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+   columns=fullflexible,
+}

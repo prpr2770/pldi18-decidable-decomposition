@@ -1,0 +1,60 @@
+\begin{figure}
+\begin{lstlisting}[
+    %frame=single,
+    basicstyle=\scriptsize,%\footnotesize,
+    keepspaces=true,
+    numbers=left,
+    %numbersep=1em,
+    xleftmargin=2em,
+    numberstyle=\tiny,
+    emph={
+      %% assert, assume,
+      %% if, then else,
+      %% while, do,
+      %% sort, relation, function,
+      %% axiom,
+      %% insert,
+    },
+    emphstyle={\bfseries},
+    mathescape=true,
+  ]
+system module $\mtoysystem$ uses $\mnodeset$, $\mtoyprotocol$, $\mtoyprotocol.\ioneleader$ { $\label{line:toysystem-uses}$
+  message $\msgrequestvote$ : $\snode$  $\label{line:system:msg-def1}$
+  message $\msgvote$ : $\snode, \snode$ $\label{line:system:msg-def2}$
+  message $\msgleader$ : $\snode$ $\label{line:system:msg-def3}$
+  // $\emph{spec: at most one node sends \msgleader}:$
+  invariant $\isafe$ = $\forall n_1, n_2. \; \msgleader(n_1) \land \msgleader(n_2) \to n_1 = n_2$ $\label{line:system-guarantee}$
+
+  relation $\ralreadyvoted$ : $\snode$ $\label{line:system-begin-node}$
+  function $\rvoters$ : $\snode \to \snodeset$
+  procedure $\pinit(\text{self}:\snode)$ {
+    $\ralreadyvoted(\text{self})$ := false
+    $\rvoters(\text{self})$ := $\mnodeset.\pemptyset()$
+  }
+  procedure $\prequestvote(\text{self}:\snode)$ {
+    send $\msgrequestvote(\text{self})$
+  }
+  procedure $\pcastvote(\text{self}:\snode ,\, \text{n}:\snode)$ handles $\msgrequestvote(\text{n})$ {
+    if $\neg\ralreadyvoted(\text{self})$ {
+      $\ralreadyvoted(\text{self})$ := true
+      send $\msgvote(\text{self}, \text{n})$
+      $\mtoyprotocol.\pvote(\text{self}, \text{n})$ $\label{line:system:ghost-2}$
+    }
+  }
+  procedure $\preceivevote(\text{self}:\snode, \text{n}:\snode)$ handles $\msgvote(\text{n},\text{self})$ {
+    $\rvoters(\text{self})$ := $\mnodeset.\padd(\rvoters(\text{self}), \text{n})$
+    if $\mnodeset.\rmajority(\rvoters(\text{self}))$ { $\label{line:system:majority}$
+      send $\msgleader(\text{self})$
+      $\mtoyprotocol.\pbecomeleader(\text{self},\rvoters(\text{self}))$ $\label{line:system:ghost-3}$
+    }
+  } $\label{line:system-end-node}$
+  // $\emph{inductive invariant for the proof:}$
+  invariant $\forall n_1,n_2. \; \mtoyprotocol.\rvoted(n_1,n_2) \leftrightarrow \msgvote(n_1,n_2)$ $\label{line:system:inv-1}$
+  invariant $\forall n_1,n_2. \, \mnodeset.\rmember(n_1,\!\rvoters(n_2)) \! \to \! \mtoyprotocol.\rvoted(n_1,\!n_2)$ $\label{line:system:inv-2}$
+  invariant $\forall n. \; \msgleader(n) \leftrightarrow \mtoyprotocol.\risleader(n)$ $\label{line:system:inv-3}$
+  invariant $\forall n_1,n_2. \; \neg \ralreadyvoted(n_1) \to \neg \mtoyprotocol.\rvoted(n_1,n_2)$ $\label{line:system:inv-4}$
+  open $\mtoyprotocol$ $\label{line:system:open}$
+}
+\end{lstlisting}
+\caption{\label{fig:toysystem}System module for Toy Leader Election. }
+\end{figure}

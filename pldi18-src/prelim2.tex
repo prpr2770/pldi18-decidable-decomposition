@@ -1,0 +1,238 @@
+\section{Preliminaries}
+\label{sec:prelim}
+%In this section we provide a brief background on first-order logic, theories and the decidable fragments used in this work.
+
+\subsection{Formulas and Theories}
+We consider many-sorted first-order logic with equality, where formulas are defined over a set $\Sorts$ of first-order sorts, and a vocabulary $\vocabulary$ which consists of sorted constant symbols and function symbols.
+Constants have first-order sorts in $\Sorts$, while functions have sorts of the form $(\sigma_1\times\cdots\sigma_n) \rightarrow \tau$, where $\sigma_i,\tau \in \Sorts$. In other words, functions may not be higher-order.
+We assume that $\Sorts$ contains a sort $\Bool$ that is the sort of propositions. A function whose range is $\Bool$ is called a relation. If $s$ is a symbol or term and $t$ is a sort, then $s:t$ represents the constraint that~$s$ has sort~$t$. We elide sort constraints when they can be inferred. A $\Sigma$-structure maps
+each sort $t\in\Sorts$ to a non-empty set called the \emph{universe} of $t$, and each symbol $s:t$ in $\Sigma$ to a value of sort $t$.
+
+%We denote the set of all formulas over $\vocabulary$ by $\Prop$.
+For a set of formulas $\theory$, we denote by $\vocabulary(\theory)$ the vocabulary of $\theory$, that is, the subset of $\vocabulary$ that occurs in $\theory$.
+%A $\vocabulary$-\emph{theory} $\theory$ (or simply a \emph{theory}) is a (possibly infinite) set of formulas such that $\vocabulary(\theory) = \vocabulary$.
+A \emph{theory} $\theory$ is a (possibly infinite) set of formulas. % such that $\vocabulary(\theory) = \vocabulary$.
+%Intuitively speaking, $\theory$ defines (or restricts) the symbols in $\vocabulary(\theory)$.
+%As such, %given a $\vocabulary$-theory $\theory$,
+% We refer to the symbols in $\vocabulary(\theory)$ as \emph{interpreted} by $\theory$.
+We use theories to give concrete interpretations of the symbols in $\vocabulary$.
+For example, a given sort might satisfy the theory of linear order, or the theory of
+arithmetic.
+In particular:
+
+\begin{definition}
+  \label{def:conservative}
+  %For $\Vocab \subseteq \vocabulary$, a $\vocabulary$-theory
+  A theory $\theory$ is $\Vocab$-\emph{conservative}, where $\Vocab \subset \vocabulary$, if every
+  $(\vocabulary \setminus \Vocab)$-structure $\sigma$ can be extended to a $\vocabulary$-structure
+  $\sigma'$ such that $\sigma' \models T$.
+\end{definition}
+
+\commentout{
+\begin{theorem}
+  Every $\Vocab$-\emph{conservative} theory is consistent.
+\end{theorem}
+}
+
+%Intuitively speaking, $\Vocab$-conservativeness means that $\theory$ defines the symbols in $\Vocab$, possibly in terms of other symbols.
+\oded{I changed the intuitive explanation. Is it OK?}
+Intuitively speaking, a $\Vocab$-conservative theory $\theory$ can be used to extend the vocabulary with symbols in $\Vocab$, 
+possibly defining them in terms of other symbols.
+\oded{I don't think we need this: We will also say that a $\Vocab$-conservative theory \emph{interprets} the symbols in $\Vocab$.}
+We can compose conservative theories to obtain conservative theories:
+
+\begin{theorem} \label{thm:conservative-composition}
+  \label{thm:defcompose}
+  If $T$ is a $\Vocab$-conservative theory and $T'$ is a $\Vocab'$-conservative theory, where $\vocabulary(T)$ and $\Vocab'$ are
+  disjoint, then $T \cup T'$ is a $(\Vocab\cup\Vocab')$-conservative theory.
+\end{theorem}
+
+\noindent
+That is, definitions can be combined sequentially, provided earlier definitions do
+not depend on later definitions.
+
+\commentout{
+For a set of formulas $\theory$, we denote by $\vocabulary(\theory)$ the vocabulary of $\theory$.
+Given a vocabulary $\Vocab$, a $\Vocab$-theory $\theory$ is a (possibly infinite) set of formulas, such that $\Vocab \subseteq \vocabulary(\theory)$.
+Intuitively speaking, $\theory$ defines the symbols in $\Vocab$.
+We use theories to characterize sorts and symbols concretely.
+For example, a given sort might satisfy the theory of linear order, or the theory of
+arithmetic.  As such, given a $\Vocab$-theory $\theory$, we refer to the symbols in $\Vocab$ as \emph{interpreted} by $\theory$.
+In particular:
+
+\begin{definition}
+  A $\Vocab$-theory $\theory$ is \emph{conservative} if every
+  structure $\sigma$ over $\vocabulary(\theory) \setminus \Vocab$ has an extension $\sigma'$ over $\vocabulary(\theory)$
+  such that $\sigma' \models T$.
+\end{definition}
+
+%Given a theory $\theory$, we refer to symbols that appear in $\theory$ as \emph{interpreted} by $\theory$.
+%, in which case satisfiability modulo $\theory$ requires that they are interpreted in a way consistent with the models of $\theory$.
+
+We can compose conservative theories to obtain conservative theories:
+
+\begin{theorem}
+  If $T$ is $\Vocab$-theory and $T'$ is $\Vocab'$-theory, where both are conservative and $\vocabulary(T)$ and $\Vocab'$ are
+  disjoint, then $T \cup T'$ is a conservative $(\Vocab\cup\Vocab')$-theory.
+\end{theorem}
+
+That is, definitions can be combined, provided earlier definitions do
+not depend on later definitions.
+}
+
+\subsection{Decidable Fragments}
+\label{subsec:prelims:decidable-fragments}
+%a brief description of the decidable fragments that we use in this work.
+We consider fragments of first-order logic for which checking \emph{satisfiability}, or \emph{satisfiability modulo a theory} (i.e., satisfiability restricted to models of a given theory $\theory$), is decidable.
+
+%We consider many-sorted first-order logic, where formulas are defined over a vocabulary which consists of sorts, constant symbols, relation symbols and function symbols.
+%%We use $\vocabulary$ to denote a first-order vocabulary, which consists of sorts, constant symbols, relation symbols and function symbols.
+%%For simplicity, we consider Skolemized formulas in negation normal form, where existentially quantified variables were replaced by fresh constant and function symbols while preserving satisfiability. As such, formulas may only contain universal quantifiers.
+%A theory $\theory$ is a set of formulas. Given a theory $\theory$, we refer to symbols that appear in $\theory$ as \emph{interpreted} by $\theory$, in which case satisfiability modulo $\theory$ requires that they are interpreted in a way consistent with the models of $\theory$.
+
+\paragraph{Effectively Propositional Logic (EPR)}
+\begin{sloppypar}
+The effectively propositional (EPR) fragment of first-order logic,
+also known as the Bernays-Sch\"onfinkel-Ramsey class is restricted to
+first-order formulas with a quantifier prefix $\exists^{*} \forall^{*}$ in prenex
+normal form defined over a vocabulary $\vocabulary$ that contains only constant and relation
+symbols, and where all sorts and symbols are uninterpreted. Satisfiability of EPR formulas is
+decidable~\cite{LEWIS1980317}. Moreover, formulas in this fragment
+enjoy the \emph{finite model property}, meaning that a satisfiable
+formula is guaranteed to have a finite model.
+\end{sloppypar}
+
+A straightforward extension of this fragment allows \emph{stratified} function symbols and quantifier alternation, as formalized next.
+The \emph{Skolem normal form} of a formula is an equisatisfiable formula in $\forall^{*}$ prenex normal form that is obtained by converting all existential quantifiers to Skolem functions.
+The \emph{quantifier alternation graph} of a formula is a graph whose vertex set is $\Sorts\setminus\{\Bool\}$, having an edge $(s,t)$ if there is a function symbol occurring in the formula's Skolem normal form with $s$ in its
+domain and $t$ as its range. Notice that a formula of the form $\forall x:s.\ \exists y:t.\ \phi$ has an edge $(s,t)$ in its quantifier alternation graph, since the Skolem function for $y$ is of sort $s\rightarrow t$.
+A \emph{bad cycle} in the quantifier alternation graph of $\phi$ is one containing a sort $s$ such that some variable of sort $s$ is universally quantified in the Skolem normal form of $\phi$.
+
+% For a formula in negation normal form we define the \emph{quantifier alternation graph} as a directed graph where the set of vertices is the set of sorts in $\vocabulary$. The set of directed edges includes an edge from $\srt_1$ to sort $\srt_2$ if and only if there exists a function symbol in $\varphi$ in which $\srt_1$ is one of the input sorts and $\srt_2$ is the output sort, or $\varphi$ has an existential quantifier of a variable of sort $\srt_2$ in the scope of a universal quantifier of sort $\srt_2$.
+%
+A formula is \emph{stratified} if its quantifier alternation graph has no bad
+cycles.
+Notice that all EPR formulas are stratified (since all the Skolem symbols are constants) and so are all the quantifier-free formulas.
+% and so are all the quantifier-free formulas.
+A formula $\phi$ is \emph{virtually stratified} if there is \emph{any} consistent assignment of sorts to symbols in $\vocabulary(\phi)$ under which $\phi$ is stratified.
+%
+As an example, the formula $\forall x:s.\ \exists y:t.\ f(x) = y$ is stratified, since the quantifier alternation graph contains only the edge $(s,t)$. On the other hand,
+$\forall x:s.\ \exists y:t.\ f(y) = x$ is not stratified, because the Skolem function for $y$ has sort $s\rightarrow t$, while $f$ has sort $t\rightarrow s$.
+The formula $\forall x:s.\ f(g(x):t) = y:s$ is not stratified, since $g$ has sort $s\rightarrow t$ while $f$ has sort $t \rightarrow s$. However, it \emph{is} virtually stratified,
+since we can resort it as $\forall x:s.\ f(g(x):t) = y:u$. Also, notice that $\forall x:s.\ f(g(x):t) = y:t$ is stratified even though there is a cycle containing sort $t$, because
+this cycle does not contain a universally quantified variable.
+
+The extended EPR fragment consists of all virtually stratified
+formulas. The extension maintains both the finite model property and
+the decidability of the satisfiability problem (this is a special case
+of Proposition~2 in~\cite{ge2009complete}).
+
+%A straightforward extension of this fragment allows \emph{stratified} function symbols, as formalized next.
+%For a formula $\varphi$ in negation normal form we define the \emph{sort dependency graph} as a directed graph where the set of vertices is the set of sorts in $\vocabulary$. The set of directed edges includes an edge from $\srt_1$ to sort $\srt_2$ if and only if there exists a function symbol in $\varphi$ in which $\srt_1$ is one of the input sorts and $\srt_2$ is the output sort.
+%%
+%A formula $\varphi$ is \emph{stratified} if its sort dependency graph is acyclic.  The extended EPR
+%fragment consists of all stratified formulas. The extension maintains both the finite model property and the decidability of the satisfiability
+%problem. The reason is that the vocabulary of a stratified
+%formula can only generate a finite set of ground terms. This allows
+%complete instantiation of the universal quantifiers.
+
+\commentout{
+\paragraph{Linear Integer Arithmetic (LIA)}
+The theory of \emph{Linear Integer Arithmetic} (also known as Presburger arithmetic) is defined over a vocabulary where the only sort is $\Integer$.
+%and the symbols are $0,1,+,\leq$.
+The vocabulary includes constant symbols (e.g., $1,2,\ldots$), function symbols of linear arithmetic (e.g., ``$+$'', but not multiplication), and relation symbols (e.g., ``$\leq$'').
+All symbols are interpreted by the theory, which includes all formulas over this vocabulary that are satisfied by the integers.
+%%It may also include uninterpreted constants (e.g., ones resulting from Skolemization). No other uninterpreted symbols are allowed.
+No uninterpreted symbols are allowed.
+For formulas over this vocabulary, satisfiability modulo the theory of LIA is decidable (without any restriction on quantification).
+}
+
+%Formulas in the \emph{Linear Integer Arithmetic} fragment (also known as Presburger arithmetic) are defined over a vocabulary where the only sort is $\Integer$. The vocabulary includes interpreted constant symbols (e.g., $1,2,\ldots$), interpreted function symbols of linear arithmetic (e.g., ``$+$''), and interpreted relation symbols (e.g., ``$\leq$''). It may also include uninterpreted constants (e.g., ones resulting from Skolemization). No other uninterpreted symbols are allowed.
+%%When the quantifier prefix of formulas is restricted to $\exists^{*}$, satisfiability modulo the theory of LIA is decidable.
+%For formulas over this vocabulary (with unrestricted quantification), satisfiability modulo the theory of LIA is decidable.
+%%(i.e., satisfiability when models are restricted to models %where the interpreted symbols are interpreted as in LIA)
+%%that satisfy the theory of LIA) is decidable.
+%\TODO{written in a non-standard way. check}
+
+%\paragraph{Quantifier-Free Linear Integer Arithmetic (LIA)}
+%Formulas in the theory of \emph{Linear Integer Arithmetic} are defined over a vocabulary where the only sort is $\Integer$. The vocabulary includes interpreted constant symbols (e.g., $1,2,\ldots$), interpreted function symbols of linear arithmetic (e.g., ``$+$''), and interpreted relation symbols (e.g., ``$\leq$''). It may also include uninterpreted constants (e.g., ones resulting from Skolemization). No other uninterpreted symbols are allowed.
+%%When the quantifier prefix of formulas is restricted to $\exists^{*}$,
+%When quantifier-free formulas are considered, satisfiability modulo the theory of LIA (i.e., satisfiability when models are restricted to models %where the interpreted symbols are interpreted as in LIA)
+%that satisfy the theory of LIA) is decidable.
+%\TODO{written in a non-standard way. check}
+
+\paragraph{Finite Almost Uninterpreted Fragment (FAU)}
+Formulas in the almost uninterpreted fragment~\cite{ge2009complete} are defined over a vocabulary that consists of the usual interpreted symbols of Linear Integer Arithmetic (LIA), equality and bit-vectors, extended with uninterpreted constant, function and relation symbols.
+%\sharon{embedded def of LIA into here:}
+In this work, we will not use bit-vectors. We recall that LIA includes constant symbols (e.g., $1,2,\ldots$), function symbols of linear arithmetic (e.g., ``$+$'', but not multiplication), and relation symbols (e.g., ``$\leq$''), all of which are interpreted by the theory, which includes all formulas over this vocabulary that are satisfied by the integers.
+%For simplicity, %we consider formulas in conjunctive normal form (CNF).
+%we assume that existential quantifiers were eliminated by Skolemization, which replaced them with fresh constant or function symbols while preserving satisfiability. As such, formulas may only contain universal quantifiers.
+A formula (over the extended vocabulary) is in the \emph{essentially uninterpreted} fragment if variables are restricted to appear as arguments to uninterpreted function or relation symbols.
+The \emph{almost uninterpreted} fragment also allows variables to appear in inequalities in a restricted way (for example, inequalities between a variable and a ground term are allowed). For example $\forall x:\mbox{int}.\ x + y \leq z$, is not in the fragment, since the variable $x$ appears under the interpreted relation $\leq$. However $\forall x:\mbox{int}.\ f(x) + y \leq z$ is allowed, as is $\forall x:\mbox{int}.\ x \leq y$.
+
+The \emph{finite} almost interpreted fragment (FAU) is defined as the
+set of almost interpreted formulas that are stratified as defined in~\cite{ge2009complete}. Satisfiability of FAU modulo the theory is decidable. In
+particular, in~\cite{ge2009complete} a set of groundings is defined
+that is sufficient for completeness. In FAU, this set is finite, which
+implies decidability. Moreover, it implies that every satisfiable
+formula has a model in which the universes of the uninterpreted sorts
+are finite. This is useful for providing counterexamples. The FAU
+fragment also subsumes the array property fragment described
+in~\cite{BradleyManna}.
+
+Of particular importance for our purposes, the SMT solver Z3~\cite{Z3} is a
+decision procedure for the FAU fragment. This is because its
+model-based quantifier instantiation procedure guarantees to
+eventually generate every grounding in the required set. This gives us
+a rich language in which to express our verification conditions,
+without sacrificing decidabilty.
+\oded{I think we should remove this: The subject of this paper is how to
+structure the proofs of implementations of distributed protocols such
+that the verification conditions fall into this fragment.}
+
+%\TODO{positive and negative examples}
+
+%if variables are restricted to appear as arguments to uninterpreted function or relation symbols or as part of atomic formulas of the form $\neg (x_i \leq x_j)$.
+
+\commentout{
+\paragraph{Finite Essentially Uninterpreted Fragment (FEU)}
+Formulas in the essentially uninterpreted fragment are defined over a vocabulary that consists of the usual interpreted symbols of LIA, equality and bit-vectors, extended with uninterpreted constant, function and relation symbols. (In this work, we will only use LIA and equality.)
+%\TODO{in the paper it is also bit vectors and equality}
+For simplicity, we consider formulas in conjunctive normal form (CNF).
+We assume that existential quantifiers were eliminated by Skolemization, which replaced them with fresh constant or function symbols while preserving satisfiability. As such, formulas may only contain universal quantifiers.
+
+A formula is \emph{essentially uninterpreted} if variables are restricted to appear as arguments to uninterpreted function or relation symbols.
+For such a formula $\varphi$, we introduce an \emph{instantiation dependency graph}, where the set of vertices is the set of all pairs $(f,j)$ where $f$ is a function or relation symbol of arity $n$, and $1 \leq j$. A vertex $(f,j)$ represents the set of ground terms that need to be considered as the $j$th argument of $f$ in a complete set of instantiations (i.e., a set of instantiations that is equi-satisfiable to $\varphi$). The edges represent dependencies between these sets.
+An edge from $(f,j)$ to $(f',j')$ exists if there exists a clause in which $x$ appears as the $j'$-th argument to $f'$ and in addition a term $t(x,\ldots)$ appears as the $j$-th argument to $f$.
+
+The \emph{finite essentially uninterpreted} (FEU) fragment consists of formulas $\varphi$ for which the instantiation dependency graph is acyclic.
+%there exists a function $\textit{level}$ that maps each set $S_{k,i}$, $A_{f,j}$ to a natural number, representing its level.
+Acyclicity ensures that it is possible to compute a finite set of ground instantiations which is complete, % (i.e., it is equi-satisfiable to $\varphi$),
+making it decidable to check satisfiability modulo theory. Details on how to compute this set of instantiations appear in~\cite{ge2009complete}.
+
+}
+
+\commentout{
+For such a formula $\varphi$, we introduce the following sets of terms:
+\begin{itemize}
+\item For each variable $x_i$ and clause $C_k$ such that $x_i$ appears in $C_k$, the set $S_{k,i}$ represents the set of ground terms that need to be instantiated for $x_i$ in $C_k$.
+\item For each uninterpreted function or relation \TODO{should it include relation symbols?} symbol $f$ with arity $n$ and for every $1 \leq j \leq n$, the set $A_{f,j}$ represents the set of ground terms that need to be instantiated for the $j$th argument of $f$.
+\end{itemize}
+We then define the following set of constraints, denoted $\Delta_{\varphi}$, that capture relationships between the sets of ground terms that need to be used in instantiations.
+%The constraints are defined over the following sets of terms:
+%The set of constraint, denoted $\Delta_{\varphi}$, is defined as follows:
+\begin{itemize}
+\item If a ground term $t$ appears as the $j$-th argument to $f$, then a constraint $t \in A_{f,j}$ is added to $\Delta_{\varphi}$.
+\item If $t(x_1,\ldots,x_n)$ appears as the $j$-th argument to $f$ in $C_k$, then a constraint $t(t_1,\ldots,t_n) \in A_{f,j}$ is added to $\Delta_{\varphi}$ for every $(t_1,\ldots,t_n) \in S_{k,1} \times \cdots \times S_{k,n}$, reflecting the fact that $A_{f,j}$ depends on $S_{k,1},\ldots,S_{k,n}$.
+\item Finally, if $x_i$ appears as the $j$-th argument to $f$ in $C_k$, then a constraint $S_{k,i} = A_{f,j}$ is added to $\Delta_{\varphi}$, reflecting the fact that $A_{f,j}$ and $S_{k,i}$ need to be merged.
+\end{itemize}
+
+The least solution of $\Delta_{\varphi}$ defines a (possibly infinite) set of ground terms that form a complete set of instantiations for $\varphi$, i.e. a set of instantiations that is equi-satisfiable to $\varphi$.
+The \emph{finite essentially uninterpreted} (FEU) fragment consists of formulas $\varphi$ for which $\Delta_{\varphi}$ is \emph{stratified}, i.e., the dependency graph between the sets $A_{f,j}$ is acyclic (when merging $A_{f,j}$ and $S_{k,i}$ whenever $S_{k,i} = A_{f,j} \in \Delta_{\varphi}$).
+\TODO{is this correct??}
+%there exists a function $\textit{level}$ that maps each set $S_{k,i}$, $A_{f,j}$ to a natural number, representing its level.
+Stratification ensures that the obtained set of ground instantiations is finite, resulting in decidability.
+}
+
+%The \emph{finite essentially uninterpreted} (FEU) fragment consists of formulas $\varphi$ for which the following set of constraints, $\Delta_{\varphi}$, whose least solution defines a set of ground terms that form a complete set of instantiations, is \emph{stratified}. Stratification ensures that the obtained set of ground instantiations is finite, resulting in decidability.
+

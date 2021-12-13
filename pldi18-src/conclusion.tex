@@ -1,0 +1,48 @@
+\section{Conclusion}
+
+
+\commentout{
+At the implementation level, distributed protocols involve arithmetic,
+unbounded sets of process and unbounded data structures.  For this
+reason, we might expect that reasoning about these systems would
+require the use of undecidable logics. We have seen, however, that by a
+fairly simple modular decomposition, we can separate the proof into
+lemmas in decidable fragments, which in turn can make the use of
+automated provers more predictable and transparent. This results in
+part from the fact that there are fairly rich theories that are
+decidable and implemented in modern SMT solvers (particularly
+Z3). Particularly, one needs to take care in separating arithmetic
+reasoning from reasoning about parameterized systems, and to divide
+the problem in a way that keeps functions and quantifier alternations
+stratified. Useful tactics for this are to use an abstract protocol
+model to prove system-level properties and to create abstract
+datatypes.  Of perhaps independent interest is that the refinement
+from abstract model to concurrent implementation can be accomplished
+with traditional modular program reasoning methods, and without
+establishing a simulation or using two-vocabulary formulas to specify
+the abstract transition relation as in~\cite{IronFleet}.
+
+There are, of course, still many problems to be solved, for example,
+reducing the trusted code base and proving liveness. Our experience to
+this point, however, indicates that robust proof automation can be
+achieved without increasing the burden of annotation for engineers.
+}
+
+Modularity is well recognized as a key to scalability of systems.
+This paper shows that modularity enables decidability of reasoning
+about real implementations of distributed protocols.
+%
+% At the implementation level, distributed protocols involve arithmetic, unbounded sets of processes and unbounded data structures.
+Such implementations involve arithmetic, unbounded sets of processes, and unbounded data structures.
+For this reason, we might expect that reasoning about these systems
+would require the use of undecidable logics. We have seen, however,
+that by a fairly simple modular decomposition, we can separate the
+proof into lemmas that reside in decidable fragments, which in turn
+can make the use of automated provers more predictable and transparent.
+%This results in part from the fact that there are
+%fairly rich theories that are decidable and implemented in modern
+%SMT solvers (particularly Z3). Particularly, one needs to take care
+%in separating arithmetic reasoning from reasoning about
+%parameterized systems, and to divide the problem in a way that keeps
+%the us
+

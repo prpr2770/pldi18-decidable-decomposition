@@ -1,0 +1,4 @@
+vars:
+  keys: 500
+  threads: 50
+  requests: 10000

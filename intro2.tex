@@ -1,0 +1,159 @@
+\section{Introduction}
+
+\begin{sloppypar}
+Verifying complex software systems is a longstanding research goal.
+Recently there have been some success stories in verifying
+compilers~\cite{Compcert}, operating systems~\cite{sel4}, and
+distributed systems~\cite{IronFleet,Verdi}.  These broadly use two
+techniques: interactive theorem proving (e.g., Coq~\cite{coq},
+Isabelle/HOL~\cite{nipkow_isabelle/hol:_2002}) and deductive
+verification based on automated theorem provers (e.g.,
+Dafny~\cite{Dafny} which uses Z3~\cite{Z3}). However, both techniques
+are difficult to apply and require a large proof engineering effort.
+On the one hand, interactive theorem provers allow a user to write
+proofs in highly expressive formalisms (e.g., higher-order logic or
+dependent type theory).  While this allows great flexibility, it
+generally requires the user to manually write long and detailed
+proofs.
+\end{sloppypar}
+
+On the other hand, deductive verification techniques use automated theorem provers
+%,e.g. the Z3 SMT solver~\cite{Z3}\mooly{why do we refer to Z3 and not to other SMTs},
+to reduce the size of the manually written proofs. In this approach,
+user-provided annotations (e.g., invariants, pre- and post-conditions)
+are used to reduce the proof to
+lemmas called \emph{verification conditions} that can be discharged by
+the automated prover.  In case these lemmas fail, the prover can
+sometimes produce counterexamples that explain the failure and allow
+the programmer to correct the annotations.
+
+Unfortunately, the behavior of provers can be quite unpredictable,
+especially when applied to formulas with quantifiers, which are common
+in practice, e.g., in distributed systems. Since the problem presented to
+the prover is in general undecidable, it is no surprise that the
+prover sometimes diverges or produces inconclusive results on small
+instances, or suffers from the ``butterfly effect'', when a seemingly
+irrelevant change in the input causes the prover to fail. As observed
+in the IronFleet project, SMT solvers can diverge even on tiny
+examples~\cite{IronFleet}. When this happens, the user has little information with
+which to decide how to proceed.  This was identified in IronFleet as
+the main hurdle in the verification task.
+
+One approach to address the unpredictability of automated solvers is
+to restrict verification conditions to a decidable fragment of
+logic~\cite{dragoi_psync:_2016,DBLP:conf/tacas/HenriksenJJKPRS95,SmallFootDecidable,MadhusudanPQ11}.
+%\TODO{Mooly, can you check the references? what else should we cite here? I couldn't figure out citations to: nyad, everything-else}
+Our previous work on the Ivy verification system~\cite{Ivy,
+  ken_fmcad16, oopsla17-epr} has used the effectively propositional
+(EPR) fragment of first-order logic to verify distributed protocols
+designs (e.g. cache coherence and consensus). However, the
+restrictions imposed for decidability are a major limitation. In
+particular, these restrictions are the reason our previous works only
+verified protocol designs rather than their executable
+implementations.
+%\oded{Can you check the last few sentences? Marcelo and I rewrote them following Adam's comment}
+
+\paragraph{Decidable Decomposition}
+
+In this paper, we show how to use well-understood modular reasoning
+techniques to increase the applicability of decidable reasoning
+and support verifying implementations as well as designs.
+The key idea is to structure the correctness proof in a modular way,
+such that each component can be proved using a decidable fragment of first-order logic,
+possibly with a background theory. Importantly, each component's
+verification condition can use a \emph{different} decidable fragment.
+This allows, for example, one component to use arithmetic, while another uses
+stratified quantifiers and uninterpreted relations. It also allows
+each component to use its own quantifier stratification, even when
+the combination would not be stratified. We will refer to
+this approach as \emph{decidable decomposition}.  Crucially, decidable
+decomposition can be applied even when the global verification
+condition does not lie in any single decidable fragment (for example,
+the combination of arithmetic, uninterpreted relations, and
+quantifiers is undecidable).
+
+% A key aspect of our methodology is the separation between the abstract
+% model and its implementation using concrete data
+% structures. We prove system-level properties of the protocol using the
+% abstract model and use these properties as a lemma in proving the
+% implementation. This is important for obtaining stratification in the use of quantifiers.
+% In addition, we use abstract datatypes to hide the
+% theory needed to implement a data structure behind a set of abstract
+% properties. The resulting
+% decidable decomposition allows us to prove each
+% module locally with decidable logics, even though a global proof would take us
+% outside the decidable range.
+
+Because our prover is a decision procedure for the logical fragments
+we use, we can guarantee that in principle it will always terminate
+with a proof or a counter-model. In practice, decidability means that
+the behavior of the prover is much more predictable.
+
+
+
+\paragraph{Verifying Distributed Systems}
+
+As a demonstration of decidable decomposition, we verify distributed protocols and
+their implementations. %\oded{I rephrased the following}
+Distributed protocols play an essential role in today's computing landscape.
+Reasoning about distributed protocols naturally leads to quantifiers and uninterpreted relations,
+while their implementations use both arithmetic and concrete
+representations (e.g., arrays). This combination escapes known decidable fragments. In particular, it prevented our previous work on the Ivy verification system from verifying
+the implementations of distributed protocols.
+%To overcome this, we use decidable decomposition in this work.
+Here, we overcome this by applying decidable decomposition.
+
+%but our previous work on the Ivy verification system could not verify
+%their implementations. \sharon{remove "but our previous work on the Ivy verification system could not verify
+%their implementations" (it's repetitive. but if we do want to repeat, it makes sense to repeat towards the end of the paragraph when saying "escapes...").  Also remove the words "In particular" but keep the rest of the sentence }In particular, reasoning about distributed
+%protocols naturally leads to quantifiers and uninterpreted relations,
+%while their implementations use both arithmetic and concrete
+%representations (e.g., arrays). This combination escapes the decidable
+%fragments used in previous work. \sharon{replace "the decidable
+%fragments used in previous work" by "known decidable
+%fragments". Possibly add "preventing our previous work on the Ivy verification system from verifying
+%the implementations of distributed protocols."}
+%\sharon{append "To overcome this, we use decidable decomposition" (otherwise the connection with next paragraph is too loose)}
+
+We observe in our evaluation that the human effort needed to achieve
+decidable decomposition is modest, and follows well known modular design principles.
+%We identify a few patterns \sharon{do we ever go back to the patterns? }that
+%suffice to decompose interesting systems.
+For example, in our implementation of Multi-Paxos, we decompose the proof into an abstract
+protocol and an implementation, where each component's verification
+condition falls in a (different) decidable fragment. 
+
+At the end of
+the process, we compile the verified system to executable code (which
+uses a small set of trusted libraries, e.g., to implement a built-in
+array type).
+%Built-in language features are implemented as part of the trusted code based.  by connecting several trusted libraries.
+Our preliminary experience indicates that this can be used to generate reasonably efficient verified distributed systems.
+
+\paragraph{Contributions}
+%This paper makes the following contributions:
+The contributions of this paper are: % as follows:
+\begin{compactenum}
+\item A new methodology, \emph{decidable decomposition},
+  that uses existing modularity principles to decompose the verification into lemmas proved in (different) decidable logics.
+\item A realization of this methodology in a deductive verification tool, Ivy, that supports compilation to C++ and
+  discharges verification conditions using an SMT solver. The fact that all verification conditions are decidable
+  makes the SMT solver's performance more predictable, improving the system's usability and reducing verification effort.
+\item An application of the methodology to distributed systems,
+  resulting in verified implementations of two popular distributed algorithms, Raft and Multi-Paxos,
+  obtaining reasonable run-time performance.
+  We show that proofs of these systems naturally decompose into decidable sub-problems.
+  Our experience is that verifying systems in decidable logics is significantly easier than previous approaches.
+\end{compactenum}
+
+% james thinks we've successfully integrated these thoughts into the new intro
+% \ken{Added the following paragraph in response to first shepherd
+%   request.}  The practical results in this paper are based on a tool
+% called IVy. IVy was introduced in~\cite{Ivy} as a tool for interactive
+% verification of distributed protocols using the decidable logic
+% EPR. IVy's modular proof system was introduced
+% in~\cite{ken_fmcad16}. We use that system here (with some extensions
+% to the logic) to demonstrate a new methodology of decidability through
+% modularity. This methodology allows us to formally refine abstract
+% distributed protocol models from~\cite{oopsla17-epr} into executable
+% implementations, while keeping the verification conditions decidable.

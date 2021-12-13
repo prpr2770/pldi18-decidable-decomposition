@@ -1,0 +1,555 @@
+
+Isolate isystem:
+
+    The following properties are assumed as axioms:
+        natural_numbers.ivy: line 20: index.spec.prop217
+        natural_numbers.ivy: index.spec.prop218
+        natural_numbers.ivy: line 22: index.spec.prop219
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 4: index.spec.transitivity
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 5: index.spec.antisymmetry
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 6: index.spec.totality
+        natural_numbers.ivy: line 20: term.spec.prop217
+        natural_numbers.ivy: term.spec.prop218
+        natural_numbers.ivy: line 22: term.spec.prop219
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 4: term.spec.transitivity
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 5: term.spec.antisymmetry
+        /home/ivyuser/ivy/ivy/include/1.7/order.ivy: line 6: term.spec.totality
+        raft.ivy: line 76: hist.prop251
+        raft.ivy: line 77: hist.prop252
+        raft.ivy: line 78: hist.prop253
+        raft.ivy: line 499: node_term.prop308
+        raft.ivy: line 500: node_term.prop309
+        raft.ivy: line 501: node_term.prop310
+
+    The following definitions are used:
+        raft.ivy: line 560: localstate.def320(V0:node)
+        raft.ivy: line 561: localstate.def321(V0:node)
+        raft.ivy: line 562: localstate.def322(V0:node)
+        raft.ivy: line 600: localstate.def325(V0:node)
+        raft.ivy: line 1159: safetyproof.def401
+
+    The inductive invariant consists of the following conjectures:
+        raft.ivy: line 1077: safetyproof.conj363
+        raft.ivy: line 1081: safetyproof.conj364
+        raft.ivy: line 1085: safetyproof.conj365
+        raft.ivy: line 1086: safetyproof.conj366
+        raft.ivy: line 1087: safetyproof.conj367
+        raft.ivy: line 1089: safetyproof.conj368
+        raft.ivy: line 1092: safetyproof.conj369
+        raft.ivy: line 1093: safetyproof.conj370
+        raft.ivy: line 1094: safetyproof.conj371
+        raft.ivy: line 1097: safetyproof.conj372
+        raft.ivy: line 1100: safetyproof.conj373
+        raft.ivy: line 1105: safetyproof.conj374
+        raft.ivy: line 1110: safetyproof.conj375
+        raft.ivy: line 1114: safetyproof.conj376
+        raft.ivy: line 1115: safetyproof.conj377
+        raft.ivy: line 1118: safetyproof.conj378
+        raft.ivy: line 1119: safetyproof.conj379
+        raft.ivy: line 1120: safetyproof.conj380
+        raft.ivy: line 1121: safetyproof.conj381
+        raft.ivy: line 1122: safetyproof.conj382
+        raft.ivy: line 1123: safetyproof.conj383
+        raft.ivy: line 1126: safetyproof.conj384
+        raft.ivy: line 1132: safetyproof.conj385
+        raft.ivy: line 1133: safetyproof.conj386
+        raft.ivy: line 1134: safetyproof.conj387
+        raft.ivy: line 1135: safetyproof.conj388
+        raft.ivy: line 1136: safetyproof.conj389
+        raft.ivy: line 1138: safetyproof.conj390
+        raft.ivy: line 1139: safetyproof.conj391
+        raft.ivy: line 1143: safetyproof.conj392
+        raft.ivy: line 1144: safetyproof.conj393
+        raft.ivy: line 1148: safetyproof.conj394
+        raft.ivy: line 1149: safetyproof.conj395
+        raft.ivy: line 1150: safetyproof.conj396
+        raft.ivy: line 1151: safetyproof.conj397
+        raft.ivy: line 1152: safetyproof.conj398
+        raft.ivy: line 1153: safetyproof.conj399
+        raft.ivy: line 1154: safetyproof.conj400
+        raft.ivy: line 1166: safetyproof.conj402
+        raft.ivy: line 1175: safetyproof.conj403
+        raft.ivy: line 1184: safetyproof.conj404
+        raft.ivy: line 1193: safetyproof.conj405
+        raft.ivy: line 1194: safetyproof.conj406
+        raft.ivy: line 1195: safetyproof.conj407
+        raft.ivy: line 1196: safetyproof.conj408
+        raft.ivy: line 1197: safetyproof.conj409
+        raft.ivy: line 1198: safetyproof.conj410
+        raft.ivy: line 1199: safetyproof.conj411
+        raft.ivy: line 1200: safetyproof.conj412
+        raft.ivy: line 1203: safetyproof.conj413
+        raft.ivy: line 1204: safetyproof.conj414
+        raft.ivy: line 1205: safetyproof.conj415
+        raft.ivy: line 1207: safetyproof.conj416
+        raft.ivy: line 1208: safetyproof.conj417
+        raft.ivy: line 1210: safetyproof.conj418
+        raft.ivy: line 1213: safetyproof.conj419
+        raft.ivy: line 1220: safetyproof.conj420
+
+    The following action implementations are present:
+        raft.ivy: line 582: implementation of localstate.become_leader
+        raft.ivy: line 601: implementation of localstate.get_last_commited_ix
+        raft.ivy: line 568: implementation of localstate.get_term
+        raft.ivy: line 564: implementation of localstate.move_to_term
+        raft.ivy: line 604: implementation of localstate.set_last_commited_ix
+        raft.ivy: line 1056: implementation of safetyproof.remember_previx_ghost
+        raft.ivy: line 1065: implementation of safetyproof.set_leader_ghost
+        raft.ivy: line 1050: implementation of safetyproof.set_valid_ghost
+        raft.ivy: line 1039: implementation of safetyproof.update_commited_ghost
+        raft.ivy: line 1071: implementation of safetyproof.update_term_hist_ghost
+        raft.ivy: line 796: implementation of system.announce_candidacy
+        raft.ivy: line 964: implementation of system.commited_at_ix
+        raft.ivy: line 763: implementation of system.get_value
+        raft.ivy: implementation of system.report_commits
+        raft.ivy: implementation of system.req_append_new_entry
+        raft.ivy: implementation of system.req_replicate_entry_from_log
+        raft.ivy: line 768: implementation of sec.timeout
+        raft.ivy: line 923: implementation of shim.handle_append_entries
+        raft.ivy: implementation of shim.handle_appended_reply_msg
+        raft.ivy: line 778: implementation of shim.handle_keepalive
+        raft.ivy: line 788: implementation of shim.handle_nack
+        raft.ivy: implementation of shim.handle_rqst_vote
+        raft.ivy: implementation of shim.handle_rqst_vote_nolog
+        raft.ivy: implementation of shim.handle_vote_cand_msg
+
+    The following action monitors are present:
+        raft.ivy: line 441: monitor of commited_ix.empty
+        raft.ivy: line 421: monitor of commited_ix.get
+        raft.ivy: line 417: monitor of commited_ix.get
+        raft.ivy: line 425: monitor of commited_ix.set
+        raft.ivy: line 99: monitor of hist.append
+        raft.ivy: line 94: monitor of hist.append
+        raft.ivy: line 80: monitor of hist.clear
+        raft.ivy: line 115: monitor of hist.get_logt
+        raft.ivy: line 111: monitor of hist.get_logt
+        raft.ivy: line 107: monitor of hist.get_next_ix
+        raft.ivy: line 88: monitor of hist.strip
+        raft.ivy: line 84: monitor of hist.strip
+        natural_numbers.ivy: line 25: monitor of index.next
+        natural_numbers.ivy: line 32: monitor of index.prev
+        natural_numbers.ivy: line 30: monitor of index.prev
+        raft.ivy: line 716: monitor of localstate.add_replier
+        raft.ivy: line 707: monitor of localstate.add_vote
+        raft.ivy: line 729: monitor of localstate.get_last_commited_ix
+        raft.ivy: line 726: monitor of localstate.get_last_commited_ix
+        raft.ivy: line 719: monitor of localstate.get_repliers
+        raft.ivy: line 700: monitor of localstate.get_term
+        raft.ivy: line 710: monitor of localstate.get_voters
+        raft.ivy: line 696: monitor of localstate.move_to_term
+        raft.ivy: line 733: monitor of localstate.set_last_commited_ix
+        raft.ivy: line 531: monitor of node_term.empty
+        raft.ivy: line 506: monitor of node_term.get
+        raft.ivy: line 503: monitor of node_term.get
+        raft.ivy: line 511: monitor of node_term.set
+        raft.ivy: line 749: monitor of shim.handle_appended_reply_msg
+        raft.ivy: line 210: monitor of shim.handle_append_entries
+        raft.ivy: line 223: monitor of shim.handle_appended_reply_msg
+        raft.ivy: line 214: monitor of shim.handle_rqst_vote
+        raft.ivy: line 218: monitor of shim.handle_rqst_vote_nolog
+        raft.ivy: line 227: monitor of shim.handle_vote_cand_msg
+        raft.ivy: line 181: monitor of msg_append_send
+        raft.ivy: line 204: monitor of send_appended_reply_msg
+        raft.ivy: line 196: monitor of send_rqst_vote_m_nolog
+        raft.ivy: line 192: monitor of send_rqst_vote_msg
+        raft.ivy: line 200: monitor of send_vote_cand_msg
+        natural_numbers.ivy: line 36: monitor of term.add
+
+    The following initializers are present:
+        raft.ivy: line 450: commited_ix.init_promises.init[after300]
+        raft.ivy: line 120: hist.init[after262]
+        raft.ivy: line 553: localstate.init[after318]
+        raft.ivy: line 571: localstate.init[after323]
+        raft.ivy: line 586: localstate.init[after324]
+        raft.ivy: line 607: localstate.init[after326]
+        raft.ivy: line 737: localstate.init_promises.init[after349]
+        raft.ivy: line 544: node_term.init_promises.init[after317]
+        raft.ivy: line 1023: safetyproof.init[after362]
+        raft.ivy: line 173: shim.init[after263]
+
+    Initialization must establish the invariant
+        raft.ivy: line 1077: safetyproof.conj363 ... PASS
+        raft.ivy: line 1081: safetyproof.conj364 ... PASS
+        raft.ivy: line 1085: safetyproof.conj365 ... PASS
+        raft.ivy: line 1086: safetyproof.conj366 ... PASS
+        raft.ivy: line 1087: safetyproof.conj367 ... PASS
+        raft.ivy: line 1089: safetyproof.conj368 ... PASS
+        raft.ivy: line 1092: safetyproof.conj369 ... PASS
+        raft.ivy: line 1093: safetyproof.conj370 ... PASS
+        raft.ivy: line 1094: safetyproof.conj371 ... PASS
+        raft.ivy: line 1097: safetyproof.conj372 ... PASS
+        raft.ivy: line 1100: safetyproof.conj373 ... PASS
+        raft.ivy: line 1105: safetyproof.conj374 ... PASS
+        raft.ivy: line 1110: safetyproof.conj375 ... PASS
+        raft.ivy: line 1114: safetyproof.conj376 ... PASS
+        raft.ivy: line 1115: safetyproof.conj377 ... PASS
+        raft.ivy: line 1118: safetyproof.conj378 ... PASS
+        raft.ivy: line 1119: safetyproof.conj379 ... PASS
+        raft.ivy: line 1120: safetyproof.conj380 ... PASS
+        raft.ivy: line 1121: safetyproof.conj381 ... PASS
+        raft.ivy: line 1122: safetyproof.conj382 ... PASS
+        raft.ivy: line 1123: safetyproof.conj383 ... PASS
+        raft.ivy: line 1126: safetyproof.conj384 ... PASS
+        raft.ivy: line 1132: safetyproof.conj385 ... PASS
+        raft.ivy: line 1133: safetyproof.conj386 ... PASS
+        raft.ivy: line 1134: safetyproof.conj387 ... PASS
+        raft.ivy: line 1135: safetyproof.conj388 ... PASS
+        raft.ivy: line 1136: safetyproof.conj389 ... PASS
+        raft.ivy: line 1138: safetyproof.conj390 ... PASS
+        raft.ivy: line 1139: safetyproof.conj391 ... PASS
+        raft.ivy: line 1143: safetyproof.conj392 ... PASS
+        raft.ivy: line 1144: safetyproof.conj393 ... PASS
+        raft.ivy: line 1148: safetyproof.conj394 ... PASS
+        raft.ivy: line 1149: safetyproof.conj395 ... PASS
+        raft.ivy: line 1150: safetyproof.conj396 ... PASS
+        raft.ivy: line 1151: safetyproof.conj397 ... PASS
+        raft.ivy: line 1152: safetyproof.conj398 ... PASS
+        raft.ivy: line 1153: safetyproof.conj399 ... PASS
+        raft.ivy: line 1154: safetyproof.conj400 ... PASS
+        raft.ivy: line 1166: safetyproof.conj402 ... PASS
+        raft.ivy: line 1175: safetyproof.conj403 ... PASS
+        raft.ivy: line 1184: safetyproof.conj404 ... PASS
+        raft.ivy: line 1193: safetyproof.conj405 ... PASS
+        raft.ivy: line 1194: safetyproof.conj406 ... PASS
+        raft.ivy: line 1195: safetyproof.conj407 ... PASS
+        raft.ivy: line 1196: safetyproof.conj408 ... PASS
+        raft.ivy: line 1197: safetyproof.conj409 ... PASS
+        raft.ivy: line 1198: safetyproof.conj410 ... PASS
+        raft.ivy: line 1199: safetyproof.conj411 ... PASS
+        raft.ivy: line 1200: safetyproof.conj412 ... PASS
+        raft.ivy: line 1203: safetyproof.conj413 ... PASS
+        raft.ivy: line 1204: safetyproof.conj414 ... PASS
+        raft.ivy: line 1205: safetyproof.conj415 ... PASS
+        raft.ivy: line 1207: safetyproof.conj416 ... PASS
+        raft.ivy: line 1208: safetyproof.conj417 ... PASS
+        raft.ivy: line 1210: safetyproof.conj418 ... PASS
+        raft.ivy: line 1213: safetyproof.conj419 ... PASS
+        raft.ivy: line 1220: safetyproof.conj420 ... PASS
+
+    Any assertions in initializers must be checked ... PASS
+
+    The following set of external actions must preserve the invariant:
+        raft.ivy: line 768: ext:sec.timeout
+            raft.ivy: line 1077: safetyproof.conj363 ... PASS
+            raft.ivy: line 1081: safetyproof.conj364 ... PASS
+            raft.ivy: line 1085: safetyproof.conj365 ... PASS
+            raft.ivy: line 1086: safetyproof.conj366 ... PASS
+            raft.ivy: line 1087: safetyproof.conj367 ... PASS
+            raft.ivy: line 1089: safetyproof.conj368 ... PASS
+            raft.ivy: line 1092: safetyproof.conj369 ... PASS
+            raft.ivy: line 1093: safetyproof.conj370 ... PASS
+            raft.ivy: line 1094: safetyproof.conj371 ... PASS
+            raft.ivy: line 1097: safetyproof.conj372 ... PASS
+            raft.ivy: line 1100: safetyproof.conj373 ... PASS
+            raft.ivy: line 1105: safetyproof.conj374 ... PASS
+            raft.ivy: line 1110: safetyproof.conj375 ... PASS
+            raft.ivy: line 1114: safetyproof.conj376 ... PASS
+            raft.ivy: line 1115: safetyproof.conj377 ... PASS
+            raft.ivy: line 1118: safetyproof.conj378 ... PASS
+            raft.ivy: line 1119: safetyproof.conj379 ... PASS
+            raft.ivy: line 1120: safetyproof.conj380 ... PASS
+            raft.ivy: line 1121: safetyproof.conj381 ... PASS
+            raft.ivy: line 1122: safetyproof.conj382 ... PASS
+            raft.ivy: line 1123: safetyproof.conj383 ... PASS
+            raft.ivy: line 1126: safetyproof.conj384 ... PASS
+            raft.ivy: line 1132: safetyproof.conj385 ... PASS
+            raft.ivy: line 1133: safetyproof.conj386 ... PASS
+            raft.ivy: line 1134: safetyproof.conj387 ... PASS
+            raft.ivy: line 1135: safetyproof.conj388 ... PASS
+            raft.ivy: line 1136: safetyproof.conj389 ... PASS
+            raft.ivy: line 1138: safetyproof.conj390 ... PASS
+            raft.ivy: line 1139: safetyproof.conj391 ... PASS
+            raft.ivy: line 1143: safetyproof.conj392 ... PASS
+            raft.ivy: line 1144: safetyproof.conj393 ... PASS
+            raft.ivy: line 1148: safetyproof.conj394 ... PASS
+            raft.ivy: line 1149: safetyproof.conj395 ... PASS
+            raft.ivy: line 1150: safetyproof.conj396 ... PASS
+            raft.ivy: line 1151: safetyproof.conj397 ... PASS
+            raft.ivy: line 1152: safetyproof.conj398 ... PASS
+            raft.ivy: line 1153: safetyproof.conj399 ... PASS
+            raft.ivy: line 1154: safetyproof.conj400 ... PASS
+            raft.ivy: line 1166: safetyproof.conj402 ... PASS
+            raft.ivy: line 1175: safetyproof.conj403 ... PASS
+            raft.ivy: line 1184: safetyproof.conj404 ... PASS
+            raft.ivy: line 1193: safetyproof.conj405 ... PASS
+            raft.ivy: line 1194: safetyproof.conj406 ... PASS
+            raft.ivy: line 1195: safetyproof.conj407 ... PASS
+            raft.ivy: line 1196: safetyproof.conj408 ... PASS
+            raft.ivy: line 1197: safetyproof.conj409 ... PASS
+            raft.ivy: line 1198: safetyproof.conj410 ... PASS
+            raft.ivy: line 1199: safetyproof.conj411 ... PASS
+            raft.ivy: line 1200: safetyproof.conj412 ... PASS
+            raft.ivy: line 1203: safetyproof.conj413 ... PASS
+            raft.ivy: line 1204: safetyproof.conj414 ... PASS
+            raft.ivy: line 1205: safetyproof.conj415 ... PASS
+            raft.ivy: line 1207: safetyproof.conj416 ... PASS
+            raft.ivy: line 1208: safetyproof.conj417 ... PASS
+            raft.ivy: line 1210: safetyproof.conj418 ... PASS
+            raft.ivy: line 1213: safetyproof.conj419 ... PASS
+            raft.ivy: line 1220: safetyproof.conj420 ... PASS
+        raft.ivy: line 210: ext:shim.handle_append_entries
+            raft.ivy: line 1077: safetyproof.conj363 ... PASS
+            raft.ivy: line 1081: safetyproof.conj364 ... PASS
+            raft.ivy: line 1085: safetyproof.conj365 ... PASS
+            raft.ivy: line 1086: safetyproof.conj366 ... PASS
+            raft.ivy: line 1087: safetyproof.conj367 ... PASS
+            raft.ivy: line 1089: safetyproof.conj368 ... PASS
+            raft.ivy: line 1092: safetyproof.conj369 ... PASS
+            raft.ivy: line 1093: safetyproof.conj370 ... PASS
+            raft.ivy: line 1094: safetyproof.conj371 ... PASS
+            raft.ivy: line 1097: safetyproof.conj372 ... PASS
+            raft.ivy: line 1100: safetyproof.conj373 ... PASS
+            raft.ivy: line 1105: safetyproof.conj374 ... PASS
+            raft.ivy: line 1110: safetyproof.conj375 ... PASS
+            raft.ivy: line 1114: safetyproof.conj376 ... PASS
+            raft.ivy: line 1115: safetyproof.conj377 ... PASS
+            raft.ivy: line 1118: safetyproof.conj378 ... PASS
+            raft.ivy: line 1119: safetyproof.conj379 ... PASS
+            raft.ivy: line 1120: safetyproof.conj380 ... PASS
+            raft.ivy: line 1121: safetyproof.conj381 ... PASS
+            raft.ivy: line 1122: safetyproof.conj382 ... PASS
+            raft.ivy: line 1123: safetyproof.conj383 ... PASS
+            raft.ivy: line 1126: safetyproof.conj384 ... PASS
+            raft.ivy: line 1132: safetyproof.conj385 ... PASS
+            raft.ivy: line 1133: safetyproof.conj386 ... PASS
+            raft.ivy: line 1134: safetyproof.conj387 ... PASS
+            raft.ivy: line 1135: safetyproof.conj388 ... PASS
+            raft.ivy: line 1136: safetyproof.conj389 ... PASS
+            raft.ivy: line 1138: safetyproof.conj390 ... PASS
+            raft.ivy: line 1139: safetyproof.conj391 ... PASS
+            raft.ivy: line 1143: safetyproof.conj392 ... PASS
+            raft.ivy: line 1144: safetyproof.conj393 ... PASS
+            raft.ivy: line 1148: safetyproof.conj394 ... PASS
+            raft.ivy: line 1149: safetyproof.conj395 ... PASS
+            raft.ivy: line 1150: safetyproof.conj396 ... PASS
+            raft.ivy: line 1151: safetyproof.conj397 ... PASS
+            raft.ivy: line 1152: safetyproof.conj398 ... PASS
+            raft.ivy: line 1153: safetyproof.conj399 ... PASS
+            raft.ivy: line 1154: safetyproof.conj400 ... PASS
+            raft.ivy: line 1166: safetyproof.conj402 ... PASS
+            raft.ivy: line 1175: safetyproof.conj403 ... PASS
+            raft.ivy: line 1184: safetyproof.conj404 ... PASS
+            raft.ivy: line 1193: safetyproof.conj405 ... PASS
+            raft.ivy: line 1194: safetyproof.conj406 ... PASS
+            raft.ivy: line 1195: safetyproof.conj407 ... PASS
+            raft.ivy: line 1196: safetyproof.conj408 ... PASS
+            raft.ivy: line 1197: safetyproof.conj409 ... PASS
+            raft.ivy: line 1198: safetyproof.conj410 ... PASS
+            raft.ivy: line 1199: safetyproof.conj411 ... PASS
+            raft.ivy: line 1200: safetyproof.conj412 ... PASS
+            raft.ivy: line 1203: safetyproof.conj413 ... PASS
+            raft.ivy: line 1204: safetyproof.conj414 ... PASS
+            raft.ivy: line 1205: safetyproof.conj415 ... PASS
+            raft.ivy: line 1207: safetyproof.conj416 ... PASS
+            raft.ivy: line 1208: safetyproof.conj417 ... PASS
+            raft.ivy: line 1210: safetyproof.conj418 ... PASS
+            raft.ivy: line 1213: safetyproof.conj419 ... PASS
+            raft.ivy: line 1220: safetyproof.conj420 ... PASS
+        raft.ivy: line 749: ext:shim.handle_appended_reply_msg
+            raft.ivy: line 1077: safetyproof.conj363 ... PASS
+            raft.ivy: line 1081: safetyproof.conj364 ... PASS
+            raft.ivy: line 1085: safetyproof.conj365 ... PASS
+            raft.ivy: line 1086: safetyproof.conj366 ... PASS
+            raft.ivy: line 1087: safetyproof.conj367 ... PASS
+            raft.ivy: line 1089: safetyproof.conj368 ... PASS
+            raft.ivy: line 1092: safetyproof.conj369 ... PASS
+            raft.ivy: line 1093: safetyproof.conj370 ... PASS
+            raft.ivy: line 1094: safetyproof.conj371 ... PASS
+            raft.ivy: line 1097: safetyproof.conj372 ... PASS
+            raft.ivy: line 1100: safetyproof.conj373 ... PASS
+            raft.ivy: line 1105: safetyproof.conj374 ... PASS
+            raft.ivy: line 1110: safetyproof.conj375 ... PASS
+            raft.ivy: line 1114: safetyproof.conj376 ... PASS
+            raft.ivy: line 1115: safetyproof.conj377 ... PASS
+            raft.ivy: line 1118: safetyproof.conj378 ... PASS
+            raft.ivy: line 1119: safetyproof.conj379 ... PASS
+            raft.ivy: line 1120: safetyproof.conj380 ... PASS
+            raft.ivy: line 1121: safetyproof.conj381 ... PASS
+            raft.ivy: line 1122: safetyproof.conj382 ... PASS
+            raft.ivy: line 1123: safetyproof.conj383 ... PASS
+            raft.ivy: line 1126: safetyproof.conj384 ... PASS
+            raft.ivy: line 1132: safetyproof.conj385 ... PASS
+            raft.ivy: line 1133: safetyproof.conj386 ... PASS
+            raft.ivy: line 1134: safetyproof.conj387 ... PASS
+            raft.ivy: line 1135: safetyproof.conj388 ... PASS
+            raft.ivy: line 1136: safetyproof.conj389 ... PASS
+            raft.ivy: line 1138: safetyproof.conj390 ... PASS
+            raft.ivy: line 1139: safetyproof.conj391 ... PASS
+            raft.ivy: line 1143: safetyproof.conj392 ... PASS
+            raft.ivy: line 1144: safetyproof.conj393 ... PASS
+            raft.ivy: line 1148: safetyproof.conj394 ... PASS
+            raft.ivy: line 1149: safetyproof.conj395 ... PASS
+            raft.ivy: line 1150: safetyproof.conj396 ... PASS
+            raft.ivy: line 1151: safetyproof.conj397 ... PASS
+            raft.ivy: line 1152: safetyproof.conj398 ... PASS
+            raft.ivy: line 1153: safetyproof.conj399 ... PASS
+            raft.ivy: line 1154: safetyproof.conj400 ... PASS
+            raft.ivy: line 1166: safetyproof.conj402 ... PASS
+            raft.ivy: line 1175: safetyproof.conj403 ... PASS
+            raft.ivy: line 1184: safetyproof.conj404 ... PASS
+            raft.ivy: line 1193: safetyproof.conj405 ... PASS
+            raft.ivy: line 1194: safetyproof.conj406 ... PASS
+            raft.ivy: line 1195: safetyproof.conj407 ... PASS
+            raft.ivy: line 1196: safetyproof.conj408 ... PASS
+            raft.ivy: line 1197: safetyproof.conj409 ... PASS
+            raft.ivy: line 1198: safetyproof.conj410 ... PASS
+            raft.ivy: line 1199: safetyproof.conj411 ... PASS
+            raft.ivy: line 1200: safetyproof.conj412 ... PASS
+            raft.ivy: line 1203: safetyproof.conj413 ... PASS
+            raft.ivy: line 1204: safetyproof.conj414 ... PASS
+            raft.ivy: line 1205: safetyproof.conj415 ... PASS
+            raft.ivy: line 1207: safetyproof.conj416 ... PASS
+            raft.ivy: line 1208: safetyproof.conj417 ... FAIL
+searching for a small model... done
+
+Trace follows...
+********************************************************************************
+action:{{assume node_term.reached(localstate.nter(V0)); assume commited_ix.reached(localstate.cix(V0)); assume (nset.majority(S) & nset.majority(T)) -> exists N. (nset.member(N,S) & nset.member(N,T)); {assume appended_reply_msg(fml:t,fml:replier,fml:ix); local loc:ok {loc:ok := true; local loc:nextreportix {loc:nextreportix := fml:ix; loc:ok := (loc:ok & localstate.is_leader(fml:self)); if (loc:ok & fml:isrecover & hist.filled(localstate.myhist(fml:self),0)) {local loc:0,loc:1 {call loc:0 := hist.get_next_ix(localstate.myhist(fml:self)); call loc:1 := index.prev(loc:0); local loc:lastusedix {loc:lastusedix := loc:1; if loc:lastusedix > fml:ix {local loc:0,loc:1 {call loc:0 := index.next(fml:ix); call loc:1 := system.req_replicate_entry_from_log(fml:self, loc:0, fml:isrecover, fml:replier); local loc:rejected {loc:rejected := loc:1; assert ~loc:rejected}}}}}}; local loc:0 {call loc:0 := localstate.get_term(fml:self); loc:ok := (loc:ok & loc:0 = fml:t)}; loc:ok := (loc:ok & hist.logtix(localstate.myhist(fml:self),fml:ix,fml:t)); if localstate.commited(fml:self,0) {call loc:nextreportix := localstate.get_last_commited_ix(fml:self); loc:ok := (loc:ok & loc:nextreportix < fml:ix); call loc:nextreportix := index.next(loc:nextreportix)}
+else {loc:nextreportix := 0:index}; if loc:ok {call localstate.add_replier(fml:self, fml:ix, fml:replier)}; local loc:0 {call loc:0 := localstate.get_repliers(fml:self, fml:ix); local loc:repliers {loc:repliers := loc:0; loc:ok := (loc:ok & nset.majority(loc:repliers)); if loc:ok {call localstate.set_last_commited_ix(fml:self, fml:ix); call system.report_commits(fml:self, loc:nextreportix, fml:ix); call safetyproof.update_commited_ghost(localstate.myhist(fml:self), fml:ix, fml:t, loc:repliers)}}}}}; assert (localstate.commited(N1,IX) & localstate.commited(N2,IX)) -> hist.valix(localstate.myhist(N1),IX) = hist.valix(localstate.myhist(N2),IX)}}}
+annot:Rename(Rename(Compose((),Rename(Rename(Compose(Compose(Compose(Compose((),()),()),()),Rename(Compose(Compose(Compose((),()),Rename(Rename(Compose(Rename(Compose((),()),{new_loc:ok:__m_loc:ok_d}),Rename(Rename(Rename(Compose(Rename(Compose(Compose(Rename(Compose(Rename(Compose(Rename(Compose(Compose(Compose((),()),Rename((),{loc:nextreportix:new_loc:nextreportix})),Rename(Rename(Ite(__ts0_b,Rename(Rename(Compose(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose((),Compose((),())),()),()),{fml:h:new_fml:h})),Rename((),{fml:h:new_fml:h})),{fml:h:__fml:h,fml:ix:__fml:ix,new_fml:h:__new_fml:h}),{__fml:ix:__fml:ix,__new_fml:h:__new_fml:h})),Rename(Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose((),Compose(Compose(Compose((),()),()),())),()),()),{fml:x:new_fml:x})),Rename((),{fml:x:new_fml:x})),{new_fml:x:__new_fml:x,fml:y:__fml:y,fml:x:__fml:x}),{__new_fml:x:__new_fml:x,__fml:y:__fml:y}),{loc:0:new_loc:0})),Rename(Rename(Rename(Compose(Compose((),()),Rename(Rename(Ite(__ts0_a,Rename(Rename(Compose(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose(Compose((),()),()),()),Compose(Compose((),()),())),{fml:x:new_fml:x})),Rename((),{fml:x:new_fml:x})),{new_fml:x:__new_fml:x,fml:y:__fml:y,fml:x:__fml:x}),{__new_fml:x:__new_fml:x,__fml:y:__fml:y})),Rename(Rename(Rename(Compose(Compose(Compose(Compose(Compose(Compose((),()),Rename((),{fml:leader:new_fml:leader})),Rename((),{fml:ix:new_fml:ix,fml:leader:new_fml:leader})),Rename((),{fml:ix:new_fml:ix,fml:leader:new_fml:leader,fml:isrecover_a:new_fml:isrecover_a})),Rename(Rename(Compose((),Rename(Rename(Compose((),Rename(Rename(Compose((),Rename(Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Rename(Compose(Compose(Compose((),Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose((),Compose(Compose((),()),())),()),()),{fml:nter:new_fml:nter})),Rename((),{fml:nter:new_fml:nter})),{fml:nter:__fml:nter,fml:t_a:__fml:t_a,new_fml:nter:__new_fml:nter}),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter})),Rename((),{fml:t:new_fml:t})),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter})),Rename((),{fml:t:new_fml:t})),Rename((),{fml:t:new_fml:t})),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter}),{prm:V0:new_prm:V0})),Rename((),{prm:V0:new_prm:V0,fml:t:new_fml:t})),{new_prm:V0:__new_prm:V0,prm:V0:__prm:V0,fml:t:__fml:t,new_fml:t:__new_fml:t}),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter,__new_prm:V0:__new_prm:V0,__new_fml:t:__new_fml:t})),Rename(Rename(Rename(Compose(Compose((),()),Rename(Rename(Rename(Compose(Compose((),()),Rename(Rename(Rename(Compose((),Rename(Ite(__ts0_b,Rename(Compose(Compose(Compose(Compose((),()),Rename(Rename(Rename(Compose(Compose(Compose(Compose((),()),Rename((),{fml:h:new_fml:h})),Rename(Compose(Compose(Compose((),Compose(Compose((),()),())),()),()),{fml:h:new_fml:h,fml:ix_a:new_fml:ix_a})),Rename((),{fml:h:new_fml:h,fml:ix_a:new_fml:ix_a})),{fml:h:__fml:h,fml:logt:__fml:logt,new_fml:h:__new_fml:h,new_fml:ix_a:__new_fml:ix_a,fml:ix_a:__fml:ix_a}),{__new_fml:ix_a:__new_fml:ix_a,__fml:logt:__fml:logt,__new_fml:h:__new_fml:h}),{fml:rejected:new_fml:rejected})),Rename(Rename(Ite(__ts0_a,Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose((),Compose(Compose(Compose((),()),()),())),()),()),{fml:x:new_fml:x})),Rename((),{fml:x:new_fml:x})),{new_fml:x:__new_fml:x,fml:y:__fml:y,fml:x:__fml:x}),{__new_fml:x:__new_fml:x,__fml:y:__fml:y})),Rename(Rename(Rename(Compose(Compose(Compose(Compose((),()),Rename((),{fml:h:new_fml:h})),Rename(Compose(Compose(Compose((),Compose(Compose((),()),())),()),()),{fml:h:new_fml:h,fml:ix:new_fml:ix})),Rename((),{fml:h:new_fml:h,fml:ix:new_fml:ix})),{fml:h:__fml:h,fml:ix:__fml:ix,new_fml:ix:__new_fml:ix,new_fml:h:__new_fml:h,fml:logt:__fml:logt}),{__fml:logt:__fml:logt,__new_fml:ix:__new_fml:ix,__new_fml:h:__new_fml:h}),{loc:previx:new_loc:previx})),{__new_fml:x:__ts0__new_fml:x,__new_fml:ix:__ts0__new_fml:ix,__new_fml:h:__ts0__new_fml:h}),Rename((),{__new_fml:x:__ts0__new_fml:x_a,__new_fml:ix:__ts0__new_fml:ix_a,__new_fml:h:__ts0__new_fml:h_a})),{__ts0__new_fml:h:__ts0__new_fml:h,__fml:y:__fml:y,__fml:logt:__fml:logt_a,__ts0_a:__ts0_a,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__new_fml:ix:__ts0__new_fml:ix}),{fml:rejected:new_fml:rejected,loc:logt:new_loc:logt})),Rename(Rename(Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose(Compose(Compose(Compose(Compose(Compose(Compose(Compose((),()),Rename((),{fml:src:new_fml:src})),Rename((),{fml:src:new_fml:src,fml:t:new_fml:t})),Rename((),{fml:v:new_fml:v,fml:src:new_fml:src,fml:t:new_fml:t})),Rename((),{fml:v:new_fml:v,fml:src:new_fml:src,fml:t:new_fml:t,fml:logt:new_fml:logt})),Rename((),{fml:v:new_fml:v,fml:ix_a:new_fml:ix_a,fml:src:new_fml:src,fml:t:new_fml:t,fml:logt:new_fml:logt})),Rename((),{fml:prevlogt:new_fml:prevlogt,fml:ix_a:new_fml:ix_a,fml:v:new_fml:v,fml:src:new_fml:src,fml:t:new_fml:t,fml:logt:new_fml:logt})),Rename((),{fml:prevlogt:new_fml:prevlogt,fml:isrecover:new_fml:isrecover,fml:ix_a:new_fml:ix_a,fml:v:new_fml:v,fml:src:new_fml:src,fml:t:new_fml:t,fml:logt:new_fml:logt})),Rename(Compose(Compose(Compose(Compose(Compose(Compose(Compose(Compose((),()),()),()),()),()),()),()),()),{fml:prevlogt:new_fml:prevlogt,fml:recovernode_a:new_fml:recovernode_a,fml:src:new_fml:src,fml:logt:new_fml:logt,fml:v:new_fml:v,fml:ix_a:new_fml:ix_a,fml:isrecover:new_fml:isrecover,fml:t:new_fml:t})),Rename((),{fml:prevlogt:new_fml:prevlogt,fml:recovernode_a:new_fml:recovernode_a,msg_append:new_msg_append,fml:src:new_fml:src,fml:logt:new_fml:logt,fml:v:new_fml:v,fml:ix_a:new_fml:ix_a,fml:isrecover:new_fml:isrecover,fml:t:new_fml:t})),{fml:prevlogt:__fml:prevlogt,fml:src:__fml:src,fml:m:__fml:m,fml:logt:__fml:logt,new_fml:logt:__new_fml:logt,fml:v:__fml:v,new_fml:t:__new_fml:t,new_fml:v:__new_fml:v,new_fml:src:__new_fml:src,fml:isrecover:__fml:isrecover,new_fml:prevlogt:__new_fml:prevlogt,new_fml:ix_a:__new_fml:ix_a,new_fml:recovernode_a:__new_fml:recovernode_a,new_fml:isrecover:__new_fml:isrecover,fml:ix_a:__fml:ix_a,fml:recovernode_a:__fml:recovernode_a,fml:t:__fml:t}),{__new_fml:ix_a:__new_fml:ix_a,__new_fml:isrecover:__new_fml:isrecover,__fml:m:__fml:m,__new_fml:src:__new_fml:src,__new_fml:prevlogt:__new_fml:prevlogt,__new_fml:t:__new_fml:t,__new_fml:v:__new_fml:v,__new_fml:logt:__new_fml:logt,__new_fml:recovernode_a:__new_fml:recovernode_a})),Rename(Rename(Rename(Compose(Compose((),()),Rename(Rename(Rename(Compose(Compose(Compose((),()),Rename((),{fml:m:new_fml:m})),Rename((),{fml:previx:new_fml:previx,fml:m:new_fml:m})),{fml:m:__fml:m,fml:previx:__fml:previx,new_fml:m:__new_fml:m,new_fml:previx:__new_fml:previx}),{__new_fml:m:__new_fml:m,__new_fml:previx:__new_fml:previx}),{loc:m:new_loc:m})),{new_loc:m:__new_loc:m,loc:m:__loc:m}),{__new_fml:m:__new_fml:m,__new_loc:m:__new_loc:m,__new_fml:previx:__new_fml:previx}),{loc:0:new_loc:0,msg_append:new_msg_append})),{new_loc:0:__new_loc:0,loc:0:__loc:0}),{__new_fml:ix_a:__new_fml:ix_a_a,__new_fml:isrecover:__new_fml:isrecover,__new_loc:m:__new_loc:m,__new_fml:recovernode_a:__new_fml:recovernode_a,__new_fml:src:__new_fml:src,__new_fml:prevlogt:__new_fml:prevlogt,__new_fml:logt:__new_fml:logt,__new_fml:v:__new_fml:v,__new_fml:m:__new_fml:m,__new_loc:0:__new_loc:0,__new_fml:previx:__new_fml:previx,__new_fml:t:__new_fml:t,__fml:m:__fml:m}),{fml:rejected:new_fml:rejected,loc:previx:new_loc:previx,loc:prevt:new_loc:prevt,loc:logt:new_loc:logt})),{__new_fml:ix_a:__ts0__new_fml:ix_a,__new_fml:prevlogt:__ts0__new_fml:prevlogt,__new_fml:t:__ts0__new_fml:t,__new_fml:previx:__ts0__new_fml:previx,__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__new_fml:logt:__ts0__new_fml:logt,__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__new_fml:h:__ts0__new_fml:h_a,__ts0__new_fml:h:__ts0__ts0__new_fml:h,__new_fml:src:__ts0__new_fml:src,__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:x:__ts0__ts0__new_fml:x,__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__new_fml:v:__ts0__new_fml:v,__new_fml:m:__ts0__new_fml:m,__new_loc:0:__ts0__new_loc:0,__new_fml:isrecover:__ts0__new_fml:isrecover,__ts0_a:__ts0__ts0_a}),Rename((),{__new_fml:ix_a:__ts0__new_fml:ix_a_b,__new_fml:prevlogt:__ts0__new_fml:prevlogt_a,__new_fml:t:__ts0__new_fml:t_a,__new_fml:previx:__ts0__new_fml:previx_a,__new_fml:ix_a_a:__ts0__new_fml:ix_a_a_a,__new_fml:logt:__ts0__new_fml:logt_a,__new_fml:recovernode_a:__ts0__new_fml:recovernode_a_a,__new_fml:h:__ts0__new_fml:h_b,__ts0__new_fml:h:__ts0__ts0__new_fml:h_a,__new_fml:src:__ts0__new_fml:src_a,__new_loc:m:__ts0__new_loc:m_a,__ts0__new_fml:x:__ts0__ts0__new_fml:x_a,__ts0__new_fml:ix:__ts0__ts0__new_fml:ix_a,__new_fml:v:__ts0__new_fml:v_a,__new_fml:m:__ts0__new_fml:m_a,__new_loc:0:__ts0__new_loc:0_a,__new_fml:isrecover:__ts0__new_fml:isrecover_a,__ts0_a:__ts0__ts0_a_a})),{__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:logt:__fml:logt,__ts0__new_fml:previx:__ts0__new_fml:previx,__fml:logt_a:__fml:logt_a,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__ts0_b:__ts0_b,__ts0__ts0_a:__ts0__ts0_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover})),{loc:logt:__loc:logt,new_loc:logt:__new_loc:logt}),{__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:logt:__fml:logt,__ts0__new_fml:previx:__ts0__new_fml:previx,__fml:logt_a:__fml:logt_a,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__ts0__ts0_a:__ts0__ts0_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover}),{loc:v:new_loc:v})),{loc:v:__loc:v,new_loc:v:__new_loc:v}),{__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:logt:__fml:logt,__ts0__new_fml:previx:__ts0__new_fml:previx,__fml:logt_a:__fml:logt_a,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__ts0__ts0_a:__ts0__ts0_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__new_loc:v:__new_loc:v,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover}),{loc:t:new_loc:t})),{loc:t:__loc:t,new_loc:t:__new_loc:t}),{__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:logt:__fml:logt,__ts0__new_fml:previx:__ts0__new_fml:previx,__new_loc:t:__new_loc:t,__fml:logt_a:__fml:logt_a,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__ts0__ts0_a:__ts0__ts0_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__new_loc:v:__new_loc:v,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover}),{loc:0:new_loc:0})),{new_loc:0:__new_loc:0,loc:0:__loc:0}),{__new_fml:nter:__new_fml:nter,__fml:logt:__fml:logt,__ts0__new_fml:previx:__ts0__new_fml:previx,__new_loc:t:__new_loc:t,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__ts0__ts0_a:__ts0__ts0_a,__fml:logt_a:__fml:logt_a,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__fml:t_a:__fml:t_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__new_loc:0:__new_loc:0,__new_fml:t:__new_fml:t,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__new_prm:V0:__new_prm:V0,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__new_loc:v:__new_loc:v})),{new_loc:prevt:__new_loc:prevt,loc:prevt:__loc:prevt}),{__new_fml:nter:__new_fml:nter,__new_loc:prevt:__new_loc:prevt,__ts0__new_fml:previx:__ts0__new_fml:previx,__new_loc:t:__new_loc:t,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__fml:logt:__fml:logt,__ts0__ts0_a:__ts0__ts0_a,__fml:logt_a:__fml:logt_a,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__loc:prevt:__loc:prevt,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__fml:t_a:__fml:t_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__new_loc:0:__new_loc:0,__new_fml:t:__new_fml:t,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__new_prm:V0:__new_prm:V0,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__new_loc:v:__new_loc:v})),{new_loc:previx:__new_loc:previx,loc:previx:__loc:previx}),{__new_fml:nter:__new_fml:nter,__new_loc:prevt:__new_loc:prevt,__ts0__new_fml:previx:__ts0__new_fml:previx,__new_loc:t:__new_loc:t,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__fml:logt:__fml:logt,__ts0__ts0_a:__ts0__ts0_a,__fml:logt_a:__fml:logt_a,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__loc:prevt:__loc:prevt,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__new_loc:previx:__new_loc:previx,__fml:t_a:__fml:t_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__new_loc:0:__new_loc:0,__new_fml:t:__new_fml:t,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__new_prm:V0:__new_prm:V0,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__loc:previx:__loc:previx,__new_loc:v:__new_loc:v})),{__new_fml:nter:__new_fml:nter,__new_loc:prevt:__new_loc:prevt,__ts0__new_fml:previx:__ts0__new_fml:previx,__new_loc:t:__new_loc:t,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__fml:logt:__fml:logt,__ts0__ts0_a:__ts0__ts0_a,__fml:logt_a:__fml:logt_a,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__loc:prevt:__loc:prevt,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__new_loc:previx:__new_loc:previx,__fml:t_a:__fml:t_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__new_loc:0:__new_loc:0,__new_fml:t:__new_fml:t,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__new_prm:V0:__new_prm:V0,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__loc:previx:__loc:previx,__new_loc:v:__new_loc:v}),{fml:ix:new_fml:ix,fml:leader:new_fml:leader,fml:isrecover_a:new_fml:isrecover_a,fml:recovernode:new_fml:recovernode})),Rename((),{fml:rejected:new_fml:rejected,fml:leader:new_fml:leader,fml:recovernode:new_fml:recovernode,fml:ix:new_fml:ix,fml:isrecover_a:new_fml:isrecover_a,msg_append:new_msg_append,safetyproof.previx_for_append:new_safetyproof.previx_for_append})),{fml:leader:__fml:leader,new_fml:leader:__new_fml:leader,new_fml:recovernode:__new_fml:recovernode,fml:isrecover_a:__fml:isrecover_a,new_fml:ix:__new_fml:ix,fml:rejected:__fml:rejected,new_fml:rejected:__new_fml:rejected,fml:recovernode:__fml:recovernode,new_fml:isrecover_a:__new_fml:isrecover_a,fml:ix:__fml:ix}),{__new_fml:nter:__new_fml:nter,__new_loc:prevt:__new_loc:prevt,__ts0__new_fml:previx:__ts0__new_fml:previx,__new_loc:t:__new_loc:t,__loc:logt:__loc:logt,__ts0__ts0__new_fml:h:__ts0__ts0__new_fml:h,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y_a,__fml:logt:__fml:logt,__ts0__ts0_a:__ts0__ts0_a,__new_fml:leader:__new_fml:leader,__new_fml:ix:__new_fml:ix,__fml:logt_a:__fml:logt_a,__ts0__new_fml:logt:__ts0__new_fml:logt,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__new_prm:V0:__new_prm:V0,__new_fml:isrecover_a:__new_fml:isrecover_a,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__new_loc:previx:__new_loc:previx,__fml:t_a:__fml:t_a,__ts0__new_fml:src:__ts0__new_fml:src,__ts0__new_fml:t:__ts0__new_fml:t,__ts0__new_fml:m:__ts0__new_fml:m,__new_loc:0:__new_loc:0,__new_fml:t:__new_fml:t,__new_fml:rejected:__new_fml:rejected,__new_loc:logt:__new_loc:logt,__ts0_b:__ts0_b,__loc:prevt:__loc:prevt,__ts0__new_fml:isrecover:__ts0__new_fml:isrecover,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:prevlogt:__ts0__new_fml:prevlogt,__fml:m:__fml:m,__ts0__new_fml:recovernode_a:__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__new_loc:m,__ts0__new_fml:v:__ts0__new_fml:v,__ts0__new_loc:0:__ts0__new_loc:0,__new_fml:recovernode:__new_fml:recovernode,__loc:previx:__loc:previx,__new_loc:v:__new_loc:v}),{loc:0:new_loc:0})),Rename(Rename(Rename(Compose(Compose((),()),Rename((),{loc:rejected:new_loc:rejected})),{loc:rejected:__loc:rejected,new_loc:rejected:__new_loc:rejected}),{__new_loc:rejected:__new_loc:rejected}),{msg_append:new_msg_append,loc:1:new_loc:1,loc:0:new_loc:0,safetyproof.previx_for_append:new_safetyproof.previx_for_append})),{new_loc:1:__new_loc:1,loc:1:__loc:1,loc:0:__loc:0,new_loc:0:__new_loc:0_a}),{__new_fml:nter:__ts0__new_fml:nter,__new_loc:prevt:__ts0__new_loc:prevt,__new_loc:0_a:__ts0__new_loc:0_a,__new_loc:t:__ts0__new_loc:t,__ts0__ts0__new_fml:h:__ts0__ts0__ts0__new_fml:h,__ts0__ts0_a:__ts0__ts0__ts0_a,__ts0__ts0__new_fml:x:__ts0__ts0__ts0__new_fml:x,__new_fml:leader:__ts0__new_fml:leader,__new_fml:ix:__ts0__new_fml:ix,__ts0__new_fml:previx:__ts0__ts0__new_fml:previx,__ts0__new_fml:logt:__ts0__ts0__new_fml:logt,__new_loc:0:__ts0__new_loc:0_b,__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__new_loc:1:__ts0__new_loc:1,__new_fml:isrecover_a:__ts0__new_fml:isrecover_a,__ts0__new_fml:h_a:__ts0__ts0__new_fml:h_a,__new_loc:previx:__ts0__new_loc:previx,__new_loc:rejected:__ts0__new_loc:rejected,__ts0__new_fml:src:__ts0__ts0__new_fml:src,__ts0__new_fml:t:__ts0__ts0__new_fml:t,__ts0__new_fml:m:__ts0__ts0__new_fml:m,__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__new_fml:t:__ts0__new_fml:t_a,__new_fml:rejected:__ts0__new_fml:rejected,__new_loc:logt:__ts0__new_loc:logt,__ts0_b:__ts0__ts0_b,__new_prm:V0:__ts0__new_prm:V0,__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__new_fml:ix,__ts0__new_fml:prevlogt:__ts0__ts0__new_fml:prevlogt,__ts0__new_fml:isrecover:__ts0__ts0__new_fml:isrecover,__new_fml:x:__ts0__new_fml:x,__ts0__new_fml:recovernode_a:__ts0__ts0__new_fml:recovernode_a,__ts0__new_loc:m:__ts0__ts0__new_loc:m,__ts0__new_fml:v:__ts0__ts0__new_fml:v,__ts0__new_loc:0:__ts0__ts0__new_loc:0,__new_fml:recovernode:__ts0__new_fml:recovernode,__new_loc:v:__ts0__new_loc:v}),Rename((),{__new_fml:nter:__ts0__new_fml:nter_a,__new_loc:prevt:__ts0__new_loc:prevt_a,__new_loc:0_a:__ts0__new_loc:0_a_a,__new_loc:t:__ts0__new_loc:t_a,__ts0__ts0__new_fml:h:__ts0__ts0__ts0__new_fml:h_a,__ts0__ts0_a:__ts0__ts0__ts0_a_a,__ts0__ts0__new_fml:x:__ts0__ts0__ts0__new_fml:x_a,__new_fml:leader:__ts0__new_fml:leader_a,__new_fml:ix:__ts0__new_fml:ix_b,__ts0__new_fml:previx:__ts0__ts0__new_fml:previx_a,__ts0__new_fml:logt:__ts0__ts0__new_fml:logt_a,__new_loc:0:__ts0__new_loc:0_c,__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a_b,__new_loc:1:__ts0__new_loc:1_a,__new_fml:isrecover_a:__ts0__new_fml:isrecover_a_a,__ts0__new_fml:h_a:__ts0__ts0__new_fml:h_a_a,__new_loc:previx:__ts0__new_loc:previx_a,__new_loc:rejected:__ts0__new_loc:rejected_a,__ts0__new_fml:src:__ts0__ts0__new_fml:src_a,__ts0__new_fml:t:__ts0__ts0__new_fml:t_a,__ts0__new_fml:m:__ts0__ts0__new_fml:m_a,__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a_a,__new_fml:t:__ts0__new_fml:t_b,__new_fml:rejected:__ts0__new_fml:rejected_a,__new_loc:logt:__ts0__new_loc:logt_a,__ts0_b:__ts0__ts0_b_a,__new_prm:V0:__ts0__new_prm:V0_a,__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__new_fml:ix_a,__ts0__new_fml:prevlogt:__ts0__ts0__new_fml:prevlogt_a,__ts0__new_fml:isrecover:__ts0__ts0__new_fml:isrecover_a,__new_fml:x:__ts0__new_fml:x_a,__ts0__new_fml:recovernode_a:__ts0__ts0__new_fml:recovernode_a_a,__ts0__new_loc:m:__ts0__ts0__new_loc:m_a,__ts0__new_fml:v:__ts0__ts0__new_fml:v_a,__ts0__new_loc:0:__ts0__ts0__new_loc:0_a,__new_fml:recovernode:__ts0__new_fml:recovernode_b,__new_loc:v:__ts0__new_loc:v_a})),{__ts0__new_loc:logt:__ts0__new_loc:logt,__fml:logt:__fml:logt,__ts0__ts0__new_fml:src:__ts0__ts0__new_fml:src,__ts0__ts0__ts0_a:__ts0__ts0__ts0_a,__ts0__new_fml:leader:__ts0__new_fml:leader,__fml:y:__fml:y,__ts0__new_loc:1:__ts0__new_loc:1,__ts0__new_loc:t:__ts0__new_loc:t,__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__new_fml:x,__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__new_fml:h,__fml:y_a:__fml:y_a,__ts0__ts0__new_fml:m:__ts0__ts0__new_fml:m,__ts0__ts0__new_loc:m:__ts0__ts0__new_loc:m,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__new_fml:nter:__ts0__new_fml:nter,__ts0__ts0__new_fml:h_a:__ts0__ts0__new_fml:h_a,__ts0__new_fml:rejected:__ts0__new_fml:rejected,__ts0__ts0__new_fml:isrecover:__ts0__ts0__new_fml:isrecover,__ts0__ts0__new_fml:v:__ts0__ts0__new_fml:v,__fml:t_a:__fml:t_a,__ts0__new_prm:V0:__ts0__new_prm:V0,__fml:logt_a:__fml:logt_a,__ts0__new_loc:0_a:__ts0__new_loc:0_a,__ts0__new_fml:isrecover_a:__ts0__new_fml:isrecover_a,__ts0__new_loc:rejected:__ts0__new_loc:rejected,__loc:logt:__loc:logt,__ts0__new_loc:v:__ts0__new_loc:v,__ts0__new_loc:0_b:__ts0__new_loc:0_b,__ts0__new_fml:recovernode:__ts0__new_fml:recovernode,__loc:prevt:__loc:prevt,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__fml:m:__fml:m,__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__new_fml:ix,__ts0__ts0_b:__ts0__ts0_b,__ts0_a:__ts0_a,__ts0__ts0__new_fml:prevlogt:__ts0__ts0__new_fml:prevlogt,__ts0__new_fml:ix:__ts0__new_fml:ix,__ts0__ts0__new_fml:t:__ts0__ts0__new_fml:t,__ts0__ts0__new_fml:logt:__ts0__ts0__new_fml:logt,__ts0__new_loc:previx:__ts0__new_loc:previx,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__ts0__ts0__new_fml:previx:__ts0__ts0__new_fml:previx,__ts0__ts0__new_loc:0:__ts0__ts0__new_loc:0,__ts0__new_loc:prevt:__ts0__new_loc:prevt,__loc:previx:__loc:previx,__ts0__new_fml:t_a:__ts0__new_fml:t_a,__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__new_fml:recovernode_a}),{loc:lastusedix:new_loc:lastusedix})),{new_loc:lastusedix:__new_loc:lastusedix,loc:lastusedix:__loc:lastusedix}),{__ts0__new_loc:logt:__ts0__new_loc:logt,__fml:logt:__fml:logt,__ts0__ts0__new_fml:src:__ts0__ts0__new_fml:src,__ts0__ts0__ts0_a:__ts0__ts0__ts0_a,__ts0__new_fml:leader:__ts0__new_fml:leader,__fml:y:__fml:y_a,__ts0__new_loc:1:__ts0__new_loc:1,__ts0__new_loc:t:__ts0__new_loc:t,__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__new_fml:x,__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__new_fml:h,__fml:y_a:__fml:y_a_a,__ts0__ts0__new_fml:m:__ts0__ts0__new_fml:m,__ts0__ts0__new_loc:m:__ts0__ts0__new_loc:m,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__new_fml:nter:__ts0__new_fml:nter,__ts0__ts0__new_fml:h_a:__ts0__ts0__new_fml:h_a,__ts0__new_fml:rejected:__ts0__new_fml:rejected,__ts0__ts0__new_fml:isrecover:__ts0__ts0__new_fml:isrecover,__new_loc:lastusedix:__new_loc:lastusedix,__ts0__ts0__new_fml:v:__ts0__ts0__new_fml:v,__fml:t_a:__fml:t_a,__ts0__new_prm:V0:__ts0__new_prm:V0,__fml:logt_a:__fml:logt_a,__ts0__new_loc:0_a:__ts0__new_loc:0_a,__ts0__new_fml:isrecover_a:__ts0__new_fml:isrecover_a,__ts0__new_loc:rejected:__ts0__new_loc:rejected,__loc:logt:__loc:logt,__ts0__new_loc:v:__ts0__new_loc:v,__ts0__new_loc:0_b:__ts0__new_loc:0_b,__ts0__new_fml:recovernode:__ts0__new_fml:recovernode,__loc:prevt:__loc:prevt,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__fml:m:__fml:m,__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__new_fml:ix,__ts0__ts0_b:__ts0__ts0_b,__ts0_a:__ts0_a,__ts0__ts0__new_fml:prevlogt:__ts0__ts0__new_fml:prevlogt,__ts0__new_fml:ix:__ts0__new_fml:ix,__ts0__ts0__new_fml:t:__ts0__ts0__new_fml:t,__ts0__ts0__new_fml:logt:__ts0__ts0__new_fml:logt,__ts0__new_loc:previx:__ts0__new_loc:previx,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__ts0__ts0__new_fml:previx:__ts0__ts0__new_fml:previx,__ts0__ts0__new_loc:0:__ts0__ts0__new_loc:0,__ts0__new_loc:prevt:__ts0__new_loc:prevt,__loc:previx:__loc:previx,__ts0__new_fml:t_a:__ts0__new_fml:t_a,__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__new_fml:recovernode_a}),{loc:1:new_loc:1,loc:0:new_loc:0})),{loc:1:__loc:1,new_loc:1:__new_loc:1,loc:0:__loc:0,new_loc:0:__new_loc:0}),{__ts0__new_loc:logt:__ts0__ts0__new_loc:logt,__ts0__new_loc:1:__ts0__ts0__new_loc:1,__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src,__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a,__ts0__new_fml:leader:__ts0__ts0__new_fml:leader,__ts0__new_loc:t:__ts0__ts0__new_loc:t,__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__new_fml:h:__ts0__new_fml:h,__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m,__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m,__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:x:__ts0__ts0__new_fml:x,__ts0__new_fml:nter:__ts0__ts0__new_fml:nter,__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a,__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected,__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover,__new_loc:lastusedix:__ts0__new_loc:lastusedix,__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v,__ts0__new_prm:V0:__ts0__ts0__new_prm:V0,__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h,__new_loc:1:__ts0__new_loc:1_a,__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode,__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a,__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected,__ts0__new_loc:v:__ts0__ts0__new_loc:v,__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt,__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix,__ts0__ts0_b:__ts0__ts0__ts0_b,__new_fml:x:__ts0__new_fml:x_a,__ts0_a:__ts0__ts0_a,__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt,__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x,__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a,__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt,__ts0__new_loc:previx:__ts0__ts0__new_loc:previx,__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a,__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx,__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0,__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b,__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t,__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a}),Rename((),{__ts0__new_loc:logt:__ts0__ts0__new_loc:logt_a,__ts0__new_loc:1:__ts0__ts0__new_loc:1_a,__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src_a,__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a_a,__ts0__new_fml:leader:__ts0__ts0__new_fml:leader_a,__ts0__new_loc:t:__ts0__ts0__new_loc:t_a,__ts0__new_fml:ix:__ts0__ts0__new_fml:ix_b,__new_fml:h:__ts0__new_fml:h_a,__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m_a,__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m_a,__new_loc:0:__ts0__new_loc:0_c,__ts0__new_fml:x:__ts0__ts0__new_fml:x_a,__ts0__new_fml:nter:__ts0__ts0__new_fml:nter_a,__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a_a,__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected_a,__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover_a,__new_loc:lastusedix:__ts0__new_loc:lastusedix_a,__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v_a,__ts0__new_prm:V0:__ts0__ts0__new_prm:V0_a,__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h_a,__new_loc:1:__ts0__new_loc:1_b,__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode_b,__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a_a,__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected_a,__ts0__new_loc:v:__ts0__ts0__new_loc:v_a,__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt_a,__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a_a,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a_a,__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix_a,__ts0__ts0_b:__ts0__ts0__ts0_b_a,__new_fml:x:__ts0__new_fml:x_b,__ts0_a:__ts0__ts0_a_a,__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt_a,__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x_a,__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a_a,__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt_a,__ts0__new_loc:previx:__ts0__ts0__new_loc:previx_a,__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a_b,__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx_a,__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0_a,__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b_a,__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t_a,__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a_a})),{__fml:t_a:__fml:t_a,__fml:logt:__fml:logt,__ts0__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected,__ts0__ts0__new_loc:t:__ts0__ts0__new_loc:t,__fml:ix:__fml:ix,__ts0__ts0__new_fml:leader:__ts0__ts0__new_fml:leader,__loc:logt:__loc:logt,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__fml:y:__fml:y,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m,__ts0__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt,__ts0__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src,__ts0__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a,__fml:y_a:__fml:y_a,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx,__ts0__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a,__ts0__new_loc:1_a:__ts0__new_loc:1_a,__ts0__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a,__ts0__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix,__ts0__new_loc:lastusedix:__ts0__new_loc:lastusedix,__ts0__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a,__ts0__ts0__new_fml:nter:__ts0__ts0__new_fml:nter,__ts0__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt,__ts0__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected,__ts0__ts0__new_loc:previx:__ts0__ts0__new_loc:previx,__ts0__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h,__ts0__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b,__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__ts0__new_prm:V0:__ts0__ts0__new_prm:V0,__fml:logt_a:__fml:logt_a,__ts0__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover,__ts0__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t,__ts0_b:__ts0_b,__ts0__ts0__new_loc:logt:__ts0__ts0__new_loc:logt,__loc:prevt:__loc:prevt,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode,__ts0__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt,__fml:m:__fml:m,__ts0__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x,__ts0__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a,__ts0__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a,__ts0__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v,__ts0__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a,__ts0__ts0__new_loc:1:__ts0__ts0__new_loc:1,__ts0__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m,__fml:y_a_a:__fml:y_a_a,__ts0__ts0__ts0_b:__ts0__ts0__ts0_b,__ts0__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a,__loc:previx:__loc:previx,__ts0__ts0__new_loc:v:__ts0__ts0__new_loc:v}),{loc:ok:new_loc:ok,loc:nextreportix:new_loc:nextreportix})),{new_loc:ok:__m_loc:ok}),Rename(Rename(Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Rename(Compose(Compose(Compose((),Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose((),Compose(Compose((),()),())),()),()),{fml:nter:new_fml:nter})),Rename((),{fml:nter:new_fml:nter})),{fml:nter:__fml:nter,fml:t_a:__fml:t_a,new_fml:nter:__new_fml:nter}),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter})),Rename((),{fml:t:new_fml:t})),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter})),Rename((),{fml:t:new_fml:t})),Rename((),{fml:t:new_fml:t})),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter}),{prm:V0:new_prm:V0})),Rename((),{prm:V0:new_prm:V0,fml:t:new_fml:t})),{new_prm:V0:__new_prm:V0,prm:V0:__prm:V0,fml:t:__fml:t,new_fml:t:__new_fml:t}),{__fml:t_a:__fml:t_a,__new_fml:nter:__new_fml:nter,__new_prm:V0:__new_prm:V0,__new_fml:t:__new_fml:t})),Rename((),{loc:0:new_loc:0})),{new_loc:0:__new_loc:0,loc:0:__loc:0}),{__fml:t_a:__fml:t_a_a,__new_fml:nter:__new_fml:nter,__new_loc:0:__new_loc:0,__new_prm:V0:__new_prm:V0,__new_fml:t:__new_fml:t}),{msg_append:new_msg_append,safetyproof.previx_for_append:new_safetyproof.previx_for_append,loc:ok:__m_loc:ok,loc:nextreportix:new_loc:nextreportix})),{new_loc:ok:__m_loc:ok_a}),Rename((),{msg_append:new_msg_append,safetyproof.previx_for_append:new_safetyproof.previx_for_append,loc:ok:__m_loc:ok_a,loc:nextreportix:new_loc:nextreportix})),{new_loc:ok:__m_loc:ok_b,new_loc:nextreportix:__m_loc:nextreportix}),Rename(Rename(Ite(__ts0_a,Rename(Compose(Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename(Rename(Compose(Compose(Compose((),Rename(Compose(Compose(Compose(Compose((),()),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose(Compose((),()),()),()),()),{fml:cix:new_fml:cix})),Rename((),{fml:cix:new_fml:cix})),{new_fml:cix:__new_fml:cix,fml:cix:__fml:cix,fml:ix_a:__fml:ix_a}),{__new_fml:cix:__new_fml:cix,__fml:ix_a:__fml:ix_a})),Rename((),{fml:ix:new_fml:ix})),Rename((),{fml:ix:new_fml:ix})),{__new_fml:cix:__new_fml:cix,__fml:ix_a:__fml:ix_a})),Rename((),{fml:ix:new_fml:ix})),Rename((),{fml:ix:new_fml:ix})),{__new_fml:cix:__new_fml:cix,__fml:ix_a:__fml:ix_a}),{prm:V0:new_prm:V0})),Rename((),{fml:ix:new_fml:ix,prm:V0:new_prm:V0})),{new_fml:ix:__new_fml:ix,fml:ix:__fml:ix,prm:V0:__prm:V0,new_prm:V0:__new_prm:V0}),{__new_fml:cix:__new_fml:cix,__new_fml:ix:__new_fml:ix,__new_prm:V0:__new_prm:V0,__fml:ix_a:__fml:ix_a})),Rename((),{loc:nextreportix:new_loc:nextreportix})),{new_loc:nextreportix:__m_loc:nextreportix}),Rename(Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose(Compose((),()),()),()),Compose(Compose((),()),())),{fml:x:new_fml:x})),Rename((),{fml:x:new_fml:x})),{new_fml:x:__new_fml:x,fml:y:__fml:y,fml:x:__fml:x}),{__new_fml:x:__new_fml:x,__fml:y:__fml:y}),{loc:ok:new_loc:ok,loc:nextreportix:__m_loc:nextreportix})),{__new_fml:cix:__ts0__new_fml:cix,__new_fml:x:__ts0__new_fml:x,__new_prm:V0:__ts0__new_prm:V0,__m_loc:nextreportix:__ts0__m_loc:nextreportix,__new_fml:ix:__ts0__new_fml:ix}),Rename(Compose((),()),{__new_fml:cix:__ts0__new_fml:cix_a,__new_fml:x:__ts0__new_fml:x_a,__new_prm:V0:__ts0__new_prm:V0_a,__m_loc:nextreportix:__ts0__m_loc:nextreportix_a,__new_fml:ix:__ts0__new_fml:ix_a})),{__ts0__new_prm:V0:__ts0__new_prm:V0,__fml:ix_a:__fml:ix_a,__ts0__new_fml:cix:__ts0__new_fml:cix,__ts0__m_loc:nextreportix:__ts0__m_loc:nextreportix,__ts0__new_fml:ix:__ts0__new_fml:ix,__fml:y:__fml:y_b,__ts0__new_fml:x:__ts0__new_fml:x,__ts0_a:__ts0_a}),{msg_append:new_msg_append,safetyproof.previx_for_append:new_safetyproof.previx_for_append,loc:ok:__m_loc:ok_b,loc:nextreportix:__m_loc:nextreportix})),Rename(Rename(Ite(__ts0_a,Rename(Compose((),Rename(Rename(Compose(Compose(Compose(Compose((),()),Rename((),{prm:V0:new_prm:V0})),Rename((),{prm:V0:new_prm:V0,fml:ix_a:new_fml:ix_a})),Rename(Compose(Compose(Compose((),Compose((),())),()),()),{fml:replier_a:new_fml:replier_a,prm:V0:new_prm:V0,fml:ix_a:new_fml:ix_a})),{prm:V0:__prm:V0,new_fml:ix_a:__new_fml:ix_a,fml:ix_a:__fml:ix_a,new_prm:V0:__new_prm:V0,fml:replier_a:__fml:replier_a,new_fml:replier_a:__new_fml:replier_a}),{__new_fml:ix_a:__new_fml:ix_a,__new_prm:V0:__new_prm:V0,__new_fml:replier_a:__new_fml:replier_a})),{__new_fml:ix_a:__ts0__new_fml:ix_a,__new_prm:V0:__ts0__new_prm:V0,__new_fml:replier_a:__ts0__new_fml:replier_a}),Rename((),{__new_fml:ix_a:__ts0__new_fml:ix_a_a,__new_prm:V0:__ts0__new_prm:V0_a,__new_fml:replier_a:__ts0__new_fml:replier_a_a})),{__ts0__new_fml:replier_a:__ts0__new_fml:replier_a,__ts0__new_prm:V0:__ts0__new_prm:V0_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0_a:__ts0_a_a}),{msg_append:new_msg_append,safetyproof.previx_for_append:new_safetyproof.previx_for_append,loc:ok:new_loc:ok,loc:nextreportix:new_loc:nextreportix})),{new_loc:ok:__m_loc:ok_c}),Rename(Rename(Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose(Compose((),()),Rename((),{prm:V0:new_prm:V0})),Rename(Compose(Compose(Compose((),Compose((),())),()),()),{prm:V0:new_prm:V0,fml:ix_a:new_fml:ix_a})),Rename((),{prm:V0:new_prm:V0,fml:ix_a:new_fml:ix_a})),{new_prm:V0:__new_prm:V0,prm:V0:__prm:V0,fml:repliers:__fml:repliers,new_fml:ix_a:__new_fml:ix_a,fml:ix_a:__fml:ix_a}),{__fml:repliers:__fml:repliers,__new_fml:ix_a:__new_fml:ix_a,__new_prm:V0:__new_prm:V0})),Rename(Rename(Rename(Compose(Compose(Compose((),()),Rename((),{loc:repliers:new_loc:repliers})),Rename(Rename(Ite(__ts0_c,Rename(Compose(Compose(Compose((),Rename(Rename(Compose(Compose(Compose((),()),Rename((),{prm:V0:new_prm:V0})),Rename(Rename(Compose(Compose(Compose((),Rename(Compose(Rename(Compose((),Rename(Rename(Compose(Rename(Compose(Compose((),()),Rename(Rename(Compose(Compose((),Rename(Ite(__ts0_a,Compose((),()),Compose((),())),{__ts0_a:__ts0_a})),Rename((),{commited_ix.commited:new_commited_ix.commited,localstate.commited:new_localstate.commited})),{__ts0_a:__ts0_a}),{fml:ix:new_fml:ix})),{new_localstate.commited:__m_localstate.commited}),Rename((),{fml:ix:new_fml:ix,commited_ix.commited:new_commited_ix.commited,commited_ix.reached:new_commited_ix.reached,localstate.commited:__m_localstate.commited})),{new_fml:ix:__new_fml:ix,fml:ix:__fml:ix,fml:cix:__fml:cix}),{__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__new_fml:ix:__new_fml:ix,__fml:cix:__fml:cix})),{new_localstate.commited:__m_localstate.commited_a}),Rename((),{localstate.cix:new_localstate.cix,localstate.commited:__m_localstate.commited_a,commited_ix.reached:new_commited_ix.reached,commited_ix.commited:new_commited_ix.commited})),{__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__new_fml:ix:__new_fml:ix,__m_localstate.commited_a:__m_localstate.commited_a,__fml:cix:__fml:cix})),Rename((),{localstate.cix:new_localstate.cix,localstate.commited:new_localstate.commited,commited_ix.reached:new_commited_ix.reached,commited_ix.commited:new_commited_ix.commited})),Rename((),{localstate.cix:new_localstate.cix,localstate.commited:new_localstate.commited,commited_ix.reached:new_commited_ix.reached,commited_ix.commited:new_commited_ix.commited})),{__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__new_fml:ix:__new_fml:ix,__m_localstate.commited_a:__m_localstate.commited_a,__fml:cix:__fml:cix}),{prm:V0:new_prm:V0,fml:ix_a:new_fml:ix_a})),{new_prm:V0:__new_prm:V0,prm:V0:__prm:V0,new_fml:ix_a:__new_fml:ix_a,fml:ix_a:__fml:ix_a}),{__new_fml:ix_a:__new_fml:ix_a,__fml:cix:__fml:cix,__new_prm:V0:__new_prm:V0,__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__new_fml:ix:__new_fml:ix,__m_localstate.commited_a:__m_localstate.commited_a})),Rename(Rename(Rename(Compose(Compose(Compose(Compose((),()),Rename((),{fml:self_a:new_fml:self_a})),Rename((),{fml:firstix:new_fml:firstix,fml:self_a:new_fml:self_a})),Rename(Rename(Rename(Compose(Rename(Compose((),()),{new_loc:ix:__m_loc:ix_a}),Rename(Rename(Compose(Compose(Rename(Compose((),()),{new_loc:ix:__m_loc:ix}),Rename(Rename(Ite(__ts0_b,Compose(Compose(Compose((),()),Rename(Compose(Compose((),Rename(Rename(Compose(Compose(Compose(Compose((),()),Rename((),{fml:self:new_fml:self})),Rename((),{fml:self:new_fml:self,fml:ix:new_fml:ix})),Rename((),{fml:self:new_fml:self,fml:v:new_fml:v,fml:ix:new_fml:ix})),{new_fml:self:__new_fml:self,new_fml:ix:__new_fml:ix,fml:v:__fml:v,new_fml:v:__new_fml:v,fml:ix:__fml:ix,fml:self:__fml:self}),{__new_fml:self:__new_fml:self,__new_fml:ix:__new_fml:ix,__new_fml:v:__new_fml:v})),Rename(Rename(Compose(Compose(Compose((),()),Rename(Compose(Compose(Compose(Compose((),()),()),()),Compose(Compose((),()),())),{fml:x:new_fml:x})),Rename((),{fml:x:new_fml:x})),{new_fml:x:__new_fml:x,fml:y:__fml:y,fml:x:__fml:x}),{__new_fml:x:__new_fml:x,__fml:y:__fml:y})),{__new_fml:x:__new_fml:x,__new_fml:self:__new_fml:self,__fml:y:__fml:y,__new_fml:ix:__new_fml:ix,__new_fml:v:__new_fml:v})),Rename((),{loc:ix:new_loc:ix})),Ite(true,(),())),{__ts0__new_fml:x_a:__ts0__new_fml:x_a,__fml:y:__fml:y,__ts0__new_fml:v_a:__ts0__new_fml:v_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0_b:__ts0_b,__ts0__new_fml:self_a:__ts0__new_fml:self_a,__ts0_a:__ts0_a}),{loc:ix:__m_loc:ix})),Rename((),{loc:ix:new_loc:ix})),{__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:self_a:__ts0__new_fml:self_a,__ts0_a:__ts0_a,__fml:y:__fml:y,__ts0__new_fml:v_a:__ts0__new_fml:v_a,__ts0_b:__ts0_b}),{loc:ix:__m_loc:ix_a})),{new_loc:ix:__new_loc:ix,loc:ix:__loc:ix}),{__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:self_a:__ts0__new_fml:self_a,__ts0_a:__ts0_a,__m_loc:ix_a:__m_loc:ix_a,__fml:y:__fml:y,__ts0__new_fml:v_a:__ts0__new_fml:v_a,__ts0_b:__ts0_b,__new_loc:ix:__new_loc:ix}),{fml:firstix:new_fml:firstix,fml:lastix:new_fml:lastix,fml:self_a:new_fml:self_a})),{fml:firstix:__fml:firstix,fml:lastix:__fml:lastix,new_fml:firstix:__new_fml:firstix,new_fml:lastix:__new_fml:lastix,new_fml:self_a:__new_fml:self_a,fml:self_a:__fml:self_a}),{__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__m_loc:ix_a:__m_loc:ix_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:self_a:__ts0__new_fml:self_a,__ts0_a:__ts0_a_a,__new_fml:self_a:__new_fml:self_a,__fml:y:__fml:y,__ts0__new_fml:v_a:__ts0__new_fml:v_a,__new_fml:lastix:__new_fml:lastix,__ts0_b:__ts0_b,__new_loc:ix:__new_loc:ix,__new_fml:firstix:__new_fml:firstix}),{localstate.cix:new_localstate.cix,commited_ix.commited:new_commited_ix.commited,commited_ix.reached:new_commited_ix.reached,localstate.commited:new_localstate.commited})),Rename(Rename(Rename(Compose(Compose(Compose(Compose(Compose((),()),Rename((),{fml:h:new_fml:h})),Rename((),{fml:h:new_fml:h,fml:ix_a:new_fml:ix_a})),Rename((),{fml:h:new_fml:h,fml:t_a:new_fml:t_a,fml:ix_a:new_fml:ix_a})),Rename(Rename(Ite(__ts0_a,Rename(Compose(Compose(Compose(Compose(Compose(Compose((),Rename(Rename(Compose(Compose(Rename(Compose(Compose((),()),Rename((),{fml:h_b:new_fml:h_b})),{new_fml:h_b:__m_fml:h_b}),Rename(Rename(Compose(Compose(Compose((),Compose(Compose(Compose(Compose(Compose((),()),()),Rename((),{fml:h_b:new_fml:h_b})),Rename((),{fml:h_b:new_fml:h_b})),Rename((),{fml:h_b:new_fml:h_b}))),Rename((),{fml:h_b:new_fml:h_b})),Rename((),{fml:h_b:new_fml:h_b})),{old_fml:h_b:fml:h_b}),{fml:h_b:__m_fml:h_b,fml:ix:new_fml:ix})),Rename((),{fml:h_b:new_fml:h_b,fml:ix:new_fml:ix})),{new_fml:ix:__new_fml:ix,fml:h_b:__fml:h_b,new_fml:h_b:__new_fml:h_b,fml:ix:__fml:ix}),{__new_fml:h_b:__new_fml:h_b,__m_fml:h_b:__m_fml:h_b,__new_fml:ix:__new_fml:ix})),Rename((),{safetyproof.commited_history:new_safetyproof.commited_history})),Rename((),{safetyproof.commited_history:new_safetyproof.commited_history,safetyproof.valid:new_safetyproof.valid})),Rename((),{safetyproof.commited_ix:new_safetyproof.commited_ix,safetyproof.commited_history:new_safetyproof.commited_history,safetyproof.valid:new_safetyproof.valid})),Rename((),{safetyproof.commited_ix:new_safetyproof.commited_ix,safetyproof.commited_history:new_safetyproof.commited_history,safetyproof.commited_term:new_safetyproof.commited_term,safetyproof.valid:new_safetyproof.valid})),Rename((),{safetyproof.commit_quorum:new_safetyproof.commit_quorum,safetyproof.commited_ix:new_safetyproof.commited_ix,safetyproof.commited_history:new_safetyproof.commited_history,safetyproof.commited_term:new_safetyproof.commited_term,safetyproof.valid:new_safetyproof.valid})),{__m_fml:h_b:__ts0__m_fml:h_b,__new_fml:ix:__ts0__new_fml:ix}),Rename((),{__m_fml:h_b:__ts0__m_fml:h_b_a,__new_fml:ix:__ts0__new_fml:ix_a})),{__ts0__m_fml:h_b:__ts0__m_fml:h_b,__new_fml:h_b:__new_fml:h_b,__ts0_a:__ts0_a,__ts0__new_fml:ix:__ts0__new_fml:ix}),{fml:h:new_fml:h,fml:t_a:new_fml:t_a,fml:q_append:new_fml:q_append,fml:ix_a:new_fml:ix_a})),{fml:q_append:__fml:q_append,new_fml:ix_a:__new_fml:ix_a,new_fml:h:__new_fml:h,fml:t_a:__fml:t_a,new_fml:t_a:__new_fml:t_a,new_fml:q_append:__new_fml:q_append,fml:ix_a:__fml:ix_a,fml:h:__fml:h}),{__new_fml:ix_a:__new_fml:ix_a_a,__ts0__m_fml:h_b:__ts0__m_fml:h_b,__new_fml:h_b:__new_fml:h_b,__ts0__new_fml:ix:__ts0__new_fml:ix,__new_fml:q_append:__new_fml:q_append,__new_fml:h:__new_fml:h,__ts0_a:__ts0_a_b,__new_fml:t_a:__new_fml:t_a}),{localstate.cix:new_localstate.cix,commited_ix.commited:new_commited_ix.commited,commited_ix.reached:new_commited_ix.reached,localstate.commited:new_localstate.commited})),{__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__new_fml:ix_a:__ts0__new_fml:ix_a_a,__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__new_loc:ix:__ts0__new_loc:ix,__m_loc:ix_a:__ts0__m_loc:ix_a,__new_prm:V0:__ts0__new_prm:V0,__new_fml:firstix:__ts0__new_fml:firstix,__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0_a:__ts0__ts0_a,__new_fml:t_a:__ts0__new_fml:t_a,__new_fml:self_a:__ts0__new_fml:self_a_a,__new_fml:h:__ts0__new_fml:h,__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__new_fml:ix:__ts0__new_fml:ix_b,__new_fml:ix_a_a:__ts0__new_fml:ix_a_a_a,__new_fml:q_append:__ts0__new_fml:q_append,__ts0_a_b:__ts0__ts0_a_b}),Rename((),{__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a_a,__new_fml:ix_a:__ts0__new_fml:ix_a_b,__new_fml:lastix:__ts0__new_fml:lastix_a,__ts0__new_fml:ix:__ts0__ts0__new_fml:ix_b,__new_loc:ix:__ts0__new_loc:ix_a,__m_loc:ix_a:__ts0__m_loc:ix_a_a,__new_prm:V0:__ts0__new_prm:V0_a,__new_fml:firstix:__ts0__new_fml:firstix_a,__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a_a,__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a_a,__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b_a,__ts0_a:__ts0__ts0_a_a,__new_fml:t_a:__ts0__new_fml:t_a_a,__new_fml:self_a:__ts0__new_fml:self_a_b,__new_fml:h:__ts0__new_fml:h_a,__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a_a,__new_fml:ix:__ts0__new_fml:ix_c,__new_fml:ix_a_a:__ts0__new_fml:ix_a_a_b,__new_fml:q_append:__ts0__new_fml:q_append_a,__ts0_a_b:__ts0__ts0_a_b_a})),{__ts0__ts0_a_b:__ts0__ts0_a_b,__ts0__new_prm:V0:__ts0__new_prm:V0,__ts0__new_loc:ix:__ts0__new_loc:ix,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__ts0_b:__ts0_b,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0_c:__ts0_c,__new_fml:h_b:__new_fml:h_b,__m_localstate.commited:__m_localstate.commited,__fml:y:__fml:y,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0_a_a:__ts0_a_a,__fml:cix:__fml:cix,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_fml:t_a:__ts0__new_fml:t_a}),{loc:repliers:new_loc:repliers,loc:ok:new_loc:ok})),{loc:repliers:__loc:repliers,new_loc:repliers:__new_loc:repliers}),{__ts0__ts0_a_b:__ts0__ts0_a_b,__ts0__new_prm:V0:__ts0__new_prm:V0,__ts0__new_loc:ix:__ts0__new_loc:ix,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__ts0_b:__ts0_b,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0_c:__ts0_c,__new_loc:repliers:__new_loc:repliers,__new_fml:h_b:__new_fml:h_b,__m_localstate.commited:__m_localstate.commited,__fml:y:__fml:y,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0_a_a:__ts0_a_a,__fml:cix:__fml:cix,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_fml:t_a:__ts0__new_fml:t_a}),{loc:0:new_loc:0})),{new_loc:0:__new_loc:0,loc:0:__loc:0}),{__ts0__ts0_a_b:__ts0__ts0_a_b,__new_fml:ix_a:__new_fml:ix_a,__ts0__new_loc:ix:__ts0__new_loc:ix,__fml:repliers:__fml:repliers,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__ts0_a:__ts0__ts0_a_a,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__ts0_c:__ts0_c,__new_loc:repliers:__new_loc:repliers,__new_fml:h_b:__new_fml:h_b,__ts0_a_a:__ts0_a_a_a,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_prm:V0:__ts0__new_prm:V0_b,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__ts0_b:__ts0_b_a,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__new_prm:V0:__new_prm:V0_a,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix_a,__ts0__new_fml:h:__ts0__new_fml:h_a,__m_localstate.commited:__m_localstate.commited,__fml:y:__fml:y_c,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0__new_fml:t_a:__ts0__new_fml:t_a,__fml:cix:__fml:cix,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a_a,__new_loc:0:__new_loc:0_a}),{msg_append:new_msg_append,safetyproof.previx_for_append:new_safetyproof.previx_for_append,loc:ok:__m_loc:ok_c,loc:nextreportix:new_loc:nextreportix})),{new_loc:nextreportix:__new_loc:nextreportix,loc:nextreportix:__loc:nextreportix}),{__ts0__ts0_a_b:__ts0__ts0_a_b,__new_fml:ix_a:__new_fml:ix_a,__fml:logt:__fml:logt,__ts0__new_prm:V0_b:__ts0__new_prm:V0_b,__fml:ix:__fml:ix,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_loc:ix:__ts0__new_loc:ix,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt,__fml:y_a:__fml:y_a,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__new_fml:h_b:__new_fml:h_b,__fml:ix_a:__fml:ix_a,__ts0__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a,__ts0__new_loc:1_a:__ts0__new_loc:1_a,__ts0_a_a:__ts0_a_a,__ts0__ts0__new_fml:nter:__ts0__ts0__new_fml:nter,__ts0__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt,__fml:repliers:__fml:repliers,__ts0__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_fml:ix:__ts0__new_fml:ix,__new_loc:repliers:__new_loc:repliers,__m_loc:ok_a:__m_loc:ok_a,__ts0__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b,__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_prm:V0:__ts0__new_prm:V0,__ts0_b_a:__ts0_b_a,__m_loc:nextreportix:__m_loc:nextreportix,__ts0__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0,__ts0__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode,__ts0__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover,__new_fml:t:__new_fml:t,__ts0__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__m_loc:ok_c:__m_loc:ok_c,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_prm:V0:__ts0__ts0__new_prm:V0,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x,__ts0__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a,__ts0__new_fml:cix:__ts0__new_fml:cix,__ts0__m_loc:nextreportix:__ts0__m_loc:nextreportix,__ts0__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a,__ts0__ts0__new_loc:1:__ts0__ts0__new_loc:1,__fml:y_a_a:__fml:y_a_a,__loc:previx:__loc:previx,__new_loc:nextreportix:__new_loc:nextreportix,__new_fml:nter:__new_fml:nter,__ts0__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected,__ts0__ts0__new_loc:t:__ts0__ts0__new_loc:t,__ts0__ts0__new_fml:leader:__ts0__ts0__new_fml:leader,__loc:logt:__loc:logt,__m_loc:ok:__m_loc:ok,__ts0__new_prm:V0_a:__ts0__new_prm:V0_a,__fml:y:__fml:y,__ts0_a_a_a:__ts0_a_a_a,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m,__ts0__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a,__new_loc:0:__new_loc:0,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0__ts0_a_a:__ts0__ts0_a_a,__ts0__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx,__ts0__new_fml:replier_a:__ts0__new_fml:replier_a,__ts0__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a,__ts0__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix,__ts0__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__ts0__ts0__new_loc:previx:__ts0__ts0__new_loc:previx,__fml:y_b:__fml:y_b,__fml:t_a:__fml:t_a,__fml:y_c:__fml:y_c,__fml:logt_a:__fml:logt_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__new_prm:V0_a:__new_prm:V0_a,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__fml:cix:__fml:cix,__ts0_b:__ts0_b,__ts0__ts0__new_loc:logt:__ts0__ts0__new_loc:logt,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__ts0_c:__ts0_c,__fml:t_a_a:__fml:t_a_a,__new_prm:V0:__new_prm:V0,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:m:__fml:m,__ts0__new_loc:lastusedix:__ts0__new_loc:lastusedix,__new_loc:0_a:__new_loc:0_a,__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__loc:prevt:__loc:prevt,__ts0__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__m_loc:ok_b:__m_loc:ok_b,__ts0__ts0__ts0_b:__ts0__ts0__ts0_b,__ts0__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__new_loc:v:__ts0__ts0__new_loc:v,__ts0__new_fml:t_a:__ts0__new_fml:t_a}),{loc:ok:__m_loc:ok_d})),{new_loc:ok:__new_loc:ok,loc:ok:__loc:ok}),{__ts0__ts0_a_b:__ts0__ts0_a_b,__new_fml:ix_a:__new_fml:ix_a,__fml:logt:__fml:logt,__ts0__new_prm:V0_b:__ts0__new_prm:V0_b,__fml:ix:__fml:ix,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_loc:ix:__ts0__new_loc:ix,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt,__fml:y_a:__fml:y_a,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__new_fml:h_b:__new_fml:h_b,__fml:ix_a:__fml:ix_a,__ts0__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a,__ts0__new_loc:1_a:__ts0__new_loc:1_a,__ts0_a_a:__ts0_a_a,__ts0__ts0__new_fml:nter:__ts0__ts0__new_fml:nter,__ts0__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt,__fml:repliers:__fml:repliers,__ts0__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_fml:ix:__ts0__new_fml:ix,__new_loc:repliers:__new_loc:repliers,__m_loc:ok_a:__m_loc:ok_a,__ts0__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b,__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_prm:V0:__ts0__new_prm:V0,__ts0_b_a:__ts0_b_a,__m_loc:nextreportix:__m_loc:nextreportix,__ts0__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0,__ts0__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode,__ts0__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover,__new_fml:t:__new_fml:t,__ts0__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__m_loc:ok_c:__m_loc:ok_c,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_prm:V0:__ts0__ts0__new_prm:V0,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x,__ts0__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a,__ts0__new_fml:cix:__ts0__new_fml:cix,__ts0__m_loc:nextreportix:__ts0__m_loc:nextreportix,__ts0__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a,__ts0__ts0__new_loc:1:__ts0__ts0__new_loc:1,__fml:y_a_a:__fml:y_a_a,__loc:previx:__loc:previx,__new_loc:nextreportix:__new_loc:nextreportix,__new_fml:nter:__new_fml:nter,__new_loc:ok:__new_loc:ok,__ts0__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected,__ts0__ts0__new_loc:t:__ts0__ts0__new_loc:t,__ts0__ts0__new_fml:leader:__ts0__ts0__new_fml:leader,__loc:logt:__loc:logt,__m_loc:ok:__m_loc:ok,__ts0__new_prm:V0_a:__ts0__new_prm:V0_a,__fml:y:__fml:y,__ts0_a_a_a:__ts0_a_a_a,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m,__ts0__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a,__new_loc:0:__new_loc:0,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0__ts0_a_a:__ts0__ts0_a_a,__ts0__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx,__ts0__new_fml:replier_a:__ts0__new_fml:replier_a,__ts0__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a,__ts0__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix,__ts0__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__ts0__ts0__new_loc:previx:__ts0__ts0__new_loc:previx,__fml:y_b:__fml:y_b,__fml:t_a:__fml:t_a,__fml:y_c:__fml:y_c,__fml:logt_a:__fml:logt_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__m_loc:ok_d:__m_loc:ok_d,__new_prm:V0_a:__new_prm:V0_a,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__fml:cix:__fml:cix,__ts0_b:__ts0_b,__ts0__ts0__new_loc:logt:__ts0__ts0__new_loc:logt,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__ts0_c:__ts0_c,__fml:t_a_a:__fml:t_a_a,__new_prm:V0:__new_prm:V0,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:m:__fml:m,__ts0__new_loc:lastusedix:__ts0__new_loc:lastusedix,__new_loc:0_a:__new_loc:0_a,__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__loc:prevt:__loc:prevt,__ts0__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__m_loc:ok_b:__m_loc:ok_b,__ts0__ts0__ts0_b:__ts0__ts0__ts0_b,__ts0__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__new_loc:v:__ts0__ts0__new_loc:v,__ts0__new_fml:t_a:__ts0__new_fml:t_a})),Rename((),{safetyproof.commited_ix:new_safetyproof.commited_ix,localstate.cix:new_localstate.cix,safetyproof.valid:new_safetyproof.valid,safetyproof.has_commits:new_safetyproof.has_commits,safetyproof.previx_for_append:new_safetyproof.previx_for_append,safetyproof.commit_quorum:new_safetyproof.commit_quorum,safetyproof.commited_history:new_safetyproof.commited_history,commited_ix.reached:new_commited_ix.reached,msg_append:new_msg_append,commited_ix.commited:new_commited_ix.commited,safetyproof.commited_term:new_safetyproof.commited_term,localstate.commited:new_localstate.commited})),{__ts0__ts0_a_b:__ts0__ts0_a_b,__new_fml:ix_a:__new_fml:ix_a,__fml:logt:__fml:logt,__ts0__new_prm:V0_b:__ts0__new_prm:V0_b,__fml:ix:__fml:ix,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_loc:ix:__ts0__new_loc:ix,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt,__fml:y_a:__fml:y_a,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__new_fml:h_b:__new_fml:h_b,__fml:ix_a:__fml:ix_a,__ts0__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a,__ts0__new_loc:1_a:__ts0__new_loc:1_a,__ts0_a_a:__ts0_a_a,__ts0__ts0__new_fml:nter:__ts0__ts0__new_fml:nter,__ts0__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt,__fml:repliers:__fml:repliers,__ts0__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_fml:ix:__ts0__new_fml:ix,__new_loc:repliers:__new_loc:repliers,__m_loc:ok_a:__m_loc:ok_a,__ts0__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b,__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_prm:V0:__ts0__new_prm:V0,__ts0_b_a:__ts0_b_a,__m_loc:nextreportix:__m_loc:nextreportix,__ts0__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0,__ts0__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode,__ts0__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover,__new_fml:t:__new_fml:t,__ts0__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__m_loc:ok_c:__m_loc:ok_c,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_prm:V0:__ts0__ts0__new_prm:V0,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x,__ts0__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a,__ts0__new_fml:cix:__ts0__new_fml:cix,__ts0__m_loc:nextreportix:__ts0__m_loc:nextreportix,__ts0__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a,__ts0__ts0__new_loc:1:__ts0__ts0__new_loc:1,__fml:y_a_a:__fml:y_a_a,__loc:previx:__loc:previx,__new_loc:nextreportix:__new_loc:nextreportix,__new_fml:nter:__new_fml:nter,__new_loc:ok:__new_loc:ok,__ts0__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected,__ts0__ts0__new_loc:t:__ts0__ts0__new_loc:t,__ts0__ts0__new_fml:leader:__ts0__ts0__new_fml:leader,__loc:logt:__loc:logt,__m_loc:ok:__m_loc:ok,__ts0__new_prm:V0_a:__ts0__new_prm:V0_a,__fml:y:__fml:y,__ts0_a_a_a:__ts0_a_a_a,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m,__ts0__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a,__new_loc:0:__new_loc:0,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0__ts0_a_a:__ts0__ts0_a_a,__ts0__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx,__ts0__new_fml:replier_a:__ts0__new_fml:replier_a,__ts0__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a,__ts0__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix,__ts0__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__ts0__ts0__new_loc:previx:__ts0__ts0__new_loc:previx,__fml:y_b:__fml:y_b,__fml:t_a:__fml:t_a,__fml:y_c:__fml:y_c,__fml:logt_a:__fml:logt_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__m_loc:ok_d:__m_loc:ok_d,__new_prm:V0_a:__new_prm:V0_a,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__fml:cix:__fml:cix,__ts0_b:__ts0_b,__ts0__ts0__new_loc:logt:__ts0__ts0__new_loc:logt,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__ts0_c:__ts0_c,__fml:t_a_a:__fml:t_a_a,__new_prm:V0:__new_prm:V0,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:m:__fml:m,__ts0__new_loc:lastusedix:__ts0__new_loc:lastusedix,__new_loc:0_a:__new_loc:0_a,__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__loc:prevt:__loc:prevt,__ts0__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__m_loc:ok_b:__m_loc:ok_b,__ts0__ts0__ts0_b:__ts0__ts0__ts0_b,__ts0__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__new_loc:v:__ts0__ts0__new_loc:v,__ts0__new_fml:t_a:__ts0__new_fml:t_a})),{fml:self:__fml:self,fml:replier:__fml:replier,fml:isrecover:__fml:isrecover,fml:t:__fml:t,fml:ix:__fml:ix_b}),{__ts0__ts0_a_b:__ts0__ts0_a_b,__new_fml:ix_a:__new_fml:ix_a,__fml:logt:__fml:logt,__fml:self:__fml:self,__ts0__new_prm:V0_b:__ts0__new_prm:V0_b,__fml:ix:__fml:ix,__ts0__ts0__new_fml:v_a:__ts0__ts0__new_fml:v_a,__ts0__new_fml:lastix:__ts0__new_fml:lastix,__ts0__new_loc:ix:__ts0__new_loc:ix,__ts0__ts0__new_fml:x:__ts0__ts0__new_fml:x,__ts0__ts0__m_fml:h_b:__ts0__ts0__m_fml:h_b,__ts0__ts0__ts0__new_fml:logt:__ts0__ts0__ts0__new_fml:logt,__fml:y_a:__fml:y_a,__ts0__new_loc:0:__ts0__new_loc:0,__ts0__new_fml:ix_a_a:__ts0__new_fml:ix_a_a,__new_fml:h_b:__new_fml:h_b,__fml:ix_a:__fml:ix_a,__ts0__ts0__ts0__new_fml:recovernode_a:__ts0__ts0__ts0__new_fml:recovernode_a,__ts0__new_loc:1_a:__ts0__new_loc:1_a,__ts0_a_a:__ts0_a_a,__ts0__ts0__new_fml:nter:__ts0__ts0__new_fml:nter,__ts0__ts0__new_loc:prevt:__ts0__ts0__new_loc:prevt,__fml:repliers:__fml:repliers,__ts0__ts0__new_loc:rejected:__ts0__ts0__new_loc:rejected,__ts0__m_loc:ix_a:__ts0__m_loc:ix_a,__ts0__new_fml:ix:__ts0__new_fml:ix,__new_loc:repliers:__new_loc:repliers,__m_loc:ok_a:__m_loc:ok_a,__ts0__ts0__new_loc:0_b:__ts0__ts0__new_loc:0_b,__ts0__new_fml:x_a:__ts0__new_fml:x_a,__ts0__new_prm:V0:__ts0__new_prm:V0,__ts0_b_a:__ts0_b_a,__m_loc:nextreportix:__m_loc:nextreportix,__fml:t:__fml:t,__ts0__ts0__new_fml:recovernode:__ts0__ts0__new_fml:recovernode,__ts0__ts0__ts0__new_fml:isrecover:__ts0__ts0__ts0__new_fml:isrecover,__new_fml:t:__new_fml:t,__ts0__ts0__ts0__new_fml:t:__ts0__ts0__ts0__new_fml:t,__ts0__new_fml:ix_b:__ts0__new_fml:ix_b,__ts0__ts0__ts0__new_loc:0:__ts0__ts0__ts0__new_loc:0,__m_loc:ok_c:__m_loc:ok_c,__ts0__new_fml:self_a_a:__ts0__new_fml:self_a_a,__ts0__ts0__new_prm:V0:__ts0__ts0__new_prm:V0,__ts0__new_fml:h:__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:prevlogt:__ts0__ts0__ts0__new_fml:prevlogt,__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__ts0__ts0__new_fml:x:__ts0__ts0__ts0__ts0__new_fml:x,__ts0__ts0__new_fml:isrecover_a:__ts0__ts0__new_fml:isrecover_a,__ts0__new_fml:cix:__ts0__new_fml:cix,__ts0__m_loc:nextreportix:__ts0__m_loc:nextreportix,__ts0__ts0__ts0__new_fml:v:__ts0__ts0__ts0__new_fml:v,__ts0__ts0__new_fml:self_a:__ts0__ts0__new_fml:self_a,__ts0__ts0__ts0__ts0_a:__ts0__ts0__ts0__ts0_a,__ts0__ts0__new_loc:1:__ts0__ts0__new_loc:1,__fml:y_a_a:__fml:y_a_a,__loc:previx:__loc:previx,__fml:isrecover:__fml:isrecover,__new_loc:nextreportix:__new_loc:nextreportix,__new_fml:nter:__new_fml:nter,__new_loc:ok:__new_loc:ok,__ts0__ts0__new_fml:rejected:__ts0__ts0__new_fml:rejected,__ts0__ts0__new_loc:t:__ts0__ts0__new_loc:t,__ts0__ts0__new_fml:leader:__ts0__ts0__new_fml:leader,__loc:logt:__loc:logt,__m_loc:ok:__m_loc:ok,__ts0__new_prm:V0_a:__ts0__new_prm:V0_a,__fml:y:__fml:y,__ts0_a_a_a:__ts0_a_a_a,__ts0__ts0_a:__ts0__ts0_a,__ts0__ts0__ts0__new_loc:m:__ts0__ts0__ts0__new_loc:m,__ts0__ts0__ts0__ts0__new_fml:h:__ts0__ts0__ts0__ts0__new_fml:h,__ts0__ts0__ts0__new_fml:src:__ts0__ts0__ts0__new_fml:src,__ts0__ts0__new_fml:x_a:__ts0__ts0__new_fml:x_a,__ts0__ts0__new_fml:t_a:__ts0__ts0__new_fml:t_a,__new_loc:0:__new_loc:0,__ts0__new_fml:ix_a:__ts0__new_fml:ix_a,__ts0__ts0_a_a:__ts0__ts0_a_a,__ts0__ts0__ts0__new_fml:previx:__ts0__ts0__ts0__new_fml:previx,__ts0__new_fml:replier_a:__ts0__new_fml:replier_a,__ts0__ts0__ts0__new_fml:ix_a:__ts0__ts0__ts0__new_fml:ix_a,__ts0__new_fml:x:__ts0__new_fml:x,__ts0__ts0__ts0__new_fml:h_a:__ts0__ts0__ts0__new_fml:h_a,__ts0__ts0__ts0__ts0__new_fml:ix:__ts0__ts0__ts0__ts0__new_fml:ix,__ts0__ts0__new_loc:0_a:__ts0__ts0__new_loc:0_a,__fml:replier:__fml:replier,__ts0__new_fml:h_a:__ts0__new_fml:h_a,__ts0__ts0__new_loc:previx:__ts0__ts0__new_loc:previx,__fml:y_b:__fml:y_b,__fml:t_a:__fml:t_a,__fml:y_c:__fml:y_c,__fml:logt_a:__fml:logt_a,__m_loc:ix:__m_loc:ix,__ts0__new_fml:firstix:__ts0__new_fml:firstix,__m_loc:ok_d:__m_loc:ok_d,__new_prm:V0_a:__new_prm:V0_a,__m_localstate.commited_a:__m_localstate.commited_a,__ts0__new_fml:q_append:__ts0__new_fml:q_append,__fml:cix:__fml:cix,__ts0_b:__ts0_b,__ts0__ts0__new_loc:logt:__ts0__ts0__new_loc:logt,__ts0__new_fml:ix_a_a_a:__ts0__new_fml:ix_a_a_a,__ts0_c:__ts0_c,__fml:t_a_a:__fml:t_a_a,__new_prm:V0:__new_prm:V0,__ts0__ts0__new_fml:ix:__ts0__ts0__new_fml:ix,__fml:m:__fml:m,__ts0__new_loc:lastusedix:__ts0__new_loc:lastusedix,__new_loc:0_a:__new_loc:0_a,__ts0_a:__ts0_a,__m_localstate.commited:__m_localstate.commited,__loc:prevt:__loc:prevt,__ts0__ts0__ts0__new_fml:m:__ts0__ts0__ts0__new_fml:m,__fml:ix_b:__fml:ix_b,__ts0__ts0__new_fml:ix_a:__ts0__ts0__new_fml:ix_a,__m_loc:ok_b:__m_loc:ok_b,__ts0__ts0__ts0_b:__ts0__ts0__ts0_b,__ts0__ts0__ts0__new_fml:ix_a_a:__ts0__ts0__ts0__new_fml:ix_a_a,__ts0__ts0__new_loc:v:__ts0__ts0__new_loc:v,__ts0__new_fml:t_a:__ts0__new_fml:t_a})),{safetyproof.commited_ix:__safetyproof.commited_ix,localstate.cix:__localstate.cix,safetyproof.valid:__safetyproof.valid,safetyproof.has_commits:__safetyproof.has_commits,safetyproof.previx_for_append:__safetyproof.previx_for_append,safetyproof.commit_quorum:__safetyproof.commit_quorum,safetyproof.commited_history:__safetyproof.commited_history,commited_ix.reached:__commited_ix.reached,msg_append:__msg_append,commited_ix.commited:__commited_ix.commited,safetyproof.commited_term:__safetyproof.commited_term,localstate.commited:__localstate.commited}),{new_msg_append:msg_append,new_safetyproof.previx_for_append:safetyproof.previx_for_append,new_commited_ix.commited:commited_ix.commited,new_commited_ix.reached:commited_ix.reached,new_localstate.cix:localstate.cix,new_safetyproof.commited_term:safetyproof.commited_term,new_safetyproof.valid:safetyproof.valid,new_safetyproof.has_commits:safetyproof.has_commits,new_safetyproof.commited_history:safetyproof.commited_history,new_safetyproof.commit_quorum:safetyproof.commit_quorum,new_localstate.commited:localstate.commited,new_safetyproof.commited_ix:safetyproof.commited_ix})
+    node_term.term_bigeq(0,0) = true
+    hist.logtix(0,0,0) = true
+    node_term.reached(0) = true
+    vote_cand_msg(0,0,0) = true
+    m_node(0) = 0
+    appended_reply_msg(0,0,0) = true
+    0:index = 0
+    localstate.term_bigeq(0,0) = true
+    node_term.curr_term(0,0) = true
+    0:term = 0
+    0:term < 1 = true
+    localstate.nter(0) = 0
+    nset.member(0,0) = true
+    m_term(0) = 0
+    0:index < 1 = true
+    safetyproof.started(0) = true
+    safetyproof.term_leader(0) = 0
+    safetyproof.term_leader(1) = 0
+    localstate.is_leader(0) = true
+    m_prevlogt(0) = 0
+    m_cand(0) = 0
+    safetyproof.voting_quorum(0) = 0
+    safetyproof.voting_quorum(1) = 0
+    hist.filled(0,0) = true
+    term.succ(0,1) = true
+    m_logt(0) = 0
+    safetyproof.term_hist(0) = 0
+    safetyproof.term_hist(1) = 1
+    index.succ(0,1) = true
+    m_ix(0) = 1
+    nset.majority(0) = true
+    m_kind(0) = rqvote
+    hist.valix(0,1) = 0
+    hist.valix(0,0) = 0
+    hist.valix(1,1) = 0
+    hist.valix(1,0) = 0
+    m_val(0) = 0
+    localstate.curr_term(0,0) = true
+    1:index = 1
+    1:term = 1
+    localstate.myhist(0) = 0
+    commited_ix.reached(1) = true
+    safetyproof.previx_for_append(0) = 1
+    safetyproof.commited_ix = 1
+    safetyproof.commited_term = 0
+    fml:t = 0
+    safetyproof.commit_quorum = 0
+    fml:replier = 0
+    fml:self = 0
+    localstate.cix(0) = 1
+    safetyproof.commited_history = 1
+    fml:ix = 0
+    safetyproof.valid(0) = true
+    safetyproof.valid(1) = true
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+nodes.ivy: line 33: assume (nset.majority(S) & nset.majority(T)) -> exists N. (nset.member(N,S) & nset.member(N,T))
+raft.ivy: line 223: assume appended_reply_msg(fml:t,fml:replier,fml:ix)
+raft.ivy: loc:ok := true
+    loc:ok = true
+raft.ivy: loc:nextreportix := fml:ix
+    loc:nextreportix = 0
+raft.ivy: line 980: loc:ok := (loc:ok & localstate.is_leader(fml:self))
+raft.ivy: line 991: call loc:0 := localstate.get_term(fml:self)
+    fml:t_a = 0
+    prm:V0 = 0
+raft.ivy: line 569: call fml:t := ext:node_term.get(localstate.nter(prm:V0))
+    fml:nter = 0
+raft.ivy: line 504: assume node_term.reached(fml:nter)
+raft.ivy: line 507: assume node_term.curr_term(fml:nter,T) <-> fml:t = T
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+raft.ivy: line 701: assume localstate.curr_term(prm:V0,fml:t)
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+    loc:0 = 0
+raft.ivy: line 991: loc:ok := (loc:ok & loc:0 = fml:t)
+raft.ivy: line 994: loc:ok := (loc:ok & hist.logtix(localstate.myhist(fml:self),fml:ix,fml:t))
+raft.ivy: line 1002: loc:nextreportix := 0:index
+    fml:ix_a = 1
+raft.ivy: line 1006: call localstate.add_replier(fml:self, fml:ix, fml:replier)
+    fml:replier_a = 0
+    fml:ix_a = 0
+raft.ivy: line 716: assert localstate.curr_term(prm:V0,T) -> (appended_reply_msg(T,fml:replier,fml:ix) | fml:replier = prm:V0)
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+    fml:repliers = 0
+    fml:ix_a = 1
+raft.ivy: call loc:0 := localstate.get_repliers(fml:self, fml:ix)
+    fml:ix_a = 0
+raft.ivy: line 719: assume (localstate.curr_term(prm:V0,T) & nset.member(REPLIER,fml:repliers)) -> (appended_reply_msg(T,REPLIER,fml:ix) | REPLIER = prm:V0)
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+    loc:0 = 0
+    fml:ix_a = 1
+raft.ivy: loc:repliers := loc:0
+    loc:repliers = 0
+raft.ivy: line 1010: loc:ok := (loc:ok & nset.majority(loc:repliers))
+raft.ivy: line 1013: call localstate.set_last_commited_ix(fml:self, fml:ix)
+    fml:ix = 1
+    fml:cix = 0
+    fml:ix_a = 0
+raft.ivy: line 605: call localstate.cix(prm:V0) := ext:commited_ix.set(fml:ix)
+    fml:ix = 0
+raft.ivy: line 427: commited_ix.commited(fml:cix,I) := I:index <= fml:ix
+    commited_ix.commited(0,0) = true
+raft.ivy: line 432: commited_ix.reached(fml:cix) := true
+    commited_ix.reached(0) = true
+    localstate.cix(0) = 0
+    localstate.commited(0,0) = true
+raft.ivy: line 734: localstate.commited(prm:V0,IX) := IX:index <= fml:ix
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+    fml:ix_a = 1
+raft.ivy: line 1014: call system.report_commits(fml:self, loc:nextreportix, fml:ix)
+    fml:firstix = 0
+    fml:lastix = 0
+    fml:self_a = 0
+raft.ivy: loc:ix := fml:firstix
+    loc:ix = 0
+raft.ivy: line 969: loc:ix := *
+raft.ivy: line 1015: call safetyproof.update_commited_ghost(localstate.myhist(fml:self), fml:ix, fml:t, loc:repliers)
+    fml:q_append = 0
+    fml:ix = 1
+    fml:h = 0
+    fml:ix_a = 0
+raft.ivy: line 1040: call safetyproof.commited_history := hist.strip(fml:h, fml:ix)
+    fml:h_b = 0
+    old_fml:h_b = 0
+    fml:ix = 0
+raft.ivy: line 85: assert hist.filled(fml:h,fml:ix)
+raft.ivy: line 89: assume hist.logtix(fml:h,IX,LOGT) <-> (hist.logtix(old_fml:h,IX,LOGT) & IX <= fml:ix)
+raft.ivy: line 90: assume IX:index <= fml:ix -> hist.valix(fml:h,IX) = hist.valix(old_fml:h,IX)
+raft.ivy: line 91: assume hist.filled(fml:h,IX) <-> IX <= fml:ix
+raft.ivy: line 559: assume node_term.reached(localstate.nter(V0))
+raft.ivy: line 610: assume commited_ix.reached(localstate.cix(V0))
+    safetyproof.commited_history = 0
+raft.ivy: line 1041: safetyproof.valid(safetyproof.commited_history) := true
+raft.ivy: line 1042: safetyproof.commited_ix := fml:ix
+    safetyproof.commited_ix = 0
+raft.ivy: line 1043: safetyproof.commited_term := fml:t
+raft.ivy: line 1044: safetyproof.commit_quorum := fml:q_append
+raft.ivy: line 1045: safetyproof.has_commits := true
+    safetyproof.has_commits = true
+    fml:ix_a = 1
+raft.ivy: line 750: assert (localstate.commited(N1,IX) & localstate.commited(N2,IX)) -> hist.valix(localstate.myhist(N1),IX) = hist.valix(localstate.myhist(N2),IX)

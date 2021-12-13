@@ -1,0 +1,3543 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    TILDAEQ
+    TILDA
+    DOT
+    ARROW
+    EQ
+
+Grammar
+
+Rule 0     S' -> top
+Rule 1     top -> <empty>
+Rule 2     top -> top field
+Rule 3     field -> VAR vardecl SEMI
+Rule 4     vardecl -> SYMBOL COLON type
+Rule 5     symbol -> SYMBOL
+Rule 6     type -> SYMBOL
+Rule 7     args -> LPAREN RPAREN
+Rule 8     args -> LPAREN vardecls RPAREN
+Rule 9     vardecls -> vardecl
+Rule 10    vardecls -> vardecls COMMA vardecl
+Rule 11    opt_semi -> <empty>
+Rule 12    opt_semi -> SEMI
+Rule 13    requires -> <empty>
+Rule 14    requires -> REQUIRES expr opt_semi
+Rule 15    modifies -> <empty>
+Rule 16    modifies -> MODIFIES modsets opt_semi
+Rule 17    ensures -> <empty>
+Rule 18    ensures -> ENSURES expr opt_semi
+Rule 19    returns -> <empty>
+Rule 20    returns -> RETURNS args
+Rule 21    decreases -> <empty>
+Rule 22    decreases -> DECREASES expr opt_semi
+Rule 23    field -> METHOD symbol args returns requires modifies ensures decreases LCB stmts RCB
+Rule 24    modsets -> <empty>
+Rule 25    modsets -> modset
+Rule 26    modsets -> modsets COMMA modset
+Rule 27    modset -> symbol
+Rule 28    modset -> LCB RCB
+Rule 29    modset -> LCB symbols RCB
+Rule 30    symbols -> symbol
+Rule 31    symbols -> symbols COMMA symbol
+Rule 32    expr -> LPAREN expr RPAREN
+Rule 33    expr -> symbol
+Rule 34    expr -> symbol LPAREN RPAREN
+Rule 35    expr -> symbol LPAREN exprs RPAREN
+Rule 36    expr -> expr AND expr
+Rule 37    expr -> expr OR expr
+Rule 38    expr -> expr IMPLIES expr
+Rule 39    expr -> expr IFF expr
+Rule 40    expr -> BANG expr
+Rule 41    expr -> expr EQEQ expr
+Rule 42    expr -> expr BANGEQ expr
+Rule 43    expr -> expr PLUS expr
+Rule 44    expr -> expr MINUS expr
+Rule 45    expr -> MINUS expr
+Rule 46    expr -> expr TIMES expr
+Rule 47    expr -> expr LE expr
+Rule 48    expr -> expr LT expr
+Rule 49    expr -> expr GE expr
+Rule 50    expr -> expr GT expr
+Rule 51    lvalue -> symbol
+Rule 52    stmt -> lvalues ASSIGN exprs SEMI
+Rule 53    lvalues -> lvalue
+Rule 54    lvalues -> lvalues COMMA lvalue
+Rule 55    exprs -> expr
+Rule 56    exprs -> exprs COMMA expr
+Rule 57    stmt -> ASSUME expr SEMI
+Rule 58    stmt -> ASSERT expr SEMI
+Rule 59    stmts -> stmt
+Rule 60    stmts -> stmts stmt
+Rule 61    invariant -> INVARIANT expr
+Rule 62    invariants -> <empty>
+Rule 63    invariants -> invariants invariant
+Rule 64    stmt -> WHILE expr modifies invariants LCB stmts RCB
+Rule 65    stmt -> IF expr LCB stmts RCB
+Rule 66    stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB
+Rule 67    stmt -> VAR vardecl SEMI
+Rule 68    stmt -> VAR symbols ASSIGN exprs SEMI
+Rule 69    stmt -> RETURN SEMI
+Rule 70    stmt -> RETURN exprs SEMI
+
+Terminals, with rules where they appear
+
+AND                  : 36
+ARROW                : 
+ASSERT               : 58
+ASSIGN               : 52 68
+ASSUME               : 57
+BANG                 : 40
+BANGEQ               : 42
+COLON                : 4
+COMMA                : 10 26 31 54 56
+DECREASES            : 22
+DOT                  : 
+ELSE                 : 66
+ENSURES              : 18
+EQ                   : 
+EQEQ                 : 41
+GE                   : 49
+GT                   : 50
+IF                   : 65 66
+IFF                  : 39
+IMPLIES              : 38
+INVARIANT            : 61
+LCB                  : 23 28 29 64 65 66 66
+LE                   : 47
+LPAREN               : 7 8 32 34 35
+LT                   : 48
+METHOD               : 23
+MINUS                : 44 45
+MODIFIES             : 16
+OR                   : 37
+PLUS                 : 43
+RCB                  : 23 28 29 64 65 66 66
+REQUIRES             : 14
+RETURN               : 69 70
+RETURNS              : 20
+RPAREN               : 7 8 32 34 35
+SEMI                 : 3 12 52 57 58 67 68 69 70
+SYMBOL               : 4 5 6
+TILDA                : 
+TILDAEQ              : 
+TIMES                : 46
+VAR                  : 3 67 68
+WHILE                : 64
+error                : 
+
+Nonterminals, with rules where they appear
+
+args                 : 20 23
+decreases            : 23
+ensures              : 23
+expr                 : 14 18 22 32 36 36 37 37 38 38 39 39 40 41 41 42 42 43 43 44 44 45 46 46 47 47 48 48 49 49 50 50 55 56 57 58 61 64 65 66
+exprs                : 35 52 56 68 70
+field                : 2
+invariant            : 63
+invariants           : 63 64
+lvalue               : 53 54
+lvalues              : 52 54
+modifies             : 23 64
+modset               : 25 26
+modsets              : 16 26
+opt_semi             : 14 16 18 22
+requires             : 23
+returns              : 23
+stmt                 : 59 60
+stmts                : 23 60 64 65 66 66
+symbol               : 23 27 30 31 33 34 35 51
+symbols              : 29 31 68
+top                  : 2 0
+type                 : 4
+vardecl              : 3 9 10 67
+vardecls             : 8 10
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . top
+    (1) top -> .
+    (2) top -> . top field
+
+    VAR             reduce using rule 1 (top -> .)
+    METHOD          reduce using rule 1 (top -> .)
+    $end            reduce using rule 1 (top -> .)
+
+    top                            shift and go to state 1
+
+state 1
+
+    (0) S' -> top .
+    (2) top -> top . field
+    (3) field -> . VAR vardecl SEMI
+    (23) field -> . METHOD symbol args returns requires modifies ensures decreases LCB stmts RCB
+
+    VAR             shift and go to state 3
+    METHOD          shift and go to state 4
+
+    field                          shift and go to state 2
+
+state 2
+
+    (2) top -> top field .
+
+    VAR             reduce using rule 2 (top -> top field .)
+    METHOD          reduce using rule 2 (top -> top field .)
+    $end            reduce using rule 2 (top -> top field .)
+
+
+state 3
+
+    (3) field -> VAR . vardecl SEMI
+    (4) vardecl -> . SYMBOL COLON type
+
+    SYMBOL          shift and go to state 5
+
+    vardecl                        shift and go to state 6
+
+state 4
+
+    (23) field -> METHOD . symbol args returns requires modifies ensures decreases LCB stmts RCB
+    (5) symbol -> . SYMBOL
+
+    SYMBOL          shift and go to state 8
+
+    symbol                         shift and go to state 7
+
+state 5
+
+    (4) vardecl -> SYMBOL . COLON type
+
+    COLON           shift and go to state 9
+
+
+state 6
+
+    (3) field -> VAR vardecl . SEMI
+
+    SEMI            shift and go to state 10
+
+
+state 7
+
+    (23) field -> METHOD symbol . args returns requires modifies ensures decreases LCB stmts RCB
+    (7) args -> . LPAREN RPAREN
+    (8) args -> . LPAREN vardecls RPAREN
+
+    LPAREN          shift and go to state 12
+
+    args                           shift and go to state 11
+
+state 8
+
+    (5) symbol -> SYMBOL .
+
+    LPAREN          reduce using rule 5 (symbol -> SYMBOL .)
+    AND             reduce using rule 5 (symbol -> SYMBOL .)
+    OR              reduce using rule 5 (symbol -> SYMBOL .)
+    IMPLIES         reduce using rule 5 (symbol -> SYMBOL .)
+    IFF             reduce using rule 5 (symbol -> SYMBOL .)
+    EQEQ            reduce using rule 5 (symbol -> SYMBOL .)
+    BANGEQ          reduce using rule 5 (symbol -> SYMBOL .)
+    PLUS            reduce using rule 5 (symbol -> SYMBOL .)
+    MINUS           reduce using rule 5 (symbol -> SYMBOL .)
+    TIMES           reduce using rule 5 (symbol -> SYMBOL .)
+    LE              reduce using rule 5 (symbol -> SYMBOL .)
+    LT              reduce using rule 5 (symbol -> SYMBOL .)
+    GE              reduce using rule 5 (symbol -> SYMBOL .)
+    GT              reduce using rule 5 (symbol -> SYMBOL .)
+    SEMI            reduce using rule 5 (symbol -> SYMBOL .)
+    MODIFIES        reduce using rule 5 (symbol -> SYMBOL .)
+    ENSURES         reduce using rule 5 (symbol -> SYMBOL .)
+    DECREASES       reduce using rule 5 (symbol -> SYMBOL .)
+    LCB             reduce using rule 5 (symbol -> SYMBOL .)
+    RPAREN          reduce using rule 5 (symbol -> SYMBOL .)
+    COMMA           reduce using rule 5 (symbol -> SYMBOL .)
+    INVARIANT       reduce using rule 5 (symbol -> SYMBOL .)
+    ASSIGN          reduce using rule 5 (symbol -> SYMBOL .)
+    RCB             reduce using rule 5 (symbol -> SYMBOL .)
+
+
+state 9
+
+    (4) vardecl -> SYMBOL COLON . type
+    (6) type -> . SYMBOL
+
+    SYMBOL          shift and go to state 14
+
+    type                           shift and go to state 13
+
+state 10
+
+    (3) field -> VAR vardecl SEMI .
+
+    VAR             reduce using rule 3 (field -> VAR vardecl SEMI .)
+    METHOD          reduce using rule 3 (field -> VAR vardecl SEMI .)
+    $end            reduce using rule 3 (field -> VAR vardecl SEMI .)
+
+
+state 11
+
+    (23) field -> METHOD symbol args . returns requires modifies ensures decreases LCB stmts RCB
+    (19) returns -> .
+    (20) returns -> . RETURNS args
+
+    REQUIRES        reduce using rule 19 (returns -> .)
+    MODIFIES        reduce using rule 19 (returns -> .)
+    ENSURES         reduce using rule 19 (returns -> .)
+    DECREASES       reduce using rule 19 (returns -> .)
+    LCB             reduce using rule 19 (returns -> .)
+    RETURNS         shift and go to state 15
+
+    returns                        shift and go to state 16
+
+state 12
+
+    (7) args -> LPAREN . RPAREN
+    (8) args -> LPAREN . vardecls RPAREN
+    (9) vardecls -> . vardecl
+    (10) vardecls -> . vardecls COMMA vardecl
+    (4) vardecl -> . SYMBOL COLON type
+
+    RPAREN          shift and go to state 17
+    SYMBOL          shift and go to state 5
+
+    vardecls                       shift and go to state 19
+    vardecl                        shift and go to state 18
+
+state 13
+
+    (4) vardecl -> SYMBOL COLON type .
+
+    RPAREN          reduce using rule 4 (vardecl -> SYMBOL COLON type .)
+    COMMA           reduce using rule 4 (vardecl -> SYMBOL COLON type .)
+    SEMI            reduce using rule 4 (vardecl -> SYMBOL COLON type .)
+
+
+state 14
+
+    (6) type -> SYMBOL .
+
+    SEMI            reduce using rule 6 (type -> SYMBOL .)
+    RPAREN          reduce using rule 6 (type -> SYMBOL .)
+    COMMA           reduce using rule 6 (type -> SYMBOL .)
+
+
+state 15
+
+    (20) returns -> RETURNS . args
+    (7) args -> . LPAREN RPAREN
+    (8) args -> . LPAREN vardecls RPAREN
+
+    LPAREN          shift and go to state 12
+
+    args                           shift and go to state 20
+
+state 16
+
+    (23) field -> METHOD symbol args returns . requires modifies ensures decreases LCB stmts RCB
+    (13) requires -> .
+    (14) requires -> . REQUIRES expr opt_semi
+
+    MODIFIES        reduce using rule 13 (requires -> .)
+    ENSURES         reduce using rule 13 (requires -> .)
+    DECREASES       reduce using rule 13 (requires -> .)
+    LCB             reduce using rule 13 (requires -> .)
+    REQUIRES        shift and go to state 21
+
+    requires                       shift and go to state 22
+
+state 17
+
+    (7) args -> LPAREN RPAREN .
+
+    RETURNS         reduce using rule 7 (args -> LPAREN RPAREN .)
+    REQUIRES        reduce using rule 7 (args -> LPAREN RPAREN .)
+    MODIFIES        reduce using rule 7 (args -> LPAREN RPAREN .)
+    ENSURES         reduce using rule 7 (args -> LPAREN RPAREN .)
+    DECREASES       reduce using rule 7 (args -> LPAREN RPAREN .)
+    LCB             reduce using rule 7 (args -> LPAREN RPAREN .)
+
+
+state 18
+
+    (9) vardecls -> vardecl .
+
+    RPAREN          reduce using rule 9 (vardecls -> vardecl .)
+    COMMA           reduce using rule 9 (vardecls -> vardecl .)
+
+
+state 19
+
+    (8) args -> LPAREN vardecls . RPAREN
+    (10) vardecls -> vardecls . COMMA vardecl
+
+    RPAREN          shift and go to state 24
+    COMMA           shift and go to state 23
+
+
+state 20
+
+    (20) returns -> RETURNS args .
+
+    REQUIRES        reduce using rule 20 (returns -> RETURNS args .)
+    MODIFIES        reduce using rule 20 (returns -> RETURNS args .)
+    ENSURES         reduce using rule 20 (returns -> RETURNS args .)
+    DECREASES       reduce using rule 20 (returns -> RETURNS args .)
+    LCB             reduce using rule 20 (returns -> RETURNS args .)
+
+
+state 21
+
+    (14) requires -> REQUIRES . expr opt_semi
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 28
+    symbol                         shift and go to state 26
+
+state 22
+
+    (23) field -> METHOD symbol args returns requires . modifies ensures decreases LCB stmts RCB
+    (15) modifies -> .
+    (16) modifies -> . MODIFIES modsets opt_semi
+
+    ENSURES         reduce using rule 15 (modifies -> .)
+    DECREASES       reduce using rule 15 (modifies -> .)
+    LCB             reduce using rule 15 (modifies -> .)
+    MODIFIES        shift and go to state 30
+
+    modifies                       shift and go to state 31
+
+state 23
+
+    (10) vardecls -> vardecls COMMA . vardecl
+    (4) vardecl -> . SYMBOL COLON type
+
+    SYMBOL          shift and go to state 5
+
+    vardecl                        shift and go to state 32
+
+state 24
+
+    (8) args -> LPAREN vardecls RPAREN .
+
+    RETURNS         reduce using rule 8 (args -> LPAREN vardecls RPAREN .)
+    REQUIRES        reduce using rule 8 (args -> LPAREN vardecls RPAREN .)
+    MODIFIES        reduce using rule 8 (args -> LPAREN vardecls RPAREN .)
+    ENSURES         reduce using rule 8 (args -> LPAREN vardecls RPAREN .)
+    DECREASES       reduce using rule 8 (args -> LPAREN vardecls RPAREN .)
+    LCB             reduce using rule 8 (args -> LPAREN vardecls RPAREN .)
+
+
+state 25
+
+    (45) expr -> MINUS . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 33
+    symbol                         shift and go to state 26
+
+state 26
+
+    (33) expr -> symbol .
+    (34) expr -> symbol . LPAREN RPAREN
+    (35) expr -> symbol . LPAREN exprs RPAREN
+
+    AND             reduce using rule 33 (expr -> symbol .)
+    OR              reduce using rule 33 (expr -> symbol .)
+    IMPLIES         reduce using rule 33 (expr -> symbol .)
+    IFF             reduce using rule 33 (expr -> symbol .)
+    EQEQ            reduce using rule 33 (expr -> symbol .)
+    BANGEQ          reduce using rule 33 (expr -> symbol .)
+    PLUS            reduce using rule 33 (expr -> symbol .)
+    MINUS           reduce using rule 33 (expr -> symbol .)
+    TIMES           reduce using rule 33 (expr -> symbol .)
+    LE              reduce using rule 33 (expr -> symbol .)
+    LT              reduce using rule 33 (expr -> symbol .)
+    GE              reduce using rule 33 (expr -> symbol .)
+    GT              reduce using rule 33 (expr -> symbol .)
+    SEMI            reduce using rule 33 (expr -> symbol .)
+    MODIFIES        reduce using rule 33 (expr -> symbol .)
+    ENSURES         reduce using rule 33 (expr -> symbol .)
+    DECREASES       reduce using rule 33 (expr -> symbol .)
+    LCB             reduce using rule 33 (expr -> symbol .)
+    RPAREN          reduce using rule 33 (expr -> symbol .)
+    COMMA           reduce using rule 33 (expr -> symbol .)
+    INVARIANT       reduce using rule 33 (expr -> symbol .)
+    LPAREN          shift and go to state 34
+
+
+state 27
+
+    (32) expr -> LPAREN . expr RPAREN
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 35
+    symbol                         shift and go to state 26
+
+state 28
+
+    (14) requires -> REQUIRES expr . opt_semi
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+    (11) opt_semi -> .
+    (12) opt_semi -> . SEMI
+
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+    MODIFIES        reduce using rule 11 (opt_semi -> .)
+    ENSURES         reduce using rule 11 (opt_semi -> .)
+    DECREASES       reduce using rule 11 (opt_semi -> .)
+    LCB             reduce using rule 11 (opt_semi -> .)
+    SEMI            shift and go to state 40
+
+    opt_semi                       shift and go to state 42
+
+state 29
+
+    (40) expr -> BANG . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 51
+    symbol                         shift and go to state 26
+
+state 30
+
+    (16) modifies -> MODIFIES . modsets opt_semi
+    (24) modsets -> .
+    (25) modsets -> . modset
+    (26) modsets -> . modsets COMMA modset
+    (27) modset -> . symbol
+    (28) modset -> . LCB RCB
+    (29) modset -> . LCB symbols RCB
+    (5) symbol -> . SYMBOL
+
+  ! shift/reduce conflict for LCB resolved as shift
+    COMMA           reduce using rule 24 (modsets -> .)
+    SEMI            reduce using rule 24 (modsets -> .)
+    ENSURES         reduce using rule 24 (modsets -> .)
+    DECREASES       reduce using rule 24 (modsets -> .)
+    INVARIANT       reduce using rule 24 (modsets -> .)
+    LCB             shift and go to state 55
+    SYMBOL          shift and go to state 8
+
+  ! LCB             [ reduce using rule 24 (modsets -> .) ]
+
+    modsets                        shift and go to state 54
+    modset                         shift and go to state 52
+    symbol                         shift and go to state 53
+
+state 31
+
+    (23) field -> METHOD symbol args returns requires modifies . ensures decreases LCB stmts RCB
+    (17) ensures -> .
+    (18) ensures -> . ENSURES expr opt_semi
+
+    DECREASES       reduce using rule 17 (ensures -> .)
+    LCB             reduce using rule 17 (ensures -> .)
+    ENSURES         shift and go to state 57
+
+    ensures                        shift and go to state 56
+
+state 32
+
+    (10) vardecls -> vardecls COMMA vardecl .
+
+    RPAREN          reduce using rule 10 (vardecls -> vardecls COMMA vardecl .)
+    COMMA           reduce using rule 10 (vardecls -> vardecls COMMA vardecl .)
+
+
+state 33
+
+    (45) expr -> MINUS expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 45 (expr -> MINUS expr .)
+    OR              reduce using rule 45 (expr -> MINUS expr .)
+    IMPLIES         reduce using rule 45 (expr -> MINUS expr .)
+    IFF             reduce using rule 45 (expr -> MINUS expr .)
+    EQEQ            reduce using rule 45 (expr -> MINUS expr .)
+    BANGEQ          reduce using rule 45 (expr -> MINUS expr .)
+    PLUS            reduce using rule 45 (expr -> MINUS expr .)
+    MINUS           reduce using rule 45 (expr -> MINUS expr .)
+    LE              reduce using rule 45 (expr -> MINUS expr .)
+    LT              reduce using rule 45 (expr -> MINUS expr .)
+    GE              reduce using rule 45 (expr -> MINUS expr .)
+    GT              reduce using rule 45 (expr -> MINUS expr .)
+    SEMI            reduce using rule 45 (expr -> MINUS expr .)
+    MODIFIES        reduce using rule 45 (expr -> MINUS expr .)
+    ENSURES         reduce using rule 45 (expr -> MINUS expr .)
+    DECREASES       reduce using rule 45 (expr -> MINUS expr .)
+    LCB             reduce using rule 45 (expr -> MINUS expr .)
+    RPAREN          reduce using rule 45 (expr -> MINUS expr .)
+    COMMA           reduce using rule 45 (expr -> MINUS expr .)
+    INVARIANT       reduce using rule 45 (expr -> MINUS expr .)
+    TIMES           shift and go to state 49
+
+  ! TIMES           [ reduce using rule 45 (expr -> MINUS expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! PLUS            [ shift and go to state 47 ]
+  ! MINUS           [ shift and go to state 44 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 34
+
+    (34) expr -> symbol LPAREN . RPAREN
+    (35) expr -> symbol LPAREN . exprs RPAREN
+    (55) exprs -> . expr
+    (56) exprs -> . exprs COMMA expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    RPAREN          shift and go to state 58
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    exprs                          shift and go to state 60
+    symbol                         shift and go to state 26
+    expr                           shift and go to state 59
+
+state 35
+
+    (32) expr -> LPAREN expr . RPAREN
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    RPAREN          shift and go to state 61
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 36
+
+    (36) expr -> expr AND . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 62
+    symbol                         shift and go to state 26
+
+state 37
+
+    (42) expr -> expr BANGEQ . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 63
+    symbol                         shift and go to state 26
+
+state 38
+
+    (47) expr -> expr LE . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 64
+    symbol                         shift and go to state 26
+
+state 39
+
+    (38) expr -> expr IMPLIES . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 65
+    symbol                         shift and go to state 26
+
+state 40
+
+    (12) opt_semi -> SEMI .
+
+    MODIFIES        reduce using rule 12 (opt_semi -> SEMI .)
+    ENSURES         reduce using rule 12 (opt_semi -> SEMI .)
+    DECREASES       reduce using rule 12 (opt_semi -> SEMI .)
+    LCB             reduce using rule 12 (opt_semi -> SEMI .)
+    INVARIANT       reduce using rule 12 (opt_semi -> SEMI .)
+
+
+state 41
+
+    (41) expr -> expr EQEQ . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 66
+    symbol                         shift and go to state 26
+
+state 42
+
+    (14) requires -> REQUIRES expr opt_semi .
+
+    MODIFIES        reduce using rule 14 (requires -> REQUIRES expr opt_semi .)
+    ENSURES         reduce using rule 14 (requires -> REQUIRES expr opt_semi .)
+    DECREASES       reduce using rule 14 (requires -> REQUIRES expr opt_semi .)
+    LCB             reduce using rule 14 (requires -> REQUIRES expr opt_semi .)
+
+
+state 43
+
+    (48) expr -> expr LT . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 67
+    symbol                         shift and go to state 26
+
+state 44
+
+    (44) expr -> expr MINUS . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 68
+    symbol                         shift and go to state 26
+
+state 45
+
+    (39) expr -> expr IFF . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 69
+    symbol                         shift and go to state 26
+
+state 46
+
+    (50) expr -> expr GT . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 70
+    symbol                         shift and go to state 26
+
+state 47
+
+    (43) expr -> expr PLUS . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 71
+    symbol                         shift and go to state 26
+
+state 48
+
+    (49) expr -> expr GE . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 72
+    symbol                         shift and go to state 26
+
+state 49
+
+    (46) expr -> expr TIMES . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 73
+    symbol                         shift and go to state 26
+
+state 50
+
+    (37) expr -> expr OR . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 74
+    symbol                         shift and go to state 26
+
+state 51
+
+    (40) expr -> BANG expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 40 (expr -> BANG expr .)
+    OR              reduce using rule 40 (expr -> BANG expr .)
+    IMPLIES         reduce using rule 40 (expr -> BANG expr .)
+    IFF             reduce using rule 40 (expr -> BANG expr .)
+    SEMI            reduce using rule 40 (expr -> BANG expr .)
+    MODIFIES        reduce using rule 40 (expr -> BANG expr .)
+    ENSURES         reduce using rule 40 (expr -> BANG expr .)
+    DECREASES       reduce using rule 40 (expr -> BANG expr .)
+    LCB             reduce using rule 40 (expr -> BANG expr .)
+    RPAREN          reduce using rule 40 (expr -> BANG expr .)
+    COMMA           reduce using rule 40 (expr -> BANG expr .)
+    INVARIANT       reduce using rule 40 (expr -> BANG expr .)
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+  ! EQEQ            [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! BANGEQ          [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! PLUS            [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! MINUS           [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! TIMES           [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! LE              [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! LT              [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! GE              [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! GT              [ reduce using rule 40 (expr -> BANG expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+
+
+state 52
+
+    (25) modsets -> modset .
+
+    COMMA           reduce using rule 25 (modsets -> modset .)
+    SEMI            reduce using rule 25 (modsets -> modset .)
+    ENSURES         reduce using rule 25 (modsets -> modset .)
+    DECREASES       reduce using rule 25 (modsets -> modset .)
+    LCB             reduce using rule 25 (modsets -> modset .)
+    INVARIANT       reduce using rule 25 (modsets -> modset .)
+
+
+state 53
+
+    (27) modset -> symbol .
+
+    COMMA           reduce using rule 27 (modset -> symbol .)
+    SEMI            reduce using rule 27 (modset -> symbol .)
+    ENSURES         reduce using rule 27 (modset -> symbol .)
+    DECREASES       reduce using rule 27 (modset -> symbol .)
+    LCB             reduce using rule 27 (modset -> symbol .)
+    INVARIANT       reduce using rule 27 (modset -> symbol .)
+
+
+state 54
+
+    (16) modifies -> MODIFIES modsets . opt_semi
+    (26) modsets -> modsets . COMMA modset
+    (11) opt_semi -> .
+    (12) opt_semi -> . SEMI
+
+    COMMA           shift and go to state 76
+    ENSURES         reduce using rule 11 (opt_semi -> .)
+    DECREASES       reduce using rule 11 (opt_semi -> .)
+    LCB             reduce using rule 11 (opt_semi -> .)
+    INVARIANT       reduce using rule 11 (opt_semi -> .)
+    SEMI            shift and go to state 40
+
+    opt_semi                       shift and go to state 75
+
+state 55
+
+    (28) modset -> LCB . RCB
+    (29) modset -> LCB . symbols RCB
+    (30) symbols -> . symbol
+    (31) symbols -> . symbols COMMA symbol
+    (5) symbol -> . SYMBOL
+
+    RCB             shift and go to state 79
+    SYMBOL          shift and go to state 8
+
+    symbols                        shift and go to state 78
+    symbol                         shift and go to state 77
+
+state 56
+
+    (23) field -> METHOD symbol args returns requires modifies ensures . decreases LCB stmts RCB
+    (21) decreases -> .
+    (22) decreases -> . DECREASES expr opt_semi
+
+    LCB             reduce using rule 21 (decreases -> .)
+    DECREASES       shift and go to state 81
+
+    decreases                      shift and go to state 80
+
+state 57
+
+    (18) ensures -> ENSURES . expr opt_semi
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 82
+    symbol                         shift and go to state 26
+
+state 58
+
+    (34) expr -> symbol LPAREN RPAREN .
+
+    AND             reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    OR              reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    IMPLIES         reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    IFF             reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    EQEQ            reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    BANGEQ          reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    PLUS            reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    MINUS           reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    TIMES           reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    LE              reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    LT              reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    GE              reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    GT              reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    SEMI            reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    MODIFIES        reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    ENSURES         reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    DECREASES       reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    LCB             reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    RPAREN          reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    COMMA           reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+    INVARIANT       reduce using rule 34 (expr -> symbol LPAREN RPAREN .)
+
+
+state 59
+
+    (55) exprs -> expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    SEMI            reduce using rule 55 (exprs -> expr .)
+    COMMA           reduce using rule 55 (exprs -> expr .)
+    RPAREN          reduce using rule 55 (exprs -> expr .)
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 60
+
+    (35) expr -> symbol LPAREN exprs . RPAREN
+    (56) exprs -> exprs . COMMA expr
+
+    RPAREN          shift and go to state 83
+    COMMA           shift and go to state 84
+
+
+state 61
+
+    (32) expr -> LPAREN expr RPAREN .
+
+    AND             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    OR              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    IMPLIES         reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    IFF             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    EQEQ            reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    BANGEQ          reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    TIMES           reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    LE              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    LT              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    GE              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    GT              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    SEMI            reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    MODIFIES        reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    ENSURES         reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    DECREASES       reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    LCB             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    COMMA           reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    INVARIANT       reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+
+
+state 62
+
+    (36) expr -> expr AND expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 36 (expr -> expr AND expr .)
+    OR              reduce using rule 36 (expr -> expr AND expr .)
+    IMPLIES         reduce using rule 36 (expr -> expr AND expr .)
+    IFF             reduce using rule 36 (expr -> expr AND expr .)
+    SEMI            reduce using rule 36 (expr -> expr AND expr .)
+    MODIFIES        reduce using rule 36 (expr -> expr AND expr .)
+    ENSURES         reduce using rule 36 (expr -> expr AND expr .)
+    DECREASES       reduce using rule 36 (expr -> expr AND expr .)
+    LCB             reduce using rule 36 (expr -> expr AND expr .)
+    RPAREN          reduce using rule 36 (expr -> expr AND expr .)
+    COMMA           reduce using rule 36 (expr -> expr AND expr .)
+    INVARIANT       reduce using rule 36 (expr -> expr AND expr .)
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+  ! EQEQ            [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! BANGEQ          [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! PLUS            [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! MINUS           [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! TIMES           [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! LE              [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! LT              [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! GE              [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! GT              [ reduce using rule 36 (expr -> expr AND expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+
+
+state 63
+
+    (42) expr -> expr BANGEQ expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 42 (expr -> expr BANGEQ expr .)
+    OR              reduce using rule 42 (expr -> expr BANGEQ expr .)
+    IMPLIES         reduce using rule 42 (expr -> expr BANGEQ expr .)
+    IFF             reduce using rule 42 (expr -> expr BANGEQ expr .)
+    EQEQ            reduce using rule 42 (expr -> expr BANGEQ expr .)
+    BANGEQ          reduce using rule 42 (expr -> expr BANGEQ expr .)
+    LE              reduce using rule 42 (expr -> expr BANGEQ expr .)
+    LT              reduce using rule 42 (expr -> expr BANGEQ expr .)
+    GE              reduce using rule 42 (expr -> expr BANGEQ expr .)
+    GT              reduce using rule 42 (expr -> expr BANGEQ expr .)
+    SEMI            reduce using rule 42 (expr -> expr BANGEQ expr .)
+    MODIFIES        reduce using rule 42 (expr -> expr BANGEQ expr .)
+    ENSURES         reduce using rule 42 (expr -> expr BANGEQ expr .)
+    DECREASES       reduce using rule 42 (expr -> expr BANGEQ expr .)
+    LCB             reduce using rule 42 (expr -> expr BANGEQ expr .)
+    RPAREN          reduce using rule 42 (expr -> expr BANGEQ expr .)
+    COMMA           reduce using rule 42 (expr -> expr BANGEQ expr .)
+    INVARIANT       reduce using rule 42 (expr -> expr BANGEQ expr .)
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+
+  ! PLUS            [ reduce using rule 42 (expr -> expr BANGEQ expr .) ]
+  ! MINUS           [ reduce using rule 42 (expr -> expr BANGEQ expr .) ]
+  ! TIMES           [ reduce using rule 42 (expr -> expr BANGEQ expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 64
+
+    (47) expr -> expr LE expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 47 (expr -> expr LE expr .)
+    OR              reduce using rule 47 (expr -> expr LE expr .)
+    IMPLIES         reduce using rule 47 (expr -> expr LE expr .)
+    IFF             reduce using rule 47 (expr -> expr LE expr .)
+    EQEQ            reduce using rule 47 (expr -> expr LE expr .)
+    BANGEQ          reduce using rule 47 (expr -> expr LE expr .)
+    LE              reduce using rule 47 (expr -> expr LE expr .)
+    LT              reduce using rule 47 (expr -> expr LE expr .)
+    GE              reduce using rule 47 (expr -> expr LE expr .)
+    GT              reduce using rule 47 (expr -> expr LE expr .)
+    SEMI            reduce using rule 47 (expr -> expr LE expr .)
+    MODIFIES        reduce using rule 47 (expr -> expr LE expr .)
+    ENSURES         reduce using rule 47 (expr -> expr LE expr .)
+    DECREASES       reduce using rule 47 (expr -> expr LE expr .)
+    LCB             reduce using rule 47 (expr -> expr LE expr .)
+    RPAREN          reduce using rule 47 (expr -> expr LE expr .)
+    COMMA           reduce using rule 47 (expr -> expr LE expr .)
+    INVARIANT       reduce using rule 47 (expr -> expr LE expr .)
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+
+  ! PLUS            [ reduce using rule 47 (expr -> expr LE expr .) ]
+  ! MINUS           [ reduce using rule 47 (expr -> expr LE expr .) ]
+  ! TIMES           [ reduce using rule 47 (expr -> expr LE expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 65
+
+    (38) expr -> expr IMPLIES expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    IMPLIES         reduce using rule 38 (expr -> expr IMPLIES expr .)
+    IFF             reduce using rule 38 (expr -> expr IMPLIES expr .)
+    SEMI            reduce using rule 38 (expr -> expr IMPLIES expr .)
+    MODIFIES        reduce using rule 38 (expr -> expr IMPLIES expr .)
+    ENSURES         reduce using rule 38 (expr -> expr IMPLIES expr .)
+    DECREASES       reduce using rule 38 (expr -> expr IMPLIES expr .)
+    LCB             reduce using rule 38 (expr -> expr IMPLIES expr .)
+    RPAREN          reduce using rule 38 (expr -> expr IMPLIES expr .)
+    COMMA           reduce using rule 38 (expr -> expr IMPLIES expr .)
+    INVARIANT       reduce using rule 38 (expr -> expr IMPLIES expr .)
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+  ! AND             [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! OR              [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! EQEQ            [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! BANGEQ          [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! PLUS            [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! MINUS           [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! TIMES           [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! LE              [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! LT              [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! GE              [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! GT              [ reduce using rule 38 (expr -> expr IMPLIES expr .) ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+
+
+state 66
+
+    (41) expr -> expr EQEQ expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 41 (expr -> expr EQEQ expr .)
+    OR              reduce using rule 41 (expr -> expr EQEQ expr .)
+    IMPLIES         reduce using rule 41 (expr -> expr EQEQ expr .)
+    IFF             reduce using rule 41 (expr -> expr EQEQ expr .)
+    EQEQ            reduce using rule 41 (expr -> expr EQEQ expr .)
+    BANGEQ          reduce using rule 41 (expr -> expr EQEQ expr .)
+    LE              reduce using rule 41 (expr -> expr EQEQ expr .)
+    LT              reduce using rule 41 (expr -> expr EQEQ expr .)
+    GE              reduce using rule 41 (expr -> expr EQEQ expr .)
+    GT              reduce using rule 41 (expr -> expr EQEQ expr .)
+    SEMI            reduce using rule 41 (expr -> expr EQEQ expr .)
+    MODIFIES        reduce using rule 41 (expr -> expr EQEQ expr .)
+    ENSURES         reduce using rule 41 (expr -> expr EQEQ expr .)
+    DECREASES       reduce using rule 41 (expr -> expr EQEQ expr .)
+    LCB             reduce using rule 41 (expr -> expr EQEQ expr .)
+    RPAREN          reduce using rule 41 (expr -> expr EQEQ expr .)
+    COMMA           reduce using rule 41 (expr -> expr EQEQ expr .)
+    INVARIANT       reduce using rule 41 (expr -> expr EQEQ expr .)
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+
+  ! PLUS            [ reduce using rule 41 (expr -> expr EQEQ expr .) ]
+  ! MINUS           [ reduce using rule 41 (expr -> expr EQEQ expr .) ]
+  ! TIMES           [ reduce using rule 41 (expr -> expr EQEQ expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 67
+
+    (48) expr -> expr LT expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 48 (expr -> expr LT expr .)
+    OR              reduce using rule 48 (expr -> expr LT expr .)
+    IMPLIES         reduce using rule 48 (expr -> expr LT expr .)
+    IFF             reduce using rule 48 (expr -> expr LT expr .)
+    EQEQ            reduce using rule 48 (expr -> expr LT expr .)
+    BANGEQ          reduce using rule 48 (expr -> expr LT expr .)
+    LE              reduce using rule 48 (expr -> expr LT expr .)
+    LT              reduce using rule 48 (expr -> expr LT expr .)
+    GE              reduce using rule 48 (expr -> expr LT expr .)
+    GT              reduce using rule 48 (expr -> expr LT expr .)
+    SEMI            reduce using rule 48 (expr -> expr LT expr .)
+    MODIFIES        reduce using rule 48 (expr -> expr LT expr .)
+    ENSURES         reduce using rule 48 (expr -> expr LT expr .)
+    DECREASES       reduce using rule 48 (expr -> expr LT expr .)
+    LCB             reduce using rule 48 (expr -> expr LT expr .)
+    RPAREN          reduce using rule 48 (expr -> expr LT expr .)
+    COMMA           reduce using rule 48 (expr -> expr LT expr .)
+    INVARIANT       reduce using rule 48 (expr -> expr LT expr .)
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+
+  ! PLUS            [ reduce using rule 48 (expr -> expr LT expr .) ]
+  ! MINUS           [ reduce using rule 48 (expr -> expr LT expr .) ]
+  ! TIMES           [ reduce using rule 48 (expr -> expr LT expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 68
+
+    (44) expr -> expr MINUS expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 44 (expr -> expr MINUS expr .)
+    OR              reduce using rule 44 (expr -> expr MINUS expr .)
+    IMPLIES         reduce using rule 44 (expr -> expr MINUS expr .)
+    IFF             reduce using rule 44 (expr -> expr MINUS expr .)
+    EQEQ            reduce using rule 44 (expr -> expr MINUS expr .)
+    BANGEQ          reduce using rule 44 (expr -> expr MINUS expr .)
+    PLUS            reduce using rule 44 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 44 (expr -> expr MINUS expr .)
+    LE              reduce using rule 44 (expr -> expr MINUS expr .)
+    LT              reduce using rule 44 (expr -> expr MINUS expr .)
+    GE              reduce using rule 44 (expr -> expr MINUS expr .)
+    GT              reduce using rule 44 (expr -> expr MINUS expr .)
+    SEMI            reduce using rule 44 (expr -> expr MINUS expr .)
+    MODIFIES        reduce using rule 44 (expr -> expr MINUS expr .)
+    ENSURES         reduce using rule 44 (expr -> expr MINUS expr .)
+    DECREASES       reduce using rule 44 (expr -> expr MINUS expr .)
+    LCB             reduce using rule 44 (expr -> expr MINUS expr .)
+    RPAREN          reduce using rule 44 (expr -> expr MINUS expr .)
+    COMMA           reduce using rule 44 (expr -> expr MINUS expr .)
+    INVARIANT       reduce using rule 44 (expr -> expr MINUS expr .)
+    TIMES           shift and go to state 49
+
+  ! TIMES           [ reduce using rule 44 (expr -> expr MINUS expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! PLUS            [ shift and go to state 47 ]
+  ! MINUS           [ shift and go to state 44 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 69
+
+    (39) expr -> expr IFF expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    IFF             reduce using rule 39 (expr -> expr IFF expr .)
+    SEMI            reduce using rule 39 (expr -> expr IFF expr .)
+    MODIFIES        reduce using rule 39 (expr -> expr IFF expr .)
+    ENSURES         reduce using rule 39 (expr -> expr IFF expr .)
+    DECREASES       reduce using rule 39 (expr -> expr IFF expr .)
+    LCB             reduce using rule 39 (expr -> expr IFF expr .)
+    RPAREN          reduce using rule 39 (expr -> expr IFF expr .)
+    COMMA           reduce using rule 39 (expr -> expr IFF expr .)
+    INVARIANT       reduce using rule 39 (expr -> expr IFF expr .)
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+  ! AND             [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! OR              [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! IMPLIES         [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! EQEQ            [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! BANGEQ          [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! PLUS            [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! MINUS           [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! TIMES           [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! LE              [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! LT              [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! GE              [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! GT              [ reduce using rule 39 (expr -> expr IFF expr .) ]
+  ! IFF             [ shift and go to state 45 ]
+
+
+state 70
+
+    (50) expr -> expr GT expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 50 (expr -> expr GT expr .)
+    OR              reduce using rule 50 (expr -> expr GT expr .)
+    IMPLIES         reduce using rule 50 (expr -> expr GT expr .)
+    IFF             reduce using rule 50 (expr -> expr GT expr .)
+    EQEQ            reduce using rule 50 (expr -> expr GT expr .)
+    BANGEQ          reduce using rule 50 (expr -> expr GT expr .)
+    LE              reduce using rule 50 (expr -> expr GT expr .)
+    LT              reduce using rule 50 (expr -> expr GT expr .)
+    GE              reduce using rule 50 (expr -> expr GT expr .)
+    GT              reduce using rule 50 (expr -> expr GT expr .)
+    SEMI            reduce using rule 50 (expr -> expr GT expr .)
+    MODIFIES        reduce using rule 50 (expr -> expr GT expr .)
+    ENSURES         reduce using rule 50 (expr -> expr GT expr .)
+    DECREASES       reduce using rule 50 (expr -> expr GT expr .)
+    LCB             reduce using rule 50 (expr -> expr GT expr .)
+    RPAREN          reduce using rule 50 (expr -> expr GT expr .)
+    COMMA           reduce using rule 50 (expr -> expr GT expr .)
+    INVARIANT       reduce using rule 50 (expr -> expr GT expr .)
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+
+  ! PLUS            [ reduce using rule 50 (expr -> expr GT expr .) ]
+  ! MINUS           [ reduce using rule 50 (expr -> expr GT expr .) ]
+  ! TIMES           [ reduce using rule 50 (expr -> expr GT expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 71
+
+    (43) expr -> expr PLUS expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 43 (expr -> expr PLUS expr .)
+    OR              reduce using rule 43 (expr -> expr PLUS expr .)
+    IMPLIES         reduce using rule 43 (expr -> expr PLUS expr .)
+    IFF             reduce using rule 43 (expr -> expr PLUS expr .)
+    EQEQ            reduce using rule 43 (expr -> expr PLUS expr .)
+    BANGEQ          reduce using rule 43 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 43 (expr -> expr PLUS expr .)
+    MINUS           reduce using rule 43 (expr -> expr PLUS expr .)
+    LE              reduce using rule 43 (expr -> expr PLUS expr .)
+    LT              reduce using rule 43 (expr -> expr PLUS expr .)
+    GE              reduce using rule 43 (expr -> expr PLUS expr .)
+    GT              reduce using rule 43 (expr -> expr PLUS expr .)
+    SEMI            reduce using rule 43 (expr -> expr PLUS expr .)
+    MODIFIES        reduce using rule 43 (expr -> expr PLUS expr .)
+    ENSURES         reduce using rule 43 (expr -> expr PLUS expr .)
+    DECREASES       reduce using rule 43 (expr -> expr PLUS expr .)
+    LCB             reduce using rule 43 (expr -> expr PLUS expr .)
+    RPAREN          reduce using rule 43 (expr -> expr PLUS expr .)
+    COMMA           reduce using rule 43 (expr -> expr PLUS expr .)
+    INVARIANT       reduce using rule 43 (expr -> expr PLUS expr .)
+    TIMES           shift and go to state 49
+
+  ! TIMES           [ reduce using rule 43 (expr -> expr PLUS expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! PLUS            [ shift and go to state 47 ]
+  ! MINUS           [ shift and go to state 44 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 72
+
+    (49) expr -> expr GE expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 49 (expr -> expr GE expr .)
+    OR              reduce using rule 49 (expr -> expr GE expr .)
+    IMPLIES         reduce using rule 49 (expr -> expr GE expr .)
+    IFF             reduce using rule 49 (expr -> expr GE expr .)
+    EQEQ            reduce using rule 49 (expr -> expr GE expr .)
+    BANGEQ          reduce using rule 49 (expr -> expr GE expr .)
+    LE              reduce using rule 49 (expr -> expr GE expr .)
+    LT              reduce using rule 49 (expr -> expr GE expr .)
+    GE              reduce using rule 49 (expr -> expr GE expr .)
+    GT              reduce using rule 49 (expr -> expr GE expr .)
+    SEMI            reduce using rule 49 (expr -> expr GE expr .)
+    MODIFIES        reduce using rule 49 (expr -> expr GE expr .)
+    ENSURES         reduce using rule 49 (expr -> expr GE expr .)
+    DECREASES       reduce using rule 49 (expr -> expr GE expr .)
+    LCB             reduce using rule 49 (expr -> expr GE expr .)
+    RPAREN          reduce using rule 49 (expr -> expr GE expr .)
+    COMMA           reduce using rule 49 (expr -> expr GE expr .)
+    INVARIANT       reduce using rule 49 (expr -> expr GE expr .)
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+
+  ! PLUS            [ reduce using rule 49 (expr -> expr GE expr .) ]
+  ! MINUS           [ reduce using rule 49 (expr -> expr GE expr .) ]
+  ! TIMES           [ reduce using rule 49 (expr -> expr GE expr .) ]
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 73
+
+    (46) expr -> expr TIMES expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    AND             reduce using rule 46 (expr -> expr TIMES expr .)
+    OR              reduce using rule 46 (expr -> expr TIMES expr .)
+    IMPLIES         reduce using rule 46 (expr -> expr TIMES expr .)
+    IFF             reduce using rule 46 (expr -> expr TIMES expr .)
+    EQEQ            reduce using rule 46 (expr -> expr TIMES expr .)
+    BANGEQ          reduce using rule 46 (expr -> expr TIMES expr .)
+    PLUS            reduce using rule 46 (expr -> expr TIMES expr .)
+    MINUS           reduce using rule 46 (expr -> expr TIMES expr .)
+    TIMES           reduce using rule 46 (expr -> expr TIMES expr .)
+    LE              reduce using rule 46 (expr -> expr TIMES expr .)
+    LT              reduce using rule 46 (expr -> expr TIMES expr .)
+    GE              reduce using rule 46 (expr -> expr TIMES expr .)
+    GT              reduce using rule 46 (expr -> expr TIMES expr .)
+    SEMI            reduce using rule 46 (expr -> expr TIMES expr .)
+    MODIFIES        reduce using rule 46 (expr -> expr TIMES expr .)
+    ENSURES         reduce using rule 46 (expr -> expr TIMES expr .)
+    DECREASES       reduce using rule 46 (expr -> expr TIMES expr .)
+    LCB             reduce using rule 46 (expr -> expr TIMES expr .)
+    RPAREN          reduce using rule 46 (expr -> expr TIMES expr .)
+    COMMA           reduce using rule 46 (expr -> expr TIMES expr .)
+    INVARIANT       reduce using rule 46 (expr -> expr TIMES expr .)
+
+  ! AND             [ shift and go to state 36 ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+  ! EQEQ            [ shift and go to state 41 ]
+  ! BANGEQ          [ shift and go to state 37 ]
+  ! PLUS            [ shift and go to state 47 ]
+  ! MINUS           [ shift and go to state 44 ]
+  ! TIMES           [ shift and go to state 49 ]
+  ! LE              [ shift and go to state 38 ]
+  ! LT              [ shift and go to state 43 ]
+  ! GE              [ shift and go to state 48 ]
+  ! GT              [ shift and go to state 46 ]
+
+
+state 74
+
+    (37) expr -> expr OR expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    OR              reduce using rule 37 (expr -> expr OR expr .)
+    IMPLIES         reduce using rule 37 (expr -> expr OR expr .)
+    IFF             reduce using rule 37 (expr -> expr OR expr .)
+    SEMI            reduce using rule 37 (expr -> expr OR expr .)
+    MODIFIES        reduce using rule 37 (expr -> expr OR expr .)
+    ENSURES         reduce using rule 37 (expr -> expr OR expr .)
+    DECREASES       reduce using rule 37 (expr -> expr OR expr .)
+    LCB             reduce using rule 37 (expr -> expr OR expr .)
+    RPAREN          reduce using rule 37 (expr -> expr OR expr .)
+    COMMA           reduce using rule 37 (expr -> expr OR expr .)
+    INVARIANT       reduce using rule 37 (expr -> expr OR expr .)
+    AND             shift and go to state 36
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+  ! AND             [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! EQEQ            [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! BANGEQ          [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! PLUS            [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! MINUS           [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! TIMES           [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! LE              [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! LT              [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! GE              [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! GT              [ reduce using rule 37 (expr -> expr OR expr .) ]
+  ! OR              [ shift and go to state 50 ]
+  ! IMPLIES         [ shift and go to state 39 ]
+  ! IFF             [ shift and go to state 45 ]
+
+
+state 75
+
+    (16) modifies -> MODIFIES modsets opt_semi .
+
+    LCB             reduce using rule 16 (modifies -> MODIFIES modsets opt_semi .)
+    INVARIANT       reduce using rule 16 (modifies -> MODIFIES modsets opt_semi .)
+    ENSURES         reduce using rule 16 (modifies -> MODIFIES modsets opt_semi .)
+    DECREASES       reduce using rule 16 (modifies -> MODIFIES modsets opt_semi .)
+
+
+state 76
+
+    (26) modsets -> modsets COMMA . modset
+    (27) modset -> . symbol
+    (28) modset -> . LCB RCB
+    (29) modset -> . LCB symbols RCB
+    (5) symbol -> . SYMBOL
+
+    LCB             shift and go to state 55
+    SYMBOL          shift and go to state 8
+
+    modset                         shift and go to state 85
+    symbol                         shift and go to state 53
+
+state 77
+
+    (30) symbols -> symbol .
+
+    ASSIGN          reduce using rule 30 (symbols -> symbol .)
+    COMMA           reduce using rule 30 (symbols -> symbol .)
+    RCB             reduce using rule 30 (symbols -> symbol .)
+
+
+state 78
+
+    (29) modset -> LCB symbols . RCB
+    (31) symbols -> symbols . COMMA symbol
+
+    RCB             shift and go to state 87
+    COMMA           shift and go to state 86
+
+
+state 79
+
+    (28) modset -> LCB RCB .
+
+    COMMA           reduce using rule 28 (modset -> LCB RCB .)
+    SEMI            reduce using rule 28 (modset -> LCB RCB .)
+    ENSURES         reduce using rule 28 (modset -> LCB RCB .)
+    DECREASES       reduce using rule 28 (modset -> LCB RCB .)
+    LCB             reduce using rule 28 (modset -> LCB RCB .)
+    INVARIANT       reduce using rule 28 (modset -> LCB RCB .)
+
+
+state 80
+
+    (23) field -> METHOD symbol args returns requires modifies ensures decreases . LCB stmts RCB
+
+    LCB             shift and go to state 88
+
+
+state 81
+
+    (22) decreases -> DECREASES . expr opt_semi
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 89
+    symbol                         shift and go to state 26
+
+state 82
+
+    (18) ensures -> ENSURES expr . opt_semi
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+    (11) opt_semi -> .
+    (12) opt_semi -> . SEMI
+
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+    DECREASES       reduce using rule 11 (opt_semi -> .)
+    LCB             reduce using rule 11 (opt_semi -> .)
+    SEMI            shift and go to state 40
+
+    opt_semi                       shift and go to state 90
+
+state 83
+
+    (35) expr -> symbol LPAREN exprs RPAREN .
+
+    AND             reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    OR              reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    IMPLIES         reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    IFF             reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    EQEQ            reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    BANGEQ          reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    PLUS            reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    MINUS           reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    TIMES           reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    LE              reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    LT              reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    GE              reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    GT              reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    SEMI            reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    MODIFIES        reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    ENSURES         reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    DECREASES       reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    LCB             reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    RPAREN          reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    COMMA           reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+    INVARIANT       reduce using rule 35 (expr -> symbol LPAREN exprs RPAREN .)
+
+
+state 84
+
+    (56) exprs -> exprs COMMA . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    symbol                         shift and go to state 26
+    expr                           shift and go to state 91
+
+state 85
+
+    (26) modsets -> modsets COMMA modset .
+
+    COMMA           reduce using rule 26 (modsets -> modsets COMMA modset .)
+    SEMI            reduce using rule 26 (modsets -> modsets COMMA modset .)
+    ENSURES         reduce using rule 26 (modsets -> modsets COMMA modset .)
+    DECREASES       reduce using rule 26 (modsets -> modsets COMMA modset .)
+    LCB             reduce using rule 26 (modsets -> modsets COMMA modset .)
+    INVARIANT       reduce using rule 26 (modsets -> modsets COMMA modset .)
+
+
+state 86
+
+    (31) symbols -> symbols COMMA . symbol
+    (5) symbol -> . SYMBOL
+
+    SYMBOL          shift and go to state 8
+
+    symbol                         shift and go to state 92
+
+state 87
+
+    (29) modset -> LCB symbols RCB .
+
+    COMMA           reduce using rule 29 (modset -> LCB symbols RCB .)
+    SEMI            reduce using rule 29 (modset -> LCB symbols RCB .)
+    ENSURES         reduce using rule 29 (modset -> LCB symbols RCB .)
+    DECREASES       reduce using rule 29 (modset -> LCB symbols RCB .)
+    LCB             reduce using rule 29 (modset -> LCB symbols RCB .)
+    INVARIANT       reduce using rule 29 (modset -> LCB symbols RCB .)
+
+
+state 88
+
+    (23) field -> METHOD symbol args returns requires modifies ensures decreases LCB . stmts RCB
+    (59) stmts -> . stmt
+    (60) stmts -> . stmts stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    stmts                          shift and go to state 96
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 100
+    lvalues                        shift and go to state 98
+
+state 89
+
+    (22) decreases -> DECREASES expr . opt_semi
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+    (11) opt_semi -> .
+    (12) opt_semi -> . SEMI
+
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+    LCB             reduce using rule 11 (opt_semi -> .)
+    SEMI            shift and go to state 40
+
+    opt_semi                       shift and go to state 104
+
+state 90
+
+    (18) ensures -> ENSURES expr opt_semi .
+
+    DECREASES       reduce using rule 18 (ensures -> ENSURES expr opt_semi .)
+    LCB             reduce using rule 18 (ensures -> ENSURES expr opt_semi .)
+
+
+state 91
+
+    (56) exprs -> exprs COMMA expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    SEMI            reduce using rule 56 (exprs -> exprs COMMA expr .)
+    COMMA           reduce using rule 56 (exprs -> exprs COMMA expr .)
+    RPAREN          reduce using rule 56 (exprs -> exprs COMMA expr .)
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 92
+
+    (31) symbols -> symbols COMMA symbol .
+
+    ASSIGN          reduce using rule 31 (symbols -> symbols COMMA symbol .)
+    COMMA           reduce using rule 31 (symbols -> symbols COMMA symbol .)
+    RCB             reduce using rule 31 (symbols -> symbols COMMA symbol .)
+
+
+state 93
+
+    (69) stmt -> RETURN . SEMI
+    (70) stmt -> RETURN . exprs SEMI
+    (55) exprs -> . expr
+    (56) exprs -> . exprs COMMA expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    SEMI            shift and go to state 105
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    exprs                          shift and go to state 106
+    symbol                         shift and go to state 26
+    expr                           shift and go to state 59
+
+state 94
+
+    (58) stmt -> ASSERT . expr SEMI
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 107
+    symbol                         shift and go to state 26
+
+state 95
+
+    (64) stmt -> WHILE . expr modifies invariants LCB stmts RCB
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 108
+    symbol                         shift and go to state 26
+
+state 96
+
+    (23) field -> METHOD symbol args returns requires modifies ensures decreases LCB stmts . RCB
+    (60) stmts -> stmts . stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    RCB             shift and go to state 109
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 110
+    lvalues                        shift and go to state 98
+
+state 97
+
+    (53) lvalues -> lvalue .
+
+    ASSIGN          reduce using rule 53 (lvalues -> lvalue .)
+    COMMA           reduce using rule 53 (lvalues -> lvalue .)
+
+
+state 98
+
+    (52) stmt -> lvalues . ASSIGN exprs SEMI
+    (54) lvalues -> lvalues . COMMA lvalue
+
+    ASSIGN          shift and go to state 112
+    COMMA           shift and go to state 111
+
+
+state 99
+
+    (51) lvalue -> symbol .
+
+    ASSIGN          reduce using rule 51 (lvalue -> symbol .)
+    COMMA           reduce using rule 51 (lvalue -> symbol .)
+
+
+state 100
+
+    (59) stmts -> stmt .
+
+    RCB             reduce using rule 59 (stmts -> stmt .)
+    ASSUME          reduce using rule 59 (stmts -> stmt .)
+    ASSERT          reduce using rule 59 (stmts -> stmt .)
+    WHILE           reduce using rule 59 (stmts -> stmt .)
+    IF              reduce using rule 59 (stmts -> stmt .)
+    VAR             reduce using rule 59 (stmts -> stmt .)
+    RETURN          reduce using rule 59 (stmts -> stmt .)
+    SYMBOL          reduce using rule 59 (stmts -> stmt .)
+
+
+state 101
+
+    (67) stmt -> VAR . vardecl SEMI
+    (68) stmt -> VAR . symbols ASSIGN exprs SEMI
+    (4) vardecl -> . SYMBOL COLON type
+    (30) symbols -> . symbol
+    (31) symbols -> . symbols COMMA symbol
+    (5) symbol -> . SYMBOL
+
+    SYMBOL          shift and go to state 113
+
+    symbols                        shift and go to state 115
+    symbol                         shift and go to state 77
+    vardecl                        shift and go to state 114
+
+state 102
+
+    (65) stmt -> IF . expr LCB stmts RCB
+    (66) stmt -> IF . expr LCB stmts RCB ELSE LCB stmts RCB
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 116
+    symbol                         shift and go to state 26
+
+state 103
+
+    (57) stmt -> ASSUME . expr SEMI
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 117
+    symbol                         shift and go to state 26
+
+state 104
+
+    (22) decreases -> DECREASES expr opt_semi .
+
+    LCB             reduce using rule 22 (decreases -> DECREASES expr opt_semi .)
+
+
+state 105
+
+    (69) stmt -> RETURN SEMI .
+
+    RCB             reduce using rule 69 (stmt -> RETURN SEMI .)
+    ASSUME          reduce using rule 69 (stmt -> RETURN SEMI .)
+    ASSERT          reduce using rule 69 (stmt -> RETURN SEMI .)
+    WHILE           reduce using rule 69 (stmt -> RETURN SEMI .)
+    IF              reduce using rule 69 (stmt -> RETURN SEMI .)
+    VAR             reduce using rule 69 (stmt -> RETURN SEMI .)
+    RETURN          reduce using rule 69 (stmt -> RETURN SEMI .)
+    SYMBOL          reduce using rule 69 (stmt -> RETURN SEMI .)
+
+
+state 106
+
+    (70) stmt -> RETURN exprs . SEMI
+    (56) exprs -> exprs . COMMA expr
+
+    SEMI            shift and go to state 118
+    COMMA           shift and go to state 84
+
+
+state 107
+
+    (58) stmt -> ASSERT expr . SEMI
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    SEMI            shift and go to state 119
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 108
+
+    (64) stmt -> WHILE expr . modifies invariants LCB stmts RCB
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+    (15) modifies -> .
+    (16) modifies -> . MODIFIES modsets opt_semi
+
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+    LCB             reduce using rule 15 (modifies -> .)
+    INVARIANT       reduce using rule 15 (modifies -> .)
+    MODIFIES        shift and go to state 30
+
+    modifies                       shift and go to state 120
+
+state 109
+
+    (23) field -> METHOD symbol args returns requires modifies ensures decreases LCB stmts RCB .
+
+    VAR             reduce using rule 23 (field -> METHOD symbol args returns requires modifies ensures decreases LCB stmts RCB .)
+    METHOD          reduce using rule 23 (field -> METHOD symbol args returns requires modifies ensures decreases LCB stmts RCB .)
+    $end            reduce using rule 23 (field -> METHOD symbol args returns requires modifies ensures decreases LCB stmts RCB .)
+
+
+state 110
+
+    (60) stmts -> stmts stmt .
+
+    RCB             reduce using rule 60 (stmts -> stmts stmt .)
+    ASSUME          reduce using rule 60 (stmts -> stmts stmt .)
+    ASSERT          reduce using rule 60 (stmts -> stmts stmt .)
+    WHILE           reduce using rule 60 (stmts -> stmts stmt .)
+    IF              reduce using rule 60 (stmts -> stmts stmt .)
+    VAR             reduce using rule 60 (stmts -> stmts stmt .)
+    RETURN          reduce using rule 60 (stmts -> stmts stmt .)
+    SYMBOL          reduce using rule 60 (stmts -> stmts stmt .)
+
+
+state 111
+
+    (54) lvalues -> lvalues COMMA . lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    SYMBOL          shift and go to state 8
+
+    symbol                         shift and go to state 99
+    lvalue                         shift and go to state 121
+
+state 112
+
+    (52) stmt -> lvalues ASSIGN . exprs SEMI
+    (55) exprs -> . expr
+    (56) exprs -> . exprs COMMA expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    symbol                         shift and go to state 26
+    expr                           shift and go to state 59
+    exprs                          shift and go to state 122
+
+state 113
+
+    (4) vardecl -> SYMBOL . COLON type
+    (5) symbol -> SYMBOL .
+
+    COLON           shift and go to state 9
+    ASSIGN          reduce using rule 5 (symbol -> SYMBOL .)
+    COMMA           reduce using rule 5 (symbol -> SYMBOL .)
+
+
+state 114
+
+    (67) stmt -> VAR vardecl . SEMI
+
+    SEMI            shift and go to state 123
+
+
+state 115
+
+    (68) stmt -> VAR symbols . ASSIGN exprs SEMI
+    (31) symbols -> symbols . COMMA symbol
+
+    ASSIGN          shift and go to state 124
+    COMMA           shift and go to state 86
+
+
+state 116
+
+    (65) stmt -> IF expr . LCB stmts RCB
+    (66) stmt -> IF expr . LCB stmts RCB ELSE LCB stmts RCB
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    LCB             shift and go to state 125
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 117
+
+    (57) stmt -> ASSUME expr . SEMI
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    SEMI            shift and go to state 126
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 118
+
+    (70) stmt -> RETURN exprs SEMI .
+
+    RCB             reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    ASSUME          reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    ASSERT          reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    WHILE           reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    IF              reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    VAR             reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    RETURN          reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+    SYMBOL          reduce using rule 70 (stmt -> RETURN exprs SEMI .)
+
+
+state 119
+
+    (58) stmt -> ASSERT expr SEMI .
+
+    RCB             reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    ASSUME          reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    ASSERT          reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    WHILE           reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    IF              reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    VAR             reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    RETURN          reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+    SYMBOL          reduce using rule 58 (stmt -> ASSERT expr SEMI .)
+
+
+state 120
+
+    (64) stmt -> WHILE expr modifies . invariants LCB stmts RCB
+    (62) invariants -> .
+    (63) invariants -> . invariants invariant
+
+    LCB             reduce using rule 62 (invariants -> .)
+    INVARIANT       reduce using rule 62 (invariants -> .)
+
+    invariants                     shift and go to state 127
+
+state 121
+
+    (54) lvalues -> lvalues COMMA lvalue .
+
+    ASSIGN          reduce using rule 54 (lvalues -> lvalues COMMA lvalue .)
+    COMMA           reduce using rule 54 (lvalues -> lvalues COMMA lvalue .)
+
+
+state 122
+
+    (52) stmt -> lvalues ASSIGN exprs . SEMI
+    (56) exprs -> exprs . COMMA expr
+
+    SEMI            shift and go to state 128
+    COMMA           shift and go to state 84
+
+
+state 123
+
+    (67) stmt -> VAR vardecl SEMI .
+
+    RCB             reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    ASSUME          reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    ASSERT          reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    WHILE           reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    IF              reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    VAR             reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    RETURN          reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+    SYMBOL          reduce using rule 67 (stmt -> VAR vardecl SEMI .)
+
+
+state 124
+
+    (68) stmt -> VAR symbols ASSIGN . exprs SEMI
+    (55) exprs -> . expr
+    (56) exprs -> . exprs COMMA expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    exprs                          shift and go to state 129
+    symbol                         shift and go to state 26
+    expr                           shift and go to state 59
+
+state 125
+
+    (65) stmt -> IF expr LCB . stmts RCB
+    (66) stmt -> IF expr LCB . stmts RCB ELSE LCB stmts RCB
+    (59) stmts -> . stmt
+    (60) stmts -> . stmts stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    stmts                          shift and go to state 130
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 100
+    lvalues                        shift and go to state 98
+
+state 126
+
+    (57) stmt -> ASSUME expr SEMI .
+
+    RCB             reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    ASSUME          reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    ASSERT          reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    WHILE           reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    IF              reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    VAR             reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    RETURN          reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+    SYMBOL          reduce using rule 57 (stmt -> ASSUME expr SEMI .)
+
+
+state 127
+
+    (64) stmt -> WHILE expr modifies invariants . LCB stmts RCB
+    (63) invariants -> invariants . invariant
+    (61) invariant -> . INVARIANT expr
+
+    LCB             shift and go to state 132
+    INVARIANT       shift and go to state 131
+
+    invariant                      shift and go to state 133
+
+state 128
+
+    (52) stmt -> lvalues ASSIGN exprs SEMI .
+
+    RCB             reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    ASSUME          reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    ASSERT          reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    WHILE           reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    IF              reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    VAR             reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    RETURN          reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+    SYMBOL          reduce using rule 52 (stmt -> lvalues ASSIGN exprs SEMI .)
+
+
+state 129
+
+    (68) stmt -> VAR symbols ASSIGN exprs . SEMI
+    (56) exprs -> exprs . COMMA expr
+
+    SEMI            shift and go to state 134
+    COMMA           shift and go to state 84
+
+
+state 130
+
+    (65) stmt -> IF expr LCB stmts . RCB
+    (66) stmt -> IF expr LCB stmts . RCB ELSE LCB stmts RCB
+    (60) stmts -> stmts . stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    RCB             shift and go to state 135
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 110
+    lvalues                        shift and go to state 98
+
+state 131
+
+    (61) invariant -> INVARIANT . expr
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . symbol
+    (34) expr -> . symbol LPAREN RPAREN
+    (35) expr -> . symbol LPAREN exprs RPAREN
+    (36) expr -> . expr AND expr
+    (37) expr -> . expr OR expr
+    (38) expr -> . expr IMPLIES expr
+    (39) expr -> . expr IFF expr
+    (40) expr -> . BANG expr
+    (41) expr -> . expr EQEQ expr
+    (42) expr -> . expr BANGEQ expr
+    (43) expr -> . expr PLUS expr
+    (44) expr -> . expr MINUS expr
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr TIMES expr
+    (47) expr -> . expr LE expr
+    (48) expr -> . expr LT expr
+    (49) expr -> . expr GE expr
+    (50) expr -> . expr GT expr
+    (5) symbol -> . SYMBOL
+
+    LPAREN          shift and go to state 27
+    BANG            shift and go to state 29
+    MINUS           shift and go to state 25
+    SYMBOL          shift and go to state 8
+
+    expr                           shift and go to state 136
+    symbol                         shift and go to state 26
+
+state 132
+
+    (64) stmt -> WHILE expr modifies invariants LCB . stmts RCB
+    (59) stmts -> . stmt
+    (60) stmts -> . stmts stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    stmts                          shift and go to state 137
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 100
+    lvalues                        shift and go to state 98
+
+state 133
+
+    (63) invariants -> invariants invariant .
+
+    LCB             reduce using rule 63 (invariants -> invariants invariant .)
+    INVARIANT       reduce using rule 63 (invariants -> invariants invariant .)
+
+
+state 134
+
+    (68) stmt -> VAR symbols ASSIGN exprs SEMI .
+
+    RCB             reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    ASSUME          reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    ASSERT          reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    WHILE           reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    IF              reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    VAR             reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    RETURN          reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+    SYMBOL          reduce using rule 68 (stmt -> VAR symbols ASSIGN exprs SEMI .)
+
+
+state 135
+
+    (65) stmt -> IF expr LCB stmts RCB .
+    (66) stmt -> IF expr LCB stmts RCB . ELSE LCB stmts RCB
+
+    RCB             reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    ASSUME          reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    ASSERT          reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    WHILE           reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    IF              reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    VAR             reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    RETURN          reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    SYMBOL          reduce using rule 65 (stmt -> IF expr LCB stmts RCB .)
+    ELSE            shift and go to state 138
+
+
+state 136
+
+    (61) invariant -> INVARIANT expr .
+    (36) expr -> expr . AND expr
+    (37) expr -> expr . OR expr
+    (38) expr -> expr . IMPLIES expr
+    (39) expr -> expr . IFF expr
+    (41) expr -> expr . EQEQ expr
+    (42) expr -> expr . BANGEQ expr
+    (43) expr -> expr . PLUS expr
+    (44) expr -> expr . MINUS expr
+    (46) expr -> expr . TIMES expr
+    (47) expr -> expr . LE expr
+    (48) expr -> expr . LT expr
+    (49) expr -> expr . GE expr
+    (50) expr -> expr . GT expr
+
+    LCB             reduce using rule 61 (invariant -> INVARIANT expr .)
+    INVARIANT       reduce using rule 61 (invariant -> INVARIANT expr .)
+    AND             shift and go to state 36
+    OR              shift and go to state 50
+    IMPLIES         shift and go to state 39
+    IFF             shift and go to state 45
+    EQEQ            shift and go to state 41
+    BANGEQ          shift and go to state 37
+    PLUS            shift and go to state 47
+    MINUS           shift and go to state 44
+    TIMES           shift and go to state 49
+    LE              shift and go to state 38
+    LT              shift and go to state 43
+    GE              shift and go to state 48
+    GT              shift and go to state 46
+
+
+state 137
+
+    (64) stmt -> WHILE expr modifies invariants LCB stmts . RCB
+    (60) stmts -> stmts . stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    RCB             shift and go to state 139
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 110
+    lvalues                        shift and go to state 98
+
+state 138
+
+    (66) stmt -> IF expr LCB stmts RCB ELSE . LCB stmts RCB
+
+    LCB             shift and go to state 140
+
+
+state 139
+
+    (64) stmt -> WHILE expr modifies invariants LCB stmts RCB .
+
+    RCB             reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    ASSUME          reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    ASSERT          reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    WHILE           reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    IF              reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    VAR             reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    RETURN          reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+    SYMBOL          reduce using rule 64 (stmt -> WHILE expr modifies invariants LCB stmts RCB .)
+
+
+state 140
+
+    (66) stmt -> IF expr LCB stmts RCB ELSE LCB . stmts RCB
+    (59) stmts -> . stmt
+    (60) stmts -> . stmts stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    stmts                          shift and go to state 141
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 100
+    lvalues                        shift and go to state 98
+
+state 141
+
+    (66) stmt -> IF expr LCB stmts RCB ELSE LCB stmts . RCB
+    (60) stmts -> stmts . stmt
+    (52) stmt -> . lvalues ASSIGN exprs SEMI
+    (57) stmt -> . ASSUME expr SEMI
+    (58) stmt -> . ASSERT expr SEMI
+    (64) stmt -> . WHILE expr modifies invariants LCB stmts RCB
+    (65) stmt -> . IF expr LCB stmts RCB
+    (66) stmt -> . IF expr LCB stmts RCB ELSE LCB stmts RCB
+    (67) stmt -> . VAR vardecl SEMI
+    (68) stmt -> . VAR symbols ASSIGN exprs SEMI
+    (69) stmt -> . RETURN SEMI
+    (70) stmt -> . RETURN exprs SEMI
+    (53) lvalues -> . lvalue
+    (54) lvalues -> . lvalues COMMA lvalue
+    (51) lvalue -> . symbol
+    (5) symbol -> . SYMBOL
+
+    RCB             shift and go to state 142
+    ASSUME          shift and go to state 103
+    ASSERT          shift and go to state 94
+    WHILE           shift and go to state 95
+    IF              shift and go to state 102
+    VAR             shift and go to state 101
+    RETURN          shift and go to state 93
+    SYMBOL          shift and go to state 8
+
+    lvalue                         shift and go to state 97
+    symbol                         shift and go to state 99
+    stmt                           shift and go to state 110
+    lvalues                        shift and go to state 98
+
+state 142
+
+    (66) stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .
+
+    RCB             reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    ASSUME          reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    ASSERT          reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    WHILE           reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    IF              reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    VAR             reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    RETURN          reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+    SYMBOL          reduce using rule 66 (stmt -> IF expr LCB stmts RCB ELSE LCB stmts RCB .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LCB in state 30 resolved as shift

@@ -1,0 +1,106 @@
+#lang ivy1.7
+
+type term
+type node
+relation vote_cand_msg(N:node, T1:term)
+
+
+isolate node_term = {
+    type this
+    interpret term -> nat
+    relation term_bigeq(NTER: this, T:term)
+    relation term_bigger(NTER: this, T:term) 
+    relation curr_term(NTER: this, T:term) # This is the max term already voted
+    relation reached(NTER: this) #TODO: do i really need reached? could i initialize everything to zero instead?
+    action get(nter: this) returns (t:term)
+    action set(t:term) returns (nter: this)
+    action empty returns (nter: this)
+
+    action is_term_bigger(nter: this, t:term) returns (res: bool)
+
+    specification {
+        # Commited index contract
+        #
+
+        property curr_term(NTER, T) <-> term_bigeq(NTER, T) & ~term_bigger(NTER, T)
+        property term_bigeq(NTER, T) & T > TSMALL -> term_bigger(NTER, TSMALL)
+        property term_bigger(NTER, TSMALL) -> term_bigeq(NTER, TSMALL)
+
+        before get {
+            require reached(nter);
+        }
+        after get {
+            ensure curr_term(nter, T) <-> t = T;
+        }
+        after set {
+            if ~reached(nter) {
+                curr_term(nter, T) := t = T;
+                term_bigeq(nter, T) := t >= T;
+                term_bigger(nter, T) := t > T;
+                reached(nter) := true;
+            } else {
+                ensure curr_term(nter, T) <-> t = T;
+                ensure term_bigeq(nter, T) <-> t >= T;
+                ensure term_bigger(nter, T) <-> t > T;
+            }
+        }
+        before is_term_bigger {
+            require reached(nter);
+        }
+        after is_term_bigger {
+            ensure res <-> term_bigger(nter, t);
+        }
+        after empty {
+
+        #TODO: do i really need this condition?
+            if ~reached(nter) {
+                curr_term(nter, T) := 0 = T;
+                term_bigeq(nter, T) := 0 >= T;
+                term_bigger(nter, T) := 0 > T;
+                reached(nter) := true;
+            } else {
+                ensure curr_term(nter, T) <-> 0 = T;
+                ensure term_bigeq(nter, T) <-> 0 >= T;
+                ensure term_bigger(nter, T) <-> 0 > T;
+            }
+        }
+
+        object init_promises = {
+            after init {
+                reached(NTER) := false;
+            }
+        } # init_promises
+    }
+}
+
+
+type dummytype
+
+
+object myset = {
+    type this
+    relation member(N: node, S:myset)
+    action emptyset returns (ret:myset) 
+    specification {
+        after emptyset {
+            #ensure ~member(N, ret);
+        }
+    }
+}
+
+object localstate = {
+
+    
+    relation curr_term(T:term)
+    individual my_voters : myset
+    after init {
+            my_voters := myset.emptyset;
+    }
+    conjecture curr_term(T) & myset.member(VOTER, my_voters) -> false 
+
+} #localstate
+
+isolate ilocalstate = localstate with node_term,myset
+
+
+#export localstate.move_to_term

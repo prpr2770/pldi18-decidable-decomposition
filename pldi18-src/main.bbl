@@ -1,0 +1,706 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{46}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Alberti, Ghilardi, and Pagani}{Alberti
+  et~al\mbox{.}}{2016}]%
+        {alberti_counting_2016}
+\bibfield{author}{\bibinfo{person}{Francesco Alberti}, \bibinfo{person}{Silvio
+  Ghilardi}, {and} \bibinfo{person}{Elena Pagani}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Counting {{Constraints}} in {{Flat Array
+  Fragments}}}. In \bibinfo{booktitle}{\emph{Automated {{Reasoning}}}}.
+  \bibinfo{publisher}{{Springer, Cham}}, \bibinfo{pages}{65--81}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bakst, von Gleissenthall, Kici, and
+  Jhala}{Bakst et~al\mbox{.}}{2017}]%
+        {DBLP:journals/pacmpl/BakstGKJ17}
+\bibfield{author}{\bibinfo{person}{Alexander Bakst}, \bibinfo{person}{Klaus von
+  Gleissenthall}, \bibinfo{person}{Rami~G{\"{o}}khan Kici}, {and}
+  \bibinfo{person}{Ranjit Jhala}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Verifying distributed programs via canonical
+  sequentialization}.
+\newblock \bibinfo{journal}{\emph{{PACMPL}}} \bibinfo{volume}{1},
+  \bibinfo{number}{{OOPSLA}} (\bibinfo{year}{2017}),
+  \bibinfo{pages}{110:1--110:27}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3133934}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Berdine, Calcagno, and O'Hearn}{Berdine
+  et~al\mbox{.}}{2004}]%
+        {SmallFootDecidable}
+\bibfield{author}{\bibinfo{person}{Josh Berdine}, \bibinfo{person}{Cristiano
+  Calcagno}, {and} \bibinfo{person}{Peter~W. O'Hearn}.}
+  \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{A Decidable Fragment of Separation Logic}. In
+  \bibinfo{booktitle}{\emph{{FSTTCS} 2004: Foundations of Software Technology
+  and Theoretical Computer Science, 24th International Conference, Chennai,
+  India, December 16-18, 2004, Proceedings}}. \bibinfo{pages}{97--109}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bertot and Cast{\'{e}}ran}{Bertot and
+  Cast{\'{e}}ran}{2004}]%
+        {coq}
+\bibfield{author}{\bibinfo{person}{Yves Bertot} {and} \bibinfo{person}{Pierre
+  Cast{\'{e}}ran}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Interactive Theorem Proving and Program
+  Development - Coq'Art: The Calculus of Inductive Constructions}}.
+\newblock \bibinfo{publisher}{Springer}.
+\newblock
+\showISBNx{978-3-642-05880-6}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-662-07964-5}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Bloem, Jacobs, Khalimov, Konnov, Rubin, Veith,
+  and Widder}{Bloem et~al\mbox{.}}{2015}]%
+        {vienna_book}
+\bibfield{author}{\bibinfo{person}{Roderick Bloem}, \bibinfo{person}{Swen
+  Jacobs}, \bibinfo{person}{Ayrat Khalimov}, \bibinfo{person}{Igor Konnov},
+  \bibinfo{person}{Sasha Rubin}, \bibinfo{person}{Helmut Veith}, {and}
+  \bibinfo{person}{Josef Widder}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Decidability of Parameterized
+  Verification}}.
+\newblock \bibinfo{publisher}{Morgan {\&} Claypool Publishers}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.2200/S00658ED1V01Y201508DCT013}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Bradley, Manna, and Sipma}{Bradley
+  et~al\mbox{.}}{2006}]%
+        {BradleyManna}
+\bibfield{author}{\bibinfo{person}{Aaron~R. Bradley}, \bibinfo{person}{Zohar
+  Manna}, {and} \bibinfo{person}{Henny~B. Sipma}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{What's Decidable About Arrays?}. In
+  \bibinfo{booktitle}{\emph{Verification, Model Checking, and Abstract
+  Interpretation, 7th International Conference, {VMCAI} 2006, Charleston, SC,
+  USA, January 8-10, 2006, Proceedings}}. \bibinfo{pages}{427--442}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1007/11609773_28}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Chand, Liu, and Stoller}{Chand
+  et~al\mbox{.}}{2016}]%
+        {chand_formal_2016}
+\bibfield{author}{\bibinfo{person}{Saksham Chand}, \bibinfo{person}{Yanhong~A.
+  Liu}, {and} \bibinfo{person}{Scott~D. Stoller}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Formal {{Verification}} of {{Multi}}-{{Paxos}} for
+  {{Distributed Consensus}}}. In \bibinfo{booktitle}{\emph{{{FM}} 2016:
+  {{Formal Methods}}: 21st {{International Symposium}}, {{Limassol}},
+  {{Cyprus}}, {{November}} 9-11, 2016, {{Proceedings}} 21}}.
+  \bibinfo{publisher}{{Springer}}, \bibinfo{pages}{119--136}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Chaudhuri, Doligez, Lamport, and
+  Merz}{Chaudhuri et~al\mbox{.}}{2010}]%
+        {chaudhuri_tla+proof_2010}
+\bibfield{author}{\bibinfo{person}{Kaustuv Chaudhuri}, \bibinfo{person}{Damien
+  Doligez}, \bibinfo{person}{Leslie Lamport}, {and} \bibinfo{person}{Stephan
+  Merz}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{The {{TLA}}+{{Proof System}}: {{Building}} a
+  {{Heterogeneous Verification Platform}}}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 7th {{International Colloquium
+  Conference}} on {{Theoretical Aspects}} of {{Computing}}}}
+  \emph{(\bibinfo{series}{ICTAC'10})}. \bibinfo{publisher}{{Springer-Verlag}},
+  \bibinfo{pages}{44--44}.
+\newblock
+\showISBNx{978-3-642-14807-1}
+
+
+\bibitem[\protect\citeauthoryear{Cohen, Dahlweid, Hillebrand, Leinenbach,
+  Moskal, Santen, Schulte, and Tobies}{Cohen et~al\mbox{.}}{2009}]%
+        {VCC}
+\bibfield{author}{\bibinfo{person}{Ernie Cohen}, \bibinfo{person}{Markus
+  Dahlweid}, \bibinfo{person}{Mark~A. Hillebrand}, \bibinfo{person}{Dirk
+  Leinenbach}, \bibinfo{person}{Michal Moskal}, \bibinfo{person}{Thomas
+  Santen}, \bibinfo{person}{Wolfram Schulte}, {and} \bibinfo{person}{Stephan
+  Tobies}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{{VCC:} {A} Practical System for Verifying
+  Concurrent {C}}. In \bibinfo{booktitle}{\emph{Theorem Proving in Higher Order
+  Logics, 22nd International Conference, TPHOLs 2009, Munich, Germany, August
+  17-20, 2009. Proceedings}} \emph{(\bibinfo{series}{Lecture Notes in Computer
+  Science})}, \bibfield{editor}{\bibinfo{person}{Stefan Berghofer},
+  \bibinfo{person}{Tobias Nipkow}, \bibinfo{person}{Christian Urban}, {and}
+  \bibinfo{person}{Makarius Wenzel}} (Eds.), Vol.~\bibinfo{volume}{5674}.
+  \bibinfo{publisher}{Springer}, \bibinfo{pages}{23--42}.
+\newblock
+\showISBNx{978-3-642-03358-2}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-642-03359-9_2}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{CoreOS}{CoreOS}{2014}]%
+        {etcd}
+CoreOS \bibinfo{year}{2014}\natexlab{}.
+\newblock \bibinfo{title}{etcd: A highly-available key value store for shared
+  configuration and service discovery}.
+\newblock
+\newblock
+\newblock
+\shownote{{\smaller\url{https://github.com/coreos/etcd}}.}
+
+
+\bibitem[\protect\citeauthoryear{de~Moura and Bj{\o}rner}{de~Moura and
+  Bj{\o}rner}{2008}]%
+        {Z3}
+\bibfield{author}{\bibinfo{person}{Leonardo de Moura} {and}
+  \bibinfo{person}{Nikolaj Bj{\o}rner}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{{Z3}: An Efficient {SMT} Solver}. In
+  \bibinfo{booktitle}{\emph{Tools and Algorithms for the Construction and
+  Analysis of Systems, 14th International Conference, TACAS 2008, Held as Part
+  of the Joint European Conferences on Theory and Practice of Software, ETAPS
+  2008, Budapest, Hungary, March 29-April 6, 2008. Proceedings}}
+  \emph{(\bibinfo{series}{Lecture Notes in Computer Science})},
+  Vol.~\bibinfo{volume}{4963}. \bibinfo{publisher}{Springer},
+  \bibinfo{pages}{337--340}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dragoi, Henzinger, Veith, Widder, and
+  Zufferey}{Dragoi et~al\mbox{.}}{2014}]%
+        {dragoi_logic-based_2014}
+\bibfield{author}{\bibinfo{person}{Cezara Dragoi}, \bibinfo{person}{Thomas~A.
+  Henzinger}, \bibinfo{person}{Helmut Veith}, \bibinfo{person}{Josef Widder},
+  {and} \bibinfo{person}{Damien Zufferey}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{A Logic-Based Framework for Verifying Consensus
+  Algorithms}. In \bibinfo{booktitle}{\emph{International {{Conference}} on
+  {{Verification}}, {{Model Checking}}, and {{Abstract Interpretation}}}}.
+  \bibinfo{publisher}{{Springer}}, \bibinfo{pages}{161--181}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dragoi, Henzinger, and Zufferey}{Dragoi
+  et~al\mbox{.}}{2016}]%
+        {dragoi_psync:_2016}
+\bibfield{author}{\bibinfo{person}{Cezara Dragoi}, \bibinfo{person}{Thomas~A.
+  Henzinger}, {and} \bibinfo{person}{Damien Zufferey}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{{{PSync}}: A Partially Synchronous Language for
+  Fault-Tolerant Distributed Algorithms}.
+\newblock \bibinfo{journal}{\emph{ACM SIGPLAN Notices}} \bibinfo{volume}{51},
+  \bibinfo{number}{1} (\bibinfo{year}{2016}), \bibinfo{pages}{400--415}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dutertre, Jovanovi{\'{c}}, and Navas}{Dutertre
+  et~al\mbox{.}}{2018}]%
+        {sally}
+\bibfield{author}{\bibinfo{person}{Bruno Dutertre}, \bibinfo{person}{Dejan
+  Jovanovi{\'{c}}}, {and} \bibinfo{person}{Jorge~A. Navas}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Verification of Fault-Tolerant Protocols with
+  Sally}. In \bibinfo{booktitle}{\emph{NASA Formal Methods}},
+  \bibfield{editor}{\bibinfo{person}{Aaron Dutle}, \bibinfo{person}{C{\'e}sar
+  Mu{\~{n}}oz}, {and} \bibinfo{person}{Anthony Narkawicz}} (Eds.).
+  \bibinfo{publisher}{Springer International Publishing},
+  \bibinfo{address}{Cham}, \bibinfo{pages}{113--120}.
+\newblock
+\showISBNx{978-3-319-77935-5}
+
+
+\bibitem[\protect\citeauthoryear{Flanagan, Leino, Lillibridge, Nelson, Saxe,
+  and Stata}{Flanagan et~al\mbox{.}}{2002}]%
+        {ESC}
+\bibfield{author}{\bibinfo{person}{Cormac Flanagan},
+  \bibinfo{person}{K.~Rustan~M. Leino}, \bibinfo{person}{Mark Lillibridge},
+  \bibinfo{person}{Greg Nelson}, \bibinfo{person}{James~B. Saxe}, {and}
+  \bibinfo{person}{Raymie Stata}.} \bibinfo{year}{2002}\natexlab{}.
+\newblock \showarticletitle{Extended Static Checking for Java}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the ACM SIGPLAN 2002 Conference on
+  Programming Language Design and Implementation}} \emph{(\bibinfo{series}{PLDI
+  '02})}. \bibinfo{publisher}{ACM}, \bibinfo{pages}{234--245}.
+\newblock
+\showISBNx{1-58113-463-0}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/512529.512558}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Garc{\'{\i}}a{-}P{\'{e}}rez, Gotsman, Meshman,
+  and Sergey}{Garc{\'{\i}}a{-}P{\'{e}}rez et~al\mbox{.}}{2018}]%
+        {paxos_destructed_abstracted}
+\bibfield{author}{\bibinfo{person}{{\'{A}}lvaro Garc{\'{\i}}a{-}P{\'{e}}rez},
+  \bibinfo{person}{Alexey Gotsman}, \bibinfo{person}{Yuri Meshman}, {and}
+  \bibinfo{person}{Ilya Sergey}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Paxos Consensus, Deconstructed and Abstracted}. In
+  \bibinfo{booktitle}{\emph{Programming Languages and Systems - 27th European
+  Symposium on Programming, {ESOP} 2018, Held as Part of the European Joint
+  Conferences on Theory and Practice of Software, {ETAPS} 2018, Thessaloniki,
+  Greece, April 14-20, 2018, Proceedings}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ge and Moura}{Ge and Moura}{2009}]%
+        {ge2009complete}
+\bibfield{author}{\bibinfo{person}{Yeting Ge} {and}
+  \bibinfo{person}{Leonardo~De Moura}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Complete instantiation for quantified formulas in
+  satisfiabiliby modulo theories}. In \bibinfo{booktitle}{\emph{International
+  Conference on Computer Aided Verification}}. Springer,
+  \bibinfo{pages}{306--320}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Hawblitzel, Howell, Kapritsos, Lorch, Parno,
+  Roberts, Setty, and Zill}{Hawblitzel et~al\mbox{.}}{2015}]%
+        {IronFleet}
+\bibfield{author}{\bibinfo{person}{Chris Hawblitzel}, \bibinfo{person}{Jon
+  Howell}, \bibinfo{person}{Manos Kapritsos}, \bibinfo{person}{Jacob~R. Lorch},
+  \bibinfo{person}{Bryan Parno}, \bibinfo{person}{Michael~L. Roberts},
+  \bibinfo{person}{Srinath T.~V. Setty}, {and} \bibinfo{person}{Brian Zill}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{IronFleet: proving practical distributed systems
+  correct}. In \bibinfo{booktitle}{\emph{Proceedings of the 25th Symposium on
+  Operating Systems Principles, {SOSP}}}. \bibinfo{pages}{1--17}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Henriksen, Jensen, J{\o}rgensen, Klarlund,
+  Paige, Rauhe, and Sandholm}{Henriksen et~al\mbox{.}}{1995}]%
+        {DBLP:conf/tacas/HenriksenJJKPRS95}
+\bibfield{author}{\bibinfo{person}{Jesper~G. Henriksen},
+  \bibinfo{person}{Jakob~L. Jensen}, \bibinfo{person}{Michael~E. J{\o}rgensen},
+  \bibinfo{person}{Nils Klarlund}, \bibinfo{person}{Robert Paige},
+  \bibinfo{person}{Theis Rauhe}, {and} \bibinfo{person}{Anders Sandholm}.}
+  \bibinfo{year}{1995}\natexlab{}.
+\newblock \showarticletitle{Mona: Monadic Second-Order Logic in Practice}. In
+  \bibinfo{booktitle}{\emph{Tools and Algorithms for Construction and Analysis
+  of Systems, First International Workshop, {TACAS}}}.
+  \bibinfo{pages}{89--110}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Hoare}{Hoare}{1972}]%
+        {Hoare:DataRepCorrectness}
+\bibfield{author}{\bibinfo{person}{C.~A.~R. Hoare}.}
+  \bibinfo{year}{1972}\natexlab{}.
+\newblock \showarticletitle{Proof of correctness of data representations}.
+\newblock  \bibinfo{volume}{1}, \bibinfo{number}{4} (\bibinfo{year}{1972}),
+  \bibinfo{pages}{271--281}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jackson}{Jackson}{2006}]%
+        {alloy}
+\bibfield{author}{\bibinfo{person}{Daniel Jackson}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Software Abstractions: Logic, Language, and
+  Analysis}}.
+\newblock \bibinfo{publisher}{The MIT Press}.
+\newblock
+\showISBNx{0262101149}
+
+
+\bibitem[\protect\citeauthoryear{Klein, Andronick, Elphinstone, Heiser, Cock,
+  Derrin, Elkaduwe, Engelhardt, Kolanski, Norrish, Sewell, Tuch, and
+  Winwood}{Klein et~al\mbox{.}}{2010}]%
+        {sel4}
+\bibfield{author}{\bibinfo{person}{Gerwin Klein}, \bibinfo{person}{June
+  Andronick}, \bibinfo{person}{Kevin Elphinstone}, \bibinfo{person}{Gernot
+  Heiser}, \bibinfo{person}{David Cock}, \bibinfo{person}{Philip Derrin},
+  \bibinfo{person}{Dhammika Elkaduwe}, \bibinfo{person}{Kai Engelhardt},
+  \bibinfo{person}{Rafal Kolanski}, \bibinfo{person}{Michael Norrish},
+  \bibinfo{person}{Thomas Sewell}, \bibinfo{person}{Harvey Tuch}, {and}
+  \bibinfo{person}{Simon Winwood}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{{seL4}: formal verification of an operating-system
+  kernel}.
+\newblock \bibinfo{journal}{\emph{Commun. {ACM}}} \bibinfo{volume}{53},
+  \bibinfo{number}{6} (\bibinfo{year}{2010}), \bibinfo{pages}{107--115}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Konnov, Lazic, Veith, and Widder}{Konnov
+  et~al\mbox{.}}{2017}]%
+        {konnov_short_2017}
+\bibfield{author}{\bibinfo{person}{Igor Konnov}, \bibinfo{person}{Marijana
+  Lazic}, \bibinfo{person}{Helmut Veith}, {and} \bibinfo{person}{Josef
+  Widder}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{A {{Short Counterexample Property}} for {{Safety}}
+  and {{Liveness Verification}} of {{Fault}}-Tolerant {{Distributed
+  Algorithms}}}. In \bibinfo{booktitle}{\emph{Proceedings of the 44th {{ACM
+  SIGPLAN Symposium}} on {{Principles}} of {{Programming Languages}}}}
+  \emph{(\bibinfo{series}{POPL 2017})}. \bibinfo{publisher}{{ACM}},
+  \bibinfo{pages}{719--734}.
+\newblock
+\showISBNx{978-1-4503-4660-3}
+
+
+\bibitem[\protect\citeauthoryear{Konnov, Veith, and Widder}{Konnov
+  et~al\mbox{.}}{2015a}]%
+        {konnov_smt_2015}
+\bibfield{author}{\bibinfo{person}{Igor Konnov}, \bibinfo{person}{Helmut
+  Veith}, {and} \bibinfo{person}{Josef Widder}.}
+  \bibinfo{year}{2015}\natexlab{a}.
+\newblock \showarticletitle{{{SMT}} and {{POR Beat Counter Abstraction}}:
+  {{Parameterized Model Checking}} of {{Threshold}}-{{Based Distributed
+  Algorithms}}}. In \bibinfo{booktitle}{\emph{Computer {{Aided
+  Verification}}}}. \bibinfo{publisher}{{Springer, Cham}},
+  \bibinfo{pages}{85--102}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Konnov, Veith, and Widder}{Konnov
+  et~al\mbox{.}}{2015b}]%
+        {DBLP:conf/ershov/KonnovVW15}
+\bibfield{author}{\bibinfo{person}{Igor~V. Konnov}, \bibinfo{person}{Helmut
+  Veith}, {and} \bibinfo{person}{Josef Widder}.}
+  \bibinfo{year}{2015}\natexlab{b}.
+\newblock \showarticletitle{What You Always Wanted to Know About Model Checking
+  of Fault-Tolerant Distributed Algorithms}. In
+  \bibinfo{booktitle}{\emph{Perspectives of System Informatics - 10th
+  International Andrei Ershov Informatics Conference, {PSI} 2015, in Memory of
+  Helmut Veith, Kazan and Innopolis, Russia, August 24-27, 2015, Revised
+  Selected Papers}} \emph{(\bibinfo{series}{Lecture Notes in Computer
+  Science})}, \bibfield{editor}{\bibinfo{person}{Manuel Mazzara} {and}
+  \bibinfo{person}{Andrei Voronkov}} (Eds.), Vol.~\bibinfo{volume}{9609}.
+  \bibinfo{publisher}{Springer}, \bibinfo{pages}{6--21}.
+\newblock
+\showISBNx{978-3-319-41578-9}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-319-41579-6_2}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Lamport}{Lamport}{1998}]%
+        {paxos}
+\bibfield{author}{\bibinfo{person}{Leslie Lamport}.}
+  \bibinfo{year}{1998}\natexlab{}.
+\newblock \showarticletitle{The Part-Time Parliament}.
+\newblock \bibinfo{journal}{\emph{{ACM} Trans. Comput. Syst.}}
+  \bibinfo{volume}{16}, \bibinfo{number}{2} (\bibinfo{year}{1998}),
+  \bibinfo{pages}{133--169}.
+\newblock
+\urldef\tempurl%
+\url{https://doi.org/10.1145/279227.279229}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Lamport}{Lamport}{2002}]%
+        {tla}
+\bibfield{author}{\bibinfo{person}{Leslie Lamport}.}
+  \bibinfo{year}{2002}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Specifying Systems: The TLA+ Language and
+  Tools for Hardware and Software Engineers}}.
+\newblock \bibinfo{publisher}{Addison-Wesley Longman Publishing Co., Inc.},
+  \bibinfo{address}{Boston, MA, USA}.
+\newblock
+\showISBNx{032114306X}
+
+
+\bibitem[\protect\citeauthoryear{Leino}{Leino}{2010}]%
+        {Dafny}
+\bibfield{author}{\bibinfo{person}{K~Rustan~M Leino}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Dafny: An automatic program verifier for functional
+  correctness}. In \bibinfo{booktitle}{\emph{Logic for Programming, Artificial
+  Intelligence, and Reasoning}}. Springer, \bibinfo{pages}{348--370}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Leroy}{Leroy}{2009}]%
+        {Compcert}
+\bibfield{author}{\bibinfo{person}{Xavier Leroy}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Formal verification of a realistic compiler}.
+\newblock \bibinfo{journal}{\emph{Commun. ACM}} \bibinfo{volume}{52},
+  \bibinfo{number}{7} (\bibinfo{year}{2009}), \bibinfo{pages}{107--115}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lewis}{Lewis}{1980}]%
+        {LEWIS1980317}
+\bibfield{author}{\bibinfo{person}{Harry~R. Lewis}.}
+  \bibinfo{year}{1980}\natexlab{}.
+\newblock \showarticletitle{Complexity results for classes of quantificational
+  formulas}.
+\newblock \bibinfo{journal}{\emph{J. Comput. System Sci.}}
+  \bibinfo{volume}{21}, \bibinfo{number}{3} (\bibinfo{year}{1980}),
+  \bibinfo{pages}{317 -- 353}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lipton}{Lipton}{1975}]%
+        {Lipton}
+\bibfield{author}{\bibinfo{person}{R.~J. Lipton}.}
+  \bibinfo{year}{1975}\natexlab{}.
+\newblock \showarticletitle{Reduction: A method of proving properties of
+  parallel programs.}
+\newblock \bibinfo{journal}{\emph{Commun. ACM}} \bibinfo{volume}{18},
+  \bibinfo{number}{12} (\bibinfo{year}{1975}), \bibinfo{pages}{717--–721}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Liu, Stoller, and Lin}{Liu
+  et~al\mbox{.}}{2017}]%
+        {DistAlgo}
+\bibfield{author}{\bibinfo{person}{Yanhong~A. Liu}, \bibinfo{person}{Scott~D.
+  Stoller}, {and} \bibinfo{person}{Bo Lin}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{From Clarity to Efficiency for Distributed
+  Algorithms}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Programming Languages and
+  Systems}} \bibinfo{volume}{39}, \bibinfo{number}{3} (\bibinfo{date}{July}
+  \bibinfo{year}{2017}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Madhusudan, Parlato, and Qiu}{Madhusudan
+  et~al\mbox{.}}{2011}]%
+        {MadhusudanPQ11}
+\bibfield{author}{\bibinfo{person}{P. Madhusudan}, \bibinfo{person}{Gennaro
+  Parlato}, {and} \bibinfo{person}{Xiaokang Qiu}.}
+  \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Decidable logics combining heap structures and
+  data}. In \bibinfo{booktitle}{\emph{Proceedings of the 38th {ACM}
+  {SIGPLAN-SIGACT} Symposium on Principles of Programming Languages, {POPL}
+  2011, Austin, TX, USA, January 26-28, 2011}}. \bibinfo{pages}{611--622}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Maric, Sprenger, and Basin}{Maric
+  et~al\mbox{.}}{2017}]%
+        {MSB17}
+\bibfield{author}{\bibinfo{person}{Ognjen Maric}, \bibinfo{person}{Christoph
+  Sprenger}, {and} \bibinfo{person}{David~A. Basin}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Cutoff Bounds for Consensus Algorithms}. In
+  \bibinfo{booktitle}{\emph{Computer Aided Verification - 29th International
+  Conference, {CAV} 2017, Heidelberg, Germany, July 24-28, 2017, Proceedings,
+  Part {II}}} \emph{(\bibinfo{series}{Lecture Notes in Computer Science})},
+  \bibfield{editor}{\bibinfo{person}{Rupak Majumdar} {and}
+  \bibinfo{person}{Viktor Kuncak}} (Eds.), Vol.~\bibinfo{volume}{10427}.
+  \bibinfo{publisher}{Springer}, \bibinfo{pages}{217--237}.
+\newblock
+\showISBNx{978-3-319-63389-3}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/978-3-319-63390-9_12}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{McMillan}{McMillan}{2016}]%
+        {ken_fmcad16}
+\bibfield{author}{\bibinfo{person}{Kenneth~L. McMillan}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Modular specification and verification of a
+  cache-coherent interface}. In \bibinfo{booktitle}{\emph{2016 Formal Methods
+  in Computer-Aided Design, {FMCAD} 2016, Mountain View, CA, USA, October 3-6,
+  2016}}, \bibfield{editor}{\bibinfo{person}{Ruzica Piskac} {and}
+  \bibinfo{person}{Muralidhar Talupur}} (Eds.). \bibinfo{publisher}{{IEEE}},
+  \bibinfo{pages}{109--116}.
+\newblock
+\showISBNx{978-0-9835678-6-8}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/FMCAD.2016.7886668}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Newcombe, Rath, Zhang, Munteanu, Brooker, and
+  Deardeuff}{Newcombe et~al\mbox{.}}{2015}]%
+        {amazon}
+\bibfield{author}{\bibinfo{person}{Chris Newcombe}, \bibinfo{person}{Tim Rath},
+  \bibinfo{person}{Fan Zhang}, \bibinfo{person}{Bogdan Munteanu},
+  \bibinfo{person}{Marc Brooker}, {and} \bibinfo{person}{Michael Deardeuff}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{How {Amazon} web services uses formal methods}.
+\newblock \bibinfo{journal}{\emph{Commun. ACM}} \bibinfo{volume}{58},
+  \bibinfo{number}{4} (\bibinfo{year}{2015}), \bibinfo{pages}{66--73}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Nipkow, Paulson, and Wenzel}{Nipkow
+  et~al\mbox{.}}{2002}]%
+        {nipkow_isabelle/hol:_2002}
+\bibfield{author}{\bibinfo{person}{Tobias Nipkow}, \bibinfo{person}{Lawrence~C.
+  Paulson}, {and} \bibinfo{person}{Markus Wenzel}.}
+  \bibinfo{year}{2002}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Isabelle/{{HOL}}: A Proof Assistant for
+  Higher-Order Logic}}. Vol.~\bibinfo{volume}{2283}.
+\newblock \bibinfo{publisher}{{Springer Science \& Business Media}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ongaro and Ousterhout}{Ongaro and
+  Ousterhout}{2014}]%
+        {raft}
+\bibfield{author}{\bibinfo{person}{Diego Ongaro} {and} \bibinfo{person}{John~K.
+  Ousterhout}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{In Search of an Understandable Consensus
+  Algorithm}. In \bibinfo{booktitle}{\emph{2014 {USENIX} Annual Technical
+  Conference, {USENIX} {ATC} '14, Philadelphia, PA, USA, June 19-20, 2014.}}
+  \bibinfo{pages}{305--319}.
+\newblock
+\urldef\tempurl%
+\url{https://www.usenix.org/conference/atc14/technical-sessions/presentation/ongaro}
+\showURL{%
+\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Padon, Losa, Sagiv, and Shoham}{Padon
+  et~al\mbox{.}}{2017}]%
+        {oopsla17-epr}
+\bibfield{author}{\bibinfo{person}{Oded Padon}, \bibinfo{person}{Giuliano
+  Losa}, \bibinfo{person}{Mooly Sagiv}, {and} \bibinfo{person}{Sharon Shoham}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Paxos Made EPR: Decidable Reasoning About
+  Distributed Protocols}.
+\newblock \bibinfo{journal}{\emph{Proc. ACM Program. Lang.}}
+  \bibinfo{volume}{1}, \bibinfo{number}{OOPSLA}, Article
+  \bibinfo{articleno}{108} (\bibinfo{date}{Oct.} \bibinfo{year}{2017}),
+  \bibinfo{numpages}{31}~pages.
+\newblock
+\showISSN{2475-1421}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3140568}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Padon, McMillan, Panda, Sagiv, and
+  Shoham}{Padon et~al\mbox{.}}{2016}]%
+        {Ivy}
+\bibfield{author}{\bibinfo{person}{Oded Padon}, \bibinfo{person}{Kenneth~L.
+  McMillan}, \bibinfo{person}{Aurojit Panda}, \bibinfo{person}{Mooly Sagiv},
+  {and} \bibinfo{person}{Sharon Shoham}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Ivy: safety verification by interactive
+  generalization}. In \bibinfo{booktitle}{\emph{Proceedings of the 37th {ACM}
+  {SIGPLAN} Conference on Programming Language Design and Implementation,
+  {PLDI} 2016, Santa Barbara, CA, USA, June 13-17, 2016}}.
+  \bibinfo{pages}{614--630}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ramsey}{Ramsey}{1930}]%
+        {EPR}
+\bibfield{author}{\bibinfo{person}{F. Ramsey}.}
+  \bibinfo{year}{1930}\natexlab{}.
+\newblock \showarticletitle{On a problem in formal logic}. In
+  \bibinfo{booktitle}{\emph{Proc. London Math. Soc.}}
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Schneider}{Schneider}{1990}]%
+        {schneider_implementing_1990}
+\bibfield{author}{\bibinfo{person}{Fred~B. Schneider}.}
+  \bibinfo{year}{1990}\natexlab{}.
+\newblock \showarticletitle{Implementing Fault-Tolerant Services Using the
+  State Machine Approach: {{A}} Tutorial}.
+\newblock \bibinfo{journal}{\emph{ACM Computing Surveys (CSUR)}}
+  \bibinfo{volume}{22}, \bibinfo{number}{4} (\bibinfo{year}{1990}),
+  \bibinfo{pages}{299--319}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Sergey, Wilcox, and Tatlock}{Sergey
+  et~al\mbox{.}}{2018}]%
+        {disel}
+\bibfield{author}{\bibinfo{person}{Ilya Sergey}, \bibinfo{person}{James~R.
+  Wilcox}, {and} \bibinfo{person}{Zachary Tatlock}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Programming and proving with distributed
+  protocols}.
+\newblock \bibinfo{journal}{\emph{{PACMPL}}} \bibinfo{volume}{2},
+  \bibinfo{number}{{POPL}} (\bibinfo{year}{2018}),
+  \bibinfo{pages}{28:1--28:30}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{v.~Gleissenthall, Bj{\o}rner, and
+  Rybalchenko}{v.~Gleissenthall et~al\mbox{.}}{2016}]%
+        {gleissenthall_cardinalities_2016}
+\bibfield{author}{\bibinfo{person}{Klaus v. Gleissenthall},
+  \bibinfo{person}{Nikolaj Bj{\o}rner}, {and} \bibinfo{person}{Andrey
+  Rybalchenko}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Cardinalities and {{Universal Quantifiers}} for
+  {{Verifying Parameterized Systems}}}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 37th {{ACM SIGPLAN Conference}}
+  on {{Programming Language Design}} and {{Implementation}}}}
+  \emph{(\bibinfo{series}{PLDI '16})}. \bibinfo{publisher}{{ACM}},
+  \bibinfo{pages}{599--613}.
+\newblock
+\showISBNx{978-1-4503-4261-2}
+
+
+\bibitem[\protect\citeauthoryear{Wilcox, Woos, Panchekha, Tatlock, Wang, Ernst,
+  and Anderson}{Wilcox et~al\mbox{.}}{2015}]%
+        {Verdi}
+\bibfield{author}{\bibinfo{person}{James~R. Wilcox}, \bibinfo{person}{Doug
+  Woos}, \bibinfo{person}{Pavel Panchekha}, \bibinfo{person}{Zachary Tatlock},
+  \bibinfo{person}{Xi Wang}, \bibinfo{person}{Michael~D. Ernst}, {and}
+  \bibinfo{person}{Thomas~E. Anderson}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Verdi: a framework for implementing and formally
+  verifying distributed systems}. In \bibinfo{booktitle}{\emph{Proceedings of
+  the 36th {ACM} {SIGPLAN} Conference on Programming Language Design and
+  Implementation, Portland, OR, USA, June 15-17, 2015}}.
+  \bibinfo{pages}{357--368}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Woos, Wilcox, Anton, Tatlock, Ernst, and
+  Anderson}{Woos et~al\mbox{.}}{2016}]%
+        {VerdiCPP}
+\bibfield{author}{\bibinfo{person}{Doug Woos}, \bibinfo{person}{James~R.
+  Wilcox}, \bibinfo{person}{Steve Anton}, \bibinfo{person}{Zachary Tatlock},
+  \bibinfo{person}{Michael~D. Ernst}, {and} \bibinfo{person}{Thomas~E.
+  Anderson}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Planning for change in a formal verification of the
+  raft consensus protocol}. In \bibinfo{booktitle}{\emph{Proceedings of the 5th
+  {ACM} {SIGPLAN} Conference on Certified Programs and Proofs, Saint
+  Petersburg, FL, USA, January 20-22, 2016}},
+  \bibfield{editor}{\bibinfo{person}{Jeremy Avigad} {and} \bibinfo{person}{Adam
+  Chlipala}} (Eds.). \bibinfo{publisher}{{ACM}}, \bibinfo{pages}{154--165}.
+\newblock
+\showISBNx{978-1-4503-4127-1}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/2854065.2854081}
+\showDOI{\tempurl}
+
+
+\end{thebibliography}

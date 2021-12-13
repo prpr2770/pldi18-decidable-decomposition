@@ -1,0 +1,1020 @@
+#lang ivy1.7
+
+include collections
+include relarray
+include order
+include udp
+include natural_numbers
+
+include nset
+
+
+type value
+interpret value -> strlit
+
+instance index : natural_numbers
+instance term : natural_numbers
+
+isolate hist = {
+    type this
+
+    relation logtix(H: this, IX: index, LOGT: term)
+    relation filled(H: this, IX:index)
+    function valix(H: this, IX: index) : value
+
+    action clear returns (h: this)
+    action strip(h: this, ix: index) returns (h:this)
+    action append(h: this, ix: index, logt: term, v: value) returns (h:this)
+    action get_next_ix(h: this) returns (ix: index)
+    action get_logt(h: this, ix: index) returns (logt: term)
+  
+    individual empty : this
+    
+
+    implementation {
+        type ent = struct {
+            ent_logt : term,
+            ent_value: value
+        }
+        instance arrlog:array(index, ent)
+        destructor repr(H: this) : arrlog.t
+
+        object imp_init = {
+            after init {
+                empty := clear;
+            }
+        }
+
+        definition logtix(H, IX, LOGT) = filled(H, IX) & ent_logt(arrlog.value(repr(H), IX)) = LOGT
+        definition filled(H, IX) = IX < arrlog.end(repr(H))
+        definition valix(H, IX) = ent_value(arrlog.value(repr(H), IX))
+
+        implement clear {
+            repr(h) := arrlog.empty
+        }
+        implement strip {
+            var dummy_ent : ent; #Default element is not relevant when resizing down the array
+            repr(h) := arrlog.resize(repr(h), ix.next, dummy_ent)
+        }
+        implement append {
+            var new_ent : ent;
+            ent_logt(new_ent) := logt;
+            ent_value(new_ent) := v;
+            repr(h) := arrlog.resize(repr(old h), ix.next, new_ent)
+        }
+        implement get_next_ix {
+            ix := arrlog.end(repr(h))
+        }
+        implement get_logt {
+            logt := ent_logt(arrlog.value(repr(h), ix))
+        }
+    }
+
+
+
+    specification {
+        property logtix(H, IX, LOGT1) & logtix(H, IX, LOGT2) -> LOGT1 = LOGT2
+        property filled(H, IX) & SMALLIX < IX -> filled(H, SMALLIX)
+        property logtix(H, IX, LOGT) -> filled(H, IX) 
+
+        after clear returns (h: this) {
+            ensure ~filled(h, IX);
+        }
+
+        before strip {
+            require filled(h, ix);
+        }
+
+        after strip {
+            ensure logtix(h, IX, LOGT) <-> logtix(old h, IX, LOGT) & IX <= ix;
+            ensure IX <= ix -> valix(h, IX) = valix(old h, IX);
+            ensure filled(h, IX) <-> IX <= ix;
+        }
+
+        before append {
+            require ~filled(h, ix);
+            require IX < ix -> filled(h, IX);
+        }
+
+        after append {
+            ensure logtix(h, IX, LOGT) <-> logtix(old h, IX, LOGT) | ix = IX & logt = LOGT;
+            ensure IX < ix -> valix(h, IX) = valix(old h, IX);
+            ensure valix(h, ix) = v;
+            ensure filled(h, ix);
+            ensure IX > ix -> ~filled(h, IX);
+        }
+
+        after get_next_ix {
+            ensure filled(h, IX) <-> IX < ix;
+        }
+
+        before get_logt {
+            require filled(h, ix);
+        }
+
+        after get_logt {
+            ensure logtix(h, ix, logt);
+        }
+
+        after init {
+            ensure ~filled(empty, IX)
+        }
+    }
+
+} with index, term
+
+
+type msgkind = {rqvote,rqvotenolog,vtcandidate,appentry,enappeneded,keepalive,nack}
+type msg =  struct {
+    m_kind : msgkind,
+    m_ix : index,
+    m_term : term,
+    m_node : node,
+    m_cand : node,
+    m_val : value,
+    m_logt : term,
+    m_prevlogt : term
+}
+
+relation msg_append(M:msg)
+action msg_append_send(src: node, t : term, v: value, logt: term, ix: index, prevlogt: term) returns (m: msg)
+
+relation rqst_vote_msg(CAND: node, LOGT: term, IX: index, T:term) 
+
+action send_rqst_vote_msg(src: node, cand: node, logt: term, ix: index, t:term)
+
+relation rqst_vote_m_nolog(CAND: node, T:term)
+action send_rqst_vote_m_nolog(src: node, cand: node, t:term)
+
+relation vote_cand_msg(N:node, T1:term, CAND:node)
+action send_vote_cand_msg(src:node, n:node, t:term, cand:node)
+
+relation appended_reply_msg(T:term, N:node, IX: index)
+action send_appended_reply_msg(src:node, leader:node, t:term, n:node, ix: index)
+
+action send_keepalive(src:nodeord.t, t:term.t)
+action send_nack(src:nodeord.t, leader:node, t:term.t, ix: index.t)
+
+instance net : udp_simple(node, msg)
+
+isolate shim = {
+
+    # Handlers
+    action handle_append_entries(self:node, m: msg)
+    action handle_rqst_vote(self:node, logt: term, ix: index, t:term, cand: node)
+    action handle_rqst_vote_nolog(self:node, t:term, cand: node)
+    action handle_appended_reply_msg(self:node, t:term, replier:node, ix: index)
+    action handle_vote_cand_msg(self:node, cand: node, t:term, voter:node)
+    action handle_keepalive(self:node, t:term.t)
+    action handle_nack(self:node, t:term.t, ix: index.t)
+
+    specification {
+        after init  {
+            msg_append(M) := false;
+            rqst_vote_msg(CAND, LOGT, IX, T) := false;
+            rqst_vote_m_nolog(CAND, T) := false;
+            vote_cand_msg(N,T,CAND) := false;
+            appended_reply_msg(T, N, IX) := false;         
+        }
+
+        after msg_append_send {
+            ensure m_kind(m) = appentry;
+            ensure m_term(m) = t;
+            ensure m_val(m) = v;
+            ensure m_logt(m) = logt;
+            ensure m_node(m) = src;
+            ensure m_ix(m) = ix;
+            ensure m_prevlogt(m) = prevlogt;
+            msg_append(m) := true;
+        }
+
+        after send_rqst_vote_msg {
+            rqst_vote_msg(cand, logt, ix, t) := true;
+        }
+
+        after send_rqst_vote_m_nolog {
+            rqst_vote_m_nolog(cand, t) := true;
+        }
+
+        after send_vote_cand_msg {
+            vote_cand_msg(n, t, cand) := true;
+        }
+
+        after send_appended_reply_msg {
+            appended_reply_msg(t, n, ix) := true;
+        }
+
+        # Handlers
+
+        before handle_append_entries {
+            require msg_append(m);
+        }
+
+        before handle_rqst_vote {
+            require rqst_vote_msg(cand, logt, ix, t); # A candidate requested our vote, it reports about its log.
+        }
+
+        before handle_rqst_vote_nolog {
+            require rqst_vote_m_nolog(cand, t); # A candidate that has no log requested our vote
+        }
+
+        before handle_appended_reply_msg {
+            require appended_reply_msg(t, replier, ix)
+        }
+
+        before handle_vote_cand_msg {
+            require vote_cand_msg(voter, t, cand)
+        }
+    }
+
+    implementation {
+
+        implement msg_append_send {
+            m_kind(m) := appentry;
+            m_term(m) := t;
+            m_val(m) := v;
+            m_logt(m) := logt;
+            m_node(m) := src;
+            m_ix(m) := ix;
+            m_prevlogt(m) := prevlogt;
+            call broadcast(src, m);
+        }
+
+        implement send_rqst_vote_msg {
+			var m : msg;
+            m_kind(m) := rqvote;
+            m_cand(m) := cand;
+            m_logt(m) := logt;
+            m_ix(m) := ix;
+            m_term(m) := t;
+            call broadcast(src, m);
+        }
+
+        implement send_rqst_vote_m_nolog {
+            var m : msg;
+            m_kind(m) := rqvotenolog;
+            m_cand(m) := cand;
+            m_term(m) := t;
+            call broadcast(src, m);
+        }
+
+        implement send_vote_cand_msg {
+            var m : msg;
+            m_kind(m) := vtcandidate;
+            m_node(m) := n;
+            m_term(m) := t;
+            m_cand(m) := cand;
+            call net.send(src, cand, m);
+        }
+
+        implement send_appended_reply_msg {
+            var m : msg;
+            m_kind(m) := enappeneded;
+            m_term(m) := t;
+            m_node(m) := n;
+            m_ix(m) := ix;
+            call net.send(src, leader, m);
+        }
+
+        implement send_keepalive {
+             var m : msg;
+             m_kind(m) := keepalive;
+             m_term(m) := t;
+             call broadcast(src, m);
+         }
+ 
+         implement send_nack {
+             var m : msg;
+             m_kind(m) := nack;
+             m_term(m) := t;
+             m_node(m) := n;
+             m_ix(m) := ix;
+             call net.send(src, leader, m);
+         }
+
+        action broadcast(src:node, m:msg) = {
+            var iter := node.iter.create(0); # For reconfiguration: will like to change this to be iterator over set
+            while ~iter.is_end
+            invariant net.spec.sent(M, N) -> old net.spec.sent(M, N) | M = m
+            {
+                var dst := iter.val;
+                call net.send(src, dst, m);
+                iter := iter.next;
+            };
+        }
+
+        implement net.recv(dst:node, m:msg) {
+            if m.m_kind = appentry {
+                call handle_append_entries(dst, m);
+            };
+            if m.m_kind = rqvote {
+                call handle_rqst_vote(dst, m_logt(m), m_ix(m), m_term(m), m_cand(m));
+            };
+            if m.m_kind = rqvotenolog {
+                call handle_rqst_vote_nolog(dst, m_term(m), m_cand(m));
+            };
+            if m.m_kind = enappeneded {
+                call handle_appended_reply_msg(dst, m_term(m), m_node(m), m_ix(m));
+            };
+            if m.m_kind = vtcandidate {
+                call handle_vote_cand_msg(dst, m_cand(m), m_term(m), m_node(m));
+            };
+            if m.m_kind = keepalive {
+                call handle_keepalive(dst, m_term(m))
+            }
+        }
+
+        conjecture net.spec.sent(M, N) & m_kind(M) = appentry -> msg_append(M)
+        conjecture net.spec.sent(M, N) & m_kind(M) = rqvote -> rqst_vote_msg(m_cand(M), m_logt(M), m_ix(M), m_term(M))
+        conjecture net.spec.sent(M, N) & m_kind(M) = rqvotenolog -> rqst_vote_m_nolog(m_cand(M), m_term(M))
+        conjecture net.spec.sent(M, N) & m_kind(M) = vtcandidate -> vote_cand_msg(m_node(M), m_term(M), m_cand(M))
+        conjecture net.spec.sent(M, N) & m_kind(M) = enappeneded -> appended_reply_msg(m_term(M), m_node(M), m_ix(M))
+    }
+ 
+} with node, net
+
+<<<<<<< HEAD
+instance replierslog:array(index, nset)
+=======
+trusted isolate typeconvert = {
+    action from_nodeid_to_term(n: nodeord.t) returns (t: term.t)
+    object spec = {
+        after from_nodeid_to_term {
+            assert n >= 0 -> t >= 0
+        }
+    }
+    object impl = {
+        implement from_nodeid_to_term {
+            <<<
+                `t` = `n`;
+            >>>
+        }
+    }
+}
+
+
+
+
+instance replierslog:array_idx_encapsulated(index, index.pureint, nset, index.zero)
+>>>>>>> 34620e3... WIP
+
+object localstate(self: node) = {
+    function myhist : hist 
+    after init {
+        myhist := hist.empty;
+    }
+
+    # Current term API
+    action increase_term_by_nodeid
+    relation term_bigeq(T:term)
+    relation term_bigger(T:term) 
+    relation curr_term(T:term) # This is the max term already voted
+    action move_to_term(t:term)
+    action get_term returns (t:term)
+
+    # Timeout API
+    action increase_time
+    action delay_leader_election
+    action is_leader_too_quiet returns (res: bool)
+
+    # Is leader API    
+    action become_leader
+    relation is_leader
+
+    # Leader voters API
+    action add_vote(voter: node)
+    action get_voters returns (voters: nset)
+
+    # Appended repliers API
+    action add_replier(ix: index, replier: node)
+    action get_repliers(ix: index) returns (repliers: nset)
+
+    # Commited index API
+    relation commited(IX: index)
+    action get_last_commited_ix returns (ix: index)
+    action set_last_commited_ix(ix: index)
+
+    implementation {
+        
+        # Is leader representation
+        #
+        implement become_leader {
+            _is_leader := true;
+        }
+        relation _is_leader # Ivy requires to split impl from interface
+        definition is_leader = _is_leader
+
+
+        # Leader voters representation
+        #
+        individual my_voters : nset
+        implement add_vote {
+            my_voters := my_voters.add(voter)
+        }
+        implement get_voters {
+            voters := my_voters
+        }
+        conjecture curr_term(T) & nset.member(VOTER, my_voters) -> vote_cand_msg(VOTER, T, self) 
+
+        # Appended repliers representation
+        #
+        individual my_repliers : replierslog.t
+        
+        implement add_replier {
+            if replierslog.end(my_repliers) <= ix {
+                my_repliers := replierslog.resize(my_repliers, ix.next, nset.emptyset)
+            };
+            var ix_repliers := replierslog.value(my_repliers, ix);
+            ix_repliers := ix_repliers.add(replier);
+            my_repliers := replierslog.set(my_repliers, ix, ix_repliers);
+        }
+        implement get_repliers {
+            if replierslog.end(my_repliers) > ix {
+                repliers := replierslog.get(my_repliers, ix);
+            } else {
+                repliers := nset.emptyset;
+            }
+        }
+        conjecture curr_term(T) & nset.member(REPLIER, replierslog.value(my_repliers, IX))
+                   & replierslog.end(my_repliers) > IX
+                    -> appended_reply_msg(T, REPLIER, IX) | REPLIER = self
+
+
+
+        # Current term representation
+        #
+        function term_val : term
+        definition curr_term(T) = term_val = T
+        definition term_bigeq(T) = term_val >= T 
+        definition term_bigger(T) = term_val > T
+        implement increase_term_by_nodeid {
+            term_val := term_val + 1 + typeconvert.from_nodeid_to_term(self);
+        }
+        implement move_to_term {
+            term_val := t;
+            my_voters := nset.emptyset;
+            my_repliers := replierslog.empty;
+            _is_leader := false;
+        }
+        implement get_term {
+            t := term_val;
+        }
+
+        # Timeout representation
+        #
+        type time
+        interpret time -> int
+        individual mytime : time
+        individual last_heard_from_leader : time
+        implement increase_time {
+            mytime := mytime + 1
+        }
+        implement delay_leader_election {
+            last_heard_from_leader := mytime
+        }
+        implement is_leader_too_quiet {
+            # The leader has not talked for more than one second
+            res := mytime - last_heard_from_leader >= 2
+        }
+
+
+        # Commited index implementation
+        individual last_commited_ix : index
+        relation has_commits
+        definition commited(IX) = has_commits & IX <= last_commited_ix
+
+        implement get_last_commited_ix {
+            ix := last_commited_ix
+        }
+        implement set_last_commited_ix {
+            last_commited_ix := ix;
+            has_commits := true;
+        }
+
+        # Initialization of the module
+        object implementation_init = {
+            after init {
+                my_voters := nset.emptyset;
+                my_repliers := replierslog.empty;
+                _is_leader := false;
+<<<<<<< HEAD
+                term_val := 0;
+=======
+                term_val := term.zero;
+                last_heard_from_leader := 0;
+                mytime := 0;
+>>>>>>> 34620e3... WIP
+                has_commits := false;
+            }
+        }
+    }
+
+    specification {
+        # Current term contract
+        #
+        property curr_term(T) <-> term_bigeq(T) & ~term_bigger(T)
+        property term_bigeq(T) & T > TSMALL -> term_bigger(TSMALL)
+        property term_bigger(TSMALL) -> term_bigeq(TSMALL)
+        after move_to_term {
+            ensure curr_term(T) <-> T = t;
+            ensure ~is_leader;
+        }
+        after get_term {
+            ensure curr_term(t);
+        }
+        after increase_term_by_nodeid {
+            assert old term_bigeq(T) -> term_bigger(T)
+        }
+
+        # Is leader contract
+        #
+        after become_leader {
+            ensure is_leader;
+        }
+
+        # Leader voters contract
+        #
+        before add_vote {
+            require curr_term(T) -> vote_cand_msg(voter, T, self)
+        }
+        after get_voters {
+            ensure curr_term(T) & nset.member(VOTER, voters) -> vote_cand_msg(VOTER, T, self)
+        }
+
+        # Appended repliers contract
+        #
+        before add_replier {
+            require curr_term(T) -> appended_reply_msg(T, replier, ix) | replier = self
+        }
+        after get_repliers {
+            ensure curr_term(T) & nset.member(REPLIER, repliers) 
+                        -> appended_reply_msg(T, REPLIER, ix) | REPLIER = self
+        }
+
+
+        # Commited index contract
+        #
+        before get_last_commited_ix {
+            require commited(0); #At least one index is commited
+        }
+        after get_last_commited_ix {
+            ensure commited(ix);
+            ensure IX > ix -> ~commited(IX);
+        }
+        after set_last_commited_ix {
+            ensure commited(ix);
+            ensure IX > ix -> ~commited(IX);
+        }
+
+        object init_promises = {
+            after init {
+                ensure ~is_leader;
+                ensure ~commited(IX);
+                ensure curr_term(0);
+            }
+        } # init_promises
+    } #specification
+} #localstate
+
+isolate ilocalstate = localstate with term, nset, index, hist, replierslog, system, shim, typeconvert
+
+
+object safety = {
+    after shim.handle_appended_reply_msg {
+        ensure localstate.commited(N1, IX)
+               & localstate.commited(N2, IX)
+               -> localstate.myhist(N1).valix(IX) = localstate.myhist(N2).valix(IX);
+    }
+}
+
+object system = {
+
+    # API to query something in the log for the client
+    action get_value(self: nodeord.t, i: index.t) returns (v: value) = {
+        v := localstate.myhist(self).valix(i)
+    }
+    export get_value
+
+    implement sec.timeout(self: nodeord.t) {
+        if ~localstate.is_leader(self) {
+            call localstate.increase_time(self);
+            if localstate.is_leader_too_quiet(self) {
+                call announce_candidacy(self)
+            }
+        } else {
+            call send_keepalive(self, localstate.get_term(self))
+        }
+    }
+
+    implement net.handle_keepalive {
+        if localstate.get_term(self) < t {
+            call localstate.move_to_term(self, t);
+        };
+        if localstate.get_term(self) = t {
+            call localstate.delay_leader_election(self);
+        }
+    }
+
+    implement net.handle_nack(self:nodeord.t, t:term.t, ix: index.t) {
+        if localstate.get_term(self) = t & localstate.check_leader(self) {
+            var rejected := req_replicate_entry_from_log(self, ix)
+        }
+    }
+
+    action announce_candidacy(cand: node)
+    implement announce_candidacy {
+        call localstate.increase_term_by_nodeid(cand);
+        var t := localstate.get_term(cand);
+
+<<<<<<< HEAD
+        if chist.filled(0) {
+=======
+        if localstate.myhist(cand).filled(index.zero) {
+>>>>>>> 34620e3... WIP
+            # Has some history
+            var ix := localstate.myhist(cand).get_next_ix.prev;
+            var logt := localstate.myhist(cand).get_logt(ix);
+            call send_rqst_vote_msg(cand, cand, logt, ix, t);
+        } else {
+            # Empty history
+            call send_rqst_vote_m_nolog(cand, cand, t);
+        };
+       
+
+        # VOTE FOR ITSELF AUTOMATICALLY
+        call send_vote_cand_msg(cand, cand, t, cand);
+        call localstate.add_vote(cand, cand);
+        call localstate.delay_leader_election(cand)
+    }
+
+    action req_append_new_entry(leader: node, v: value) returns (rejected : bool)
+    export req_append_new_entry
+
+
+    action req_replicate_entry_from_log(leader: node, ix:index) returns (rejected : bool)
+    export req_replicate_entry_from_log
+
+
+    implement req_append_new_entry { 
+        var previx : index;
+        var prevt : term;
+        var t := localstate.get_term(leader);
+        var lhist := localstate.myhist(leader);
+        var ix := lhist.get_next_ix;
+
+        if localstate.is_leader(leader) {
+            localstate.myhist(leader) := lhist.append(ix, t, v);
+            call safetyproof.update_term_hist_ghost(t, localstate.myhist(leader));
+
+            # The leader is considered as appended automatically
+            call localstate.add_replier(leader, ix, leader);
+
+            rejected := req_replicate_entry_from_log(leader, ix);
+            assert ~rejected
+            
+        } else {
+            rejected := true
+        }
+    }
+
+    implement req_replicate_entry_from_log {
+        var previx : index;
+        var prevt : term;
+        var t := localstate.get_term(leader);
+        var lhist := localstate.myhist(leader);
+        var v := lhist.valix(ix);
+        var previx : index;
+        var logt : term;
+
+        if localstate.is_leader(leader) & lhist.filled(ix) {
+            rejected := false;
+            logt := lhist.get_logt(ix);
+
+            if ix ~= 0 {
+                previx := ix.prev;
+                prevt := lhist.get_logt(previx);
+            };
+
+            # SEND REQUEST
+            var m := msg_append_send(leader, t, v, logt, ix, prevt);
+
+            # Ghost: Previous index for the message
+            call safetyproof.remember_previx_ghost(m, previx);
+        } else {
+            rejected := true
+        }
+    }
+
+    implement shim.handle_vote_cand_msg {
+        var ok := true;
+
+        ok := ok & self = cand;
+        ok := ok & localstate.curr_term(self, t);
+        ok := ok & ~localstate.is_leader(self);
+
+        if ok {
+            call localstate.add_vote(self, voter);
+            var voters := localstate.get_voters(self);
+            if voters.majority {
+                call localstate.become_leader(self);
+                call safetyproof.set_leader_ghost(t, self, voters);
+            }
+        }
+    }
+
+    implement shim.handle_rqst_vote_nolog {  
+        var h := localstate.myhist(self);
+        var ok := ~h.filled(0);
+
+        # Check we haven't voted before in this term
+        ok := ok & ~localstate.term_bigeq(self, t);
+
+        if ok {
+            call send_vote_cand_msg(self, self, t, cand);
+            call localstate.move_to_term(self, t);
+        }
+    }
+
+    implement shim.handle_rqst_vote {  
+        var h := localstate.myhist(self);
+        var ok := true;
+        if h.filled(0) {
+            var lastix := h.get_next_ix.prev;
+            var lastlogt := h.get_logt(lastix);
+            
+            # Candidate has higher log term or same log term with the grater or equal lenght
+            if lastlogt > logt | (lastlogt = logt & lastix > ix) {
+                ok := false;
+            }
+
+        };
+     
+        # Check we haven't voted before in this term
+        ok := ok & ~localstate.term_bigeq(self, t);
+
+        if ok {
+            call send_vote_cand_msg(self, self, t, cand);
+            call localstate.move_to_term(self, t);  
+        }
+    }
+
+    implement shim.handle_append_entries {
+        var t := m_term(m);
+        var ix := m_ix(m);
+        var logt := m_logt(m);
+        var v := m_val(m);
+        var prevt := m_prevlogt(m);
+        var h := localstate.myhist(self);
+        var node_term := localstate.get_term(self);
+        var ok := true;
+
+        ok := ok & ~localstate.is_leader(self);
+        ok := ok & node_term <= t;
+        if ix ~= 0 {
+            ok := ok & h.logtix(ix.prev, prevt); 
+        };
+
+        if ok {
+            if ~h.logtix(ix, logt) {
+                # Replacing or appending
+                if ix = 0 {
+                    h := hist.clear;
+                } else {
+                    var previx := ix.prev;
+                    h := h.strip(previx);
+                };
+                h := h.append(ix, logt, v);
+                localstate.myhist(self) := h;
+                call safetyproof.set_valid_ghost(h);
+            };
+            if h.get_next_ix = ix {
+                call send_appended_reply_msg(self, m_node(m), t, self, ix);
+            };
+            call localstate.move_to_term(self, t);
+        };
+    }
+    implement shim.handle_appended_reply_msg(self:node, t:term, replier:node, ix: index) { 
+        var ok := true;
+        ok := ok & localstate.is_leader(self);
+        ok := ok & localstate.get_term(self) = t;
+
+        # In RAFT we can only commit things which have been stored with logt = t
+        ok := ok & localstate.myhist(self).logtix(ix, t);
+
+        # Go forward and never backwards
+        if localstate.commited(self, 0) {
+            ok := ok & localstate.get_last_commited_ix(self) <= ix;
+        };
+
+        if ok {
+            call localstate.add_replier(self, ix, replier);
+        };
+
+        var repliers := localstate.get_repliers(self, ix);
+        ok := ok & repliers.majority;
+
+        if ok {
+            call localstate.set_last_commited_ix(self, ix);
+            call safetyproof.update_commited_ghost(localstate.myhist(self), ix, t, repliers);
+        }
+    }
+} 
+
+object safetyproof = {
+    relation valid(H: hist) # The histories that were part of this RAFT execution
+    after init {
+        valid(H) := H = hist.empty;
+        term_hist(T) := hist.empty;
+        started(T) := false;
+        commited_history := hist.empty;
+        has_commits := false;
+        ensure ~started(T);
+    }
+    # COMMITED HISTORY:
+    function commited_history : hist
+    function commited_ix : index
+    function commited_term : term
+    function commit_quorum : nset
+    relation has_commits
+
+    action update_commited_ghost(h: hist, ix: index, t: term, q_append: nset) = {
+        if ~commited_history.filled(ix) {
+            commited_history := h.strip(ix);
+            commited_ix := ix;
+            commited_term := t;
+            commit_quorum := q_append;
+            has_commits := true;
+        }
+    }
+
+    action set_valid_ghost(h: hist) = {
+        valid(h) := true
+    }
+
+    function previx_for_append(M: msg) : index
+
+    action remember_previx_ghost(m: msg, previx: index) = {
+        previx_for_append(m) := previx
+    }
+
+
+    # TERM PROPERTIES
+    function term_leader(T:term) : node
+    function voting_quorum(T: term) : nset
+    relation started(T:term)
+    function term_hist(T: term) : hist
+    action set_leader_ghost(t: term, leader: node, voters: nset) = {
+        started(t) := true;
+        term_leader(t) := leader;
+        voting_quorum(t) := voters;
+        term_hist(t) := localstate.myhist(leader);
+    }
+    action update_term_hist_ghost(t: term, h: hist) = {
+        valid(h) := true;
+        term_hist(t) := h;
+    }
+
+    
+    conjecture localstate.curr_term(N, T) ->
+                ( localstate.is_leader(N) <-> term_leader(T) = N & started(T))
+
+    conjecture  term_leader(T) = N & started(T) 
+                    ->  localstate.term_bigeq(N, T) 
+
+
+
+    conjecture vote_cand_msg(N, T, CAND1) & vote_cand_msg(N, T, CAND2) -> CAND1 = CAND2
+    conjecture rqst_vote_msg(CAND, LOGT, IX, T) -> ~rqst_vote_m_nolog(CAND, T)
+    conjecture rqst_vote_msg(CAND, LOGT, IX, T) -> vote_cand_msg(CAND, T, CAND)
+
+    conjecture term_hist(T).filled(IX) -> started(T)
+    
+    # Implicit valid
+    conjecture valid(term_hist(T))
+    conjecture valid(commited_history)
+    conjecture valid(localstate.myhist(N))
+
+    conjecture valid(H) & hist.logtix(H, IX, LOGT)
+        -> started(LOGT) & term_hist(LOGT).logtix(IX, LOGT)
+
+    # Same LOGT, different IX
+    conjecture hist.logtix(H1, IX1, LOGT) & hist.logtix(H2, IX2, LOGT) & IX1 <= IX2 & valid(H1) & valid(H2) -> 
+                hist.logtix(H2, IX1, LOGT) 
+
+
+    conjecture hist.logtix(H1, IX, LOGT) & hist.logtix(H2, IX, LOGT) & IX2 < IX & valid(H1) & valid(H2) 
+            -> ( hist.logtix(H1, IX2, OTHERT) <-> 
+                 hist.logtix(H2, IX2, OTHERT) )
+
+
+    conjecture hist.logtix(H1, IX, LOGT) & hist.logtix(H2, IX, LOGT) & IX2 <= IX & valid(H1) & valid(H2) 
+            -> hist.valix(H1, IX2) = hist.valix(H2, IX2)
+
+
+    # Official history for term
+    conjecture started(T) & localstate.curr_term(term_leader(T), T) -> localstate.myhist(term_leader(T)) = term_hist(T)
+    conjecture started(T) -> localstate.term_bigeq(term_leader(T), T)
+
+    # Consistency with append msg
+    conjecture msg_append(M) -> started(m_term(M))
+    conjecture msg_append(M) -> term_hist(m_term(M)).logtix(m_ix(M), m_logt(M))
+    conjecture msg_append(M) -> term_hist(m_term(M)).valix(m_ix(M)) = m_val(M)
+    conjecture msg_append(M) & m_ix(M) ~= 0 -> previx_for_append(M) < m_ix(M) 
+    conjecture msg_append(M) & m_ix(M) ~= 0 -> ~(previx_for_append(M) < MIDDLE & MIDDLE < m_ix(M))
+    conjecture msg_append(M) & m_ix(M) ~= 0 -> term_hist(m_term(M)).logtix(previx_for_append(M), m_prevlogt(M))
+
+    # Consistency with reply message
+    conjecture appended_reply_msg(T, N, IX) -> term_hist(T).filled(IX)
+
+
+    # Request vote message and candidates
+    #####!!!!
+    conjecture rqst_vote_msg(term_leader(T), LOGT, IX, T) & started(T)
+                    -> term_hist(T).logtix(IX, LOGT)
+    conjecture rqst_vote_m_nolog(CAND, T) & ~localstate.term_bigger(CAND, T) & ~started(T) -> ~localstate.myhist(CAND).filled(IX) #possible_leader(CAND, T)
+    conjecture rqst_vote_m_nolog(CAND, T) -> localstate.term_bigeq(CAND, T)
+    conjecture rqst_vote_msg(CAND, LOGT, IX, T) -> localstate.term_bigeq(CAND, T)
+    conjecture rqst_vote_msg(CAND, LOGT, IX, T) & ~localstate.term_bigger(CAND, T) & ~started(T) -> localstate.myhist(CAND).logtix(IX, LOGT) #possible_leader(CAND, T)
+    conjecture rqst_vote_msg(CAND, LOGT, IX, T) & started(T) & term_leader(T) = CAND
+        & ~localstate.term_bigger(CAND, T) -> localstate.myhist(CAND).logtix(IX, LOGT)
+    conjecture rqst_vote_msg(CAND, LOGT, IX, T) & ~localstate.term_bigger(CAND, T) & ~started(T) & BIGIX > IX -> ~localstate.myhist(CAND).filled(BIGIX) #possible_leader(CAND, T)
+
+
+    # Leader decided only when there are enough votes
+    conjecture started(T) -> voting_quorum(T).majority
+    conjecture started(T) & nset.member(N, voting_quorum(T)) -> vote_cand_msg(N, T, term_leader(T))
+
+
+    #Basic inequalities
+    conjecture msg_append(M) -> localstate.term_bigeq(term_leader(m_term(M)), m_term(M))
+    conjecture appended_reply_msg(T, N, IX) -> localstate.term_bigeq(N, T)
+    conjecture vote_cand_msg(N, T, CAND) -> localstate.term_bigeq(N, T)
+    conjecture vote_cand_msg(N, T, CAND) -> localstate.term_bigeq(CAND, T)
+    conjecture rqst_vote_m_nolog(CAND, T) -> localstate.term_bigeq(CAND, T)
+    conjecture term_hist(T).logtix(IX, LOGT) -> LOGT <= T
+    conjecture localstate.myhist(N).logtix(IX, LOGT) & ~localstate.term_bigger(N, T) -> LOGT <= T
+
+
+    # Strong voters continue to carry data voted if there is a choosable quorum
+
+
+    conjecture 
+                    # choosable(T, IX)
+                    (term_hist(T).logtix(IX, T) & exists QQ. nset.majority(QQ) &
+                    forall NN. nset.member(NN, QQ) -> (appended_reply_msg(T, NN, IX) | term_leader(T) = NN) | ~localstate.term_bigger(NN, T))
+        
+        ->  forall N.
+             # strong_vote(N, T, IX)
+             (appended_reply_msg(T, N, IX) | term_leader(T) = N)
+         -> 
+         localstate.myhist(N).logtix(IX, T)
+
+    conjecture 
+                    # choosable(T, IX)
+                    (term_hist(T).logtix(IX, T) & exists QQ. nset.majority(QQ) &
+                    forall NN. nset.member(NN, QQ) -> (appended_reply_msg(T, NN, IX) | term_leader(T) = NN) | ~localstate.term_bigger(NN, T))
+        
+        -> forall T2. T2 > T & started(T2) 
+        ->
+        term_hist(T2).logtix(IX, T)
+
+
+    # Strong voters will only vote for candidates which agree with them
+    conjecture 
+                    # choosable(T, IX)
+                    (term_hist(T).logtix(IX, T) & exists QQ. nset.majority(QQ) &
+                    forall NN. nset.member(NN, QQ) -> (appended_reply_msg(T, NN, IX) | term_leader(T) = NN) | ~localstate.term_bigger(NN, T))
+        
+        -> forall N, CAND, T2. T2 > T &
+         # strong_vote(N, T, IX)
+         (appended_reply_msg(T, N, IX) | term_leader(T) = N)
+        & vote_cand_msg(N, T2, CAND) & ~localstate.term_bigger(CAND, T2) & ~started(T2) 
+                                       #possible_leader(CAND, T2)
+                        -> localstate.myhist(CAND).logtix(IX, T)
+
+
+
+    conjecture has_commits -> commited_history.logtix(commited_ix, commited_term)
+    conjecture has_commits -> term_hist(commited_term).logtix(commited_ix, commited_term)
+    conjecture has_commits & IX > commited_ix -> ~commited_history.filled(IX)
+    conjecture has_commits -> commit_quorum.majority
+    conjecture has_commits & nset.member(N, commit_quorum) -> appended_reply_msg(commited_term, N, commited_ix) | term_leader(commited_term) = N
+    conjecture localstate.commited(N, IX) -> has_commits
+    conjecture valid(commited_history)
+
+    conjecture localstate.commited(N, IX) & SMALLIX < IX -> localstate.commited(N, SMALLIX)
+    conjecture localstate.commited(N, IX) -> localstate.myhist(N).logtix(commited_ix, commited_term)
+    conjecture localstate.commited(N, IX) -> IX <= commited_ix
+
+    #
+    # MAIN AGREEMENT CLAUSE
+    #
+    conjecture localstate.commited(N1, IX)
+               & localstate.commited(N2, IX)
+               -> localstate.myhist(N1).valix(IX) = localstate.myhist(N2).valix(IX)
+
+}
+
+isolate isystem = system, safety, safetyproof with hist, index, term, localstate, nset, nset.majorities_intersect, shim
+
+extract test(n: node) = system(n), hist, index, term, localstate(n), nset, shim(n), net.impl(n), node, replierslog
